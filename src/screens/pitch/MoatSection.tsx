@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
 
-const icons: Record<string, (color: string) => JSX.Element> = {
+const icons: Record<string, (color: string) => React.ReactNode> = {
   schema: (color) => (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="14" cy="4" r="3" stroke={color} strokeWidth="1.5" />
@@ -36,7 +36,7 @@ const cardVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.15, duration: 0.5, ease: 'easeOut' },
+    transition: { delay: i * 0.15, duration: 0.5, ease: 'easeOut' as const },
   }),
 }
 
