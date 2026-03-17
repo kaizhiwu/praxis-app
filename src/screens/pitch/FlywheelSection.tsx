@@ -67,8 +67,8 @@ function buildArcPath(
 
 export function FlywheelSection() {
   const nodes = PITCH.flywheel.nodes
-  // SVG viewBox is 480x480, CSS scales it
-  const size = 480
+  // SVG viewBox has padding for labels outside the orbit
+  const size = 600
   const cx = size / 2
   const cy = size / 2
   const orbitRadius = 170
@@ -98,7 +98,7 @@ export function FlywheelSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative mx-auto w-[320px] h-[320px] md:w-[480px] md:h-[480px]"
+          className="relative mx-auto w-[360px] h-[360px] md:w-[540px] md:h-[540px]"
         >
           {/* Radial glow */}
           <div
