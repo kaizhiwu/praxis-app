@@ -98,13 +98,24 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
 
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
-      {/* Animated focus glow ring */}
+      {/* Animated gradient border on focus */}
+      <motion.div
+        className="absolute -inset-[2px] rounded-[18px] pointer-events-none"
+        style={{
+          background: isFocused
+            ? 'linear-gradient(135deg, #4F46E5, #7C3AED, #E2614B)'
+            : 'transparent',
+          opacity: isFocused ? 1 : 0,
+          transition: 'opacity 0.3s ease-out',
+        }}
+      />
+      {/* Inner mask to create border effect */}
       <motion.div
         className="absolute -inset-[1px] rounded-2xl pointer-events-none"
         animate={{
           boxShadow: isFocused
-            ? '0 0 0 1px rgba(79,70,229,0.25), 0 0 16px -4px rgba(79,70,229,0.1)'
-            : '0 0 0 1px rgba(79,70,229,0), 0 0 16px -4px rgba(79,70,229,0)',
+            ? '0 0 16px -4px rgba(79,70,229,0.15)'
+            : '0 0 16px -4px rgba(79,70,229,0)',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       />
@@ -121,8 +132,8 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
         animate={{ scale: isFocused ? 1.02 : 1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
-        <div className="relative flex items-center py-4.5 px-6 gap-3">
-          {/* Search icon — transitions color on focus */}
+        <div className="relative flex items-center py-4.5 px-6 gap-3" style={{ boxShadow: 'inset 0 1px 3px -1px rgba(0,0,0,0.06)' }}>
+          {/* Search icon — transitions color on focus + subtle bounce */}
           <motion.svg
             width="16"
             height="16"
@@ -133,8 +144,14 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="shrink-0"
-            animate={{ color: isFocused ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
-            transition={{ duration: 0.2 }}
+            animate={{
+              color: isFocused ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
+              y: isFocused ? [0, -2, 0] : 0,
+            }}
+            transition={{
+              color: { duration: 0.2 },
+              y: { duration: 0.4, ease: 'easeOut' },
+            }}
           >
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -178,9 +195,22 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                className="shrink-0 w-8 h-8 rounded-full bg-accent flex items-center justify-center hover:bg-accent-hover transition-colors cursor-pointer"
+                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer relative overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}
                 aria-label="Search"
               >
+                {/* Subtle sparkle pulse */}
+                <motion.div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  animate={{
+                    boxShadow: [
+                      '0 0 6px 1px rgba(99, 102, 241, 0.2)',
+                      '0 0 12px 3px rgba(99, 102, 241, 0.4)',
+                      '0 0 6px 1px rgba(99, 102, 241, 0.2)',
+                    ],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                />
                 <svg
                   width="16"
                   height="16"
@@ -190,6 +220,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  className="relative z-10"
                 >
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />

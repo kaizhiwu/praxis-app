@@ -1,11 +1,33 @@
 import { motion } from 'framer-motion'
 import { AttributeBar } from './AttributeBar'
-import type { SearchResult, AttributeType } from '../data/types'
+import type { SearchResult, AttributeType, AttributeCluster } from '../data/types'
 
 interface ResultCardProps {
   result: SearchResult
   index: number
   onClick: () => void
+}
+
+const CLUSTER_COLORS: Record<AttributeCluster, { hex: string; label: string }> = {
+  workability: { hex: '#4F46E5', label: 'Workability' },
+  relief: { hex: '#E2614B', label: 'Relief' },
+  savings: { hex: '#D97706', label: 'Savings' },
+}
+
+function getPrimaryCluster(attributes: { cluster: AttributeCluster }[]): AttributeCluster {
+  const counts: Record<string, number> = {}
+  for (const attr of attributes) {
+    counts[attr.cluster] = (counts[attr.cluster] || 0) + 1
+  }
+  let max: AttributeCluster = 'workability'
+  let maxCount = 0
+  for (const [cluster, count] of Object.entries(counts)) {
+    if (count > maxCount) {
+      max = cluster as AttributeCluster
+      maxCount = count
+    }
+  }
+  return max
 }
 
 function getAttributeIcon(type: AttributeType) {
@@ -131,22 +153,70 @@ function getAttributeIcon(type: AttributeType) {
   }
 }
 
-function MatchScoreRing({ score }: { score: number }) {
+function DecorativePattern({ color }: { color: string }) {
+  return (
+    <svg
+      className="absolute top-3 right-14 pointer-events-none"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+    >
+      <path
+        d="M32 0 A32 32 0 0 1 0 32"
+        stroke={color}
+        strokeWidth="1.5"
+        opacity="0.04"
+        fill="none"
+      />
+      <path
+        d="M32 0 A22 22 0 0 1 10 32"
+        stroke={color}
+        strokeWidth="1.5"
+        opacity="0.04"
+        fill="none"
+      />
+      <path
+        d="M32 0 A12 12 0 0 1 20 32"
+        stroke={color}
+        strokeWidth="1.5"
+        opacity="0.04"
+        fill="none"
+      />
+    </svg>
+  )
+}
+
+function MatchScoreRing({ score, glowColor }: { score: number; glowColor: string }) {
   const size = 36
   const strokeWidth = 2.5
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const offset = circumference * (1 - score)
   const displayScore = Math.round(score * 100)
+  const hasGlow = displayScore > 80
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <div
+      className="relative"
+      style={{
+        width: size,
+        height: size,
+        filter: hasGlow ? `drop-shadow(0 0 6px ${glowColor}40)` : undefined,
+      }}
+    >
       <svg
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
         className="rotate-[-90deg]"
       >
+        <defs>
+          <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#4F46E5" />
+            <stop offset="100%" stopColor="#7C3AED" />
+          </linearGradient>
+        </defs>
         {/* Background track */}
         <circle
           cx={size / 2}
@@ -162,7 +232,7 @@ function MatchScoreRing({ score }: { score: number }) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#4F46E5"
+          stroke="url(#scoreGradient)"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -172,7 +242,7 @@ function MatchScoreRing({ score }: { score: number }) {
         />
       </svg>
       {/* Score text */}
-      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold font-mono text-text-primary tabular-nums">
+      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold font-mono text-text-primary tabular-nums">
         {displayScore}
       </span>
     </div>
@@ -180,19 +250,34 @@ function MatchScoreRing({ score }: { score: number }) {
 }
 
 export function ResultCard({ result, index, onClick }: ResultCardProps) {
+  const primaryCluster = getPrimaryCluster(result.topAttributes)
+  const clusterColor = CLUSTER_COLORS[primaryCluster]
+
   return (
     <motion.button
       onClick={onClick}
-      className="group relative w-full text-left bg-white rounded-2xl border border-surface-border shadow-sm p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden transition-all duration-200 hover:shadow-md hover:border-accent/20"
+      className="group relative w-full text-left bg-white rounded-2xl border border-surface-border shadow-sm p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden"
+      style={{
+        borderLeft: `3px solid ${clusterColor.hex}30`,
+      }}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{
-        y: -2,
-        boxShadow: '0 8px 24px -8px rgba(79,70,229,0.12)',
+        scale: 1.01,
+        borderLeftColor: `${clusterColor.hex}90`,
+        boxShadow: '0 12px 32px -8px rgba(79,70,229,0.15)',
       }}
       whileTap={{ scale: 0.995 }}
-      transition={{ duration: 0.3, delay: index * 0.08, ease: 'easeOut' }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.08,
+        ease: 'easeOut',
+        scale: { type: 'spring', stiffness: 300, damping: 20 },
+      }}
     >
+      {/* Decorative pattern */}
+      <DecorativePattern color={clusterColor.hex} />
+
       {/* Rank watermark */}
       <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-surface-border/60 select-none pointer-events-none">
         {index + 1}
@@ -200,7 +285,24 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
 
       {/* Match score ring */}
       <div className="absolute top-4 right-4 z-10">
-        <MatchScoreRing score={result.matchScore} />
+        <MatchScoreRing score={result.matchScore} glowColor={clusterColor.hex} />
+      </div>
+
+      {/* Category pill */}
+      <div className="relative z-10 flex items-center gap-2">
+        <span
+          className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium tracking-wide"
+          style={{
+            backgroundColor: `${clusterColor.hex}10`,
+            color: clusterColor.hex,
+          }}
+        >
+          <span
+            className="mr-1.5 inline-block w-1.5 h-1.5 rounded-full"
+            style={{ backgroundColor: clusterColor.hex }}
+          />
+          {clusterColor.label}
+        </span>
       </div>
 
       {/* Header */}
@@ -220,7 +322,10 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
 
       {/* Summary with accent border */}
       <div className="relative z-10 flex gap-3">
-        <div className="w-0.5 shrink-0 rounded-full bg-accent/50" />
+        <div
+          className="w-0.5 shrink-0 rounded-full"
+          style={{ backgroundColor: `${clusterColor.hex}50` }}
+        />
         <p className="text-text-primary/70 text-[13px] leading-relaxed">
           {result.summary}
         </p>
@@ -228,17 +333,32 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
 
       {/* Attribute bars with icons */}
       <div className="relative z-10 space-y-3">
-        {result.topAttributes.slice(0, 3).map(attr => (
-          <div key={attr.type} className="flex items-start gap-2">
-            <div className="mt-[3px]">
-              {getAttributeIcon(attr.type)}
+        {result.topAttributes.slice(0, 3).map(attr => {
+          const attrColor = CLUSTER_COLORS[attr.cluster].hex
+          return (
+            <div key={attr.type} className="flex items-start gap-2">
+              <div className="mt-[3px] flex items-center gap-1.5">
+                <span
+                  className="inline-block w-1 h-1 rounded-full shrink-0"
+                  style={{ backgroundColor: attrColor }}
+                />
+                {getAttributeIcon(attr.type)}
+              </div>
+              <div
+                className="flex-1 min-w-0 rounded-md px-1.5 py-0.5 -mx-1.5 -my-0.5"
+                style={{ backgroundColor: `${attrColor}06` }}
+              >
+                <AttributeBar attribute={attr} compact />
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <AttributeBar attribute={attr} compact />
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
+
+      {/* Hover arrow — slides in from left on card hover */}
+      <span className="absolute bottom-4 right-4 text-text-tertiary text-sm pointer-events-none opacity-0 translate-x-[-6px] transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0">
+        &rarr;
+      </span>
     </motion.button>
   )
 }

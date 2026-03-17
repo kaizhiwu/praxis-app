@@ -14,10 +14,61 @@ const CLUSTER_LABELS: Record<AttributeCluster, string> = {
 
 const CLUSTER_ORDER: AttributeCluster[] = ['workability', 'relief', 'savings']
 
-const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string }> = {
-  workability: { dot: 'bg-[#4F46E5]', tint: 'text-[#4F46E5]/70' },
-  relief: { dot: 'bg-[#E2614B]', tint: 'text-[#E2614B]/70' },
-  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70' },
+const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string; hex: string; border: string }> = {
+  workability: { dot: 'bg-[#4F46E5]', tint: 'text-[#4F46E5]/70', hex: '#4F46E5', border: 'border-l-[#4F46E5]/30' },
+  relief: { dot: 'bg-[#E2614B]', tint: 'text-[#E2614B]/70', hex: '#E2614B', border: 'border-l-[#E2614B]/30' },
+  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70', hex: '#D97706', border: 'border-l-[#D97706]/30' },
+}
+
+function isRecentContribution(timestamp: string): boolean {
+  const diff = Date.now() - new Date(timestamp).getTime()
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  return days < 30
+}
+
+function ClusterIcon({ cluster }: { cluster: AttributeCluster }) {
+  const iconProps = {
+    width: 14,
+    height: 14,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.5,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  }
+
+  switch (cluster) {
+    case 'workability':
+      return (
+        <svg {...iconProps}>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M2 20h20" />
+        </svg>
+      )
+    case 'relief':
+      return (
+        <svg {...iconProps}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      )
+    case 'savings':
+      return (
+        <svg {...iconProps}>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="16" />
+          <path d="M15 10H10.5a2 2 0 0 0 0 4h3a2 2 0 0 1 0 4H9" />
+        </svg>
+      )
+  }
+}
+
+function VerifiedBadge() {
+  return (
+    <svg width={10} height={10} viewBox="0 0 24 24" fill="currentColor" className="text-accent shrink-0">
+      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 12c0 4.97 3.042 9.226 7.365 11.024a.75.75 0 0 0 .508.012C15.015 21.187 21 16.948 21 12c0-1.39-.236-2.728-.67-3.972l-.712-.044z" />
+    </svg>
+  )
 }
 
 function formatTimestamp(iso: string): string {
@@ -28,21 +79,6 @@ function formatTimestamp(iso: string): string {
   return `${days}d ago`
 }
 
-function getAvatarColor(name: string): string {
-  const colors = [
-    'bg-[#4F46E5]/10 text-[#4F46E5]',
-    'bg-[#E2614B]/10 text-[#E2614B]',
-    'bg-[#D97706]/10 text-[#D97706]',
-    'bg-rose-500/10 text-rose-500',
-    'bg-sky-500/10 text-sky-500',
-    'bg-emerald-500/10 text-emerald-500',
-  ]
-  let hash = 0
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  }
-  return colors[Math.abs(hash) % colors.length]
-}
 
 function AttributeIcon({ type }: { type: AttributeType }) {
   const iconProps = {
@@ -213,31 +249,68 @@ export function PlaceDetailScreen() {
           </div>
         </div>
 
-        {/* Hero gradient band */}
+        {/* Hero gradient band — mesh-style with overlapping radials */}
         <div className="relative">
           <div
-            className="absolute inset-x-0 top-0 h-48 pointer-events-none"
+            className="absolute inset-x-0 top-0 h-56 pointer-events-none"
             style={{
-              background: 'linear-gradient(180deg, rgba(79,70,229,0.04) 0%, rgba(79,70,229,0.01) 50%, transparent 100%)',
+              background: [
+                'radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,70,229,0.04) 0%, transparent 70%)',
+                'radial-gradient(ellipse 60% 50% at 70% 20%, rgba(226,97,75,0.03) 0%, transparent 70%)',
+                'radial-gradient(ellipse 70% 40% at 50% 40%, rgba(217,119,6,0.02) 0%, transparent 70%)',
+              ].join(', '),
             }}
           />
 
           <div className="max-w-lg mx-auto px-4 sm:px-6 pt-8 relative">
             {/* Place hero */}
             <motion.div
-              className="space-y-2 mb-10"
+              className="space-y-2 mb-4 relative"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h1 className="text-3xl font-bold tracking-tight text-text-primary">
+              {/* Topographic decorative lines */}
+              <div className="absolute -top-4 -left-6 w-[calc(100%+3rem)] h-[calc(100%+2rem)] pointer-events-none overflow-hidden">
+                <svg className="w-full h-full" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="20" y="10" width="360" height="100" rx="40" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
+                  <rect x="40" y="20" width="320" height="80" rx="32" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
+                  <rect x="60" y="30" width="280" height="60" rx="24" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
+                  <rect x="80" y="40" width="240" height="40" rx="16" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.03]" />
+                </svg>
+              </div>
+
+              <h1 className="text-3xl font-bold tracking-tight text-text-primary relative">
                 {place.name}
               </h1>
-              <p className="text-text-secondary text-sm">{place.address}</p>
-              <p className="text-text-tertiary text-xs tracking-wide">
-                {place.neighborhood} &middot; {place.distance}
-              </p>
+              <p className="text-text-secondary text-sm relative">{place.address}</p>
+              <div className="flex items-center gap-3 relative">
+                <p className="text-text-tertiary text-xs tracking-wide">
+                  {place.neighborhood} &middot; {place.distance}
+                </p>
+              </div>
             </motion.div>
+
+            {/* Verified by X people badge */}
+            {(() => {
+              const uniqueContributors = new Set(place.contributions.map(c => c.userId)).size
+              if (uniqueContributors === 0) return null
+              return (
+                <motion.div
+                  className="mb-10"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                >
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-accent bg-accent/[0.06] border border-accent/10 rounded-full px-3 py-1">
+                    <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Verified by {uniqueContributors} {uniqueContributors === 1 ? 'person' : 'people'}
+                  </span>
+                </motion.div>
+              )
+            })()}
 
             {/* Attribute groups */}
             <div className="space-y-10">
@@ -250,11 +323,25 @@ export function PlaceDetailScreen() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: gi * 0.1 }}
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className={`w-1.5 h-1.5 rounded-full ${clusterColor.dot}`} />
-                      <h3 className={`text-xs uppercase tracking-widest font-medium whitespace-nowrap ${clusterColor.tint}`}>
-                        {group.label}
-                      </h3>
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full ${clusterColor.dot}`} />
+                        <span style={{ color: clusterColor.hex }} className="opacity-60">
+                          <ClusterIcon cluster={group.cluster} />
+                        </span>
+                        <div className="flex flex-col">
+                          <h3 className={`text-[11px] uppercase tracking-widest font-semibold whitespace-nowrap ${clusterColor.tint}`}>
+                            {group.label}
+                          </h3>
+                          <div
+                            className="h-[1.5px] mt-1 rounded-full"
+                            style={{
+                              background: `linear-gradient(to right, ${clusterColor.hex}33, transparent)`,
+                              width: '100%',
+                            }}
+                          />
+                        </div>
+                      </div>
                       <hr className="flex-1 border-surface-border/40" />
                     </div>
                     <div className="space-y-3">
@@ -269,12 +356,13 @@ export function PlaceDetailScreen() {
                               onClick={() => setExpandedAttr(isExpanded ? null : attr.type)}
                             >
                               <motion.div
-                                className={`rounded-xl p-4 border transition-colors duration-200 ${
+                                className={`rounded-xl p-4 border border-l-2 transition-colors duration-200 ${clusterColor.border} ${
                                   isExpanded
                                     ? 'bg-white border-accent/25 shadow-sm'
                                     : 'bg-white border-surface-border hover:border-surface-border'
                                 }`}
-                                layout
+                                layout="position"
+                                transition={{ layout: { duration: 0.25, ease: 'easeOut' } }}
                               >
                                 <div className="flex items-start gap-2.5">
                                   <div className="pt-0.5">
@@ -294,7 +382,7 @@ export function PlaceDetailScreen() {
                                   initial={{ opacity: 0, height: 0 }}
                                   animate={{ opacity: 1, height: 'auto' }}
                                   exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                                  transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                                 >
                                   <div className="flex gap-3 pl-4 pr-4 pb-3 pt-2">
                                     {/* Connecting line */}
@@ -302,22 +390,25 @@ export function PlaceDetailScreen() {
 
                                     <div className="flex-1 space-y-2">
                                       {contributions.map(c => {
-                                        const avatarColor = getAvatarColor(c.userName)
                                         return (
                                           <div
                                             key={c.id}
                                             className="flex items-center gap-2.5 text-xs"
                                           >
-                                            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0 ${avatarColor}`}>
+                                            <span
+                                              className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0 text-white"
+                                              style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
+                                            >
                                               {c.userName.charAt(0).toUpperCase()}
                                             </span>
-                                            <span className="text-text-secondary truncate">
+                                            <span className="text-text-secondary truncate flex items-center gap-1">
                                               {c.userName}
+                                              {isRecentContribution(c.timestamp) && <VerifiedBadge />}
                                             </span>
-                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-lg font-medium shrink-0 ${
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-lg font-semibold shrink-0 text-[11px] ${
                                               c.value
-                                                ? 'bg-accent/10 text-accent'
-                                                : 'bg-red-400/10 text-red-400'
+                                                ? 'bg-accent text-white'
+                                                : 'bg-red-400 text-white'
                                             }`}>
                                               {c.value ? 'Yes' : 'No'}
                                             </span>
@@ -363,25 +454,30 @@ export function PlaceDetailScreen() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {place.contributions.map(c => {
-                    const avatarColor = getAvatarColor(c.userName)
                     return (
                       <div
                         key={c.id}
                         className="bg-white border border-surface-border hover:border-accent/15 rounded-xl p-3 flex items-center justify-between transition-colors duration-200"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold shrink-0 ${avatarColor}`}>
+                          <span
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold shrink-0 text-white"
+                            style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
+                          >
                             {c.userName.charAt(0).toUpperCase()}
                           </span>
-                          <span className="text-text-secondary text-xs truncate">{c.userName}</span>
+                          <span className="text-text-secondary text-xs truncate flex items-center gap-1">
+                            {c.userName}
+                            {isRecentContribution(c.timestamp) && <VerifiedBadge />}
+                          </span>
                           <span className="text-text-tertiary font-mono text-[10px] shrink-0">
                             {formatTimestamp(c.timestamp)}
                           </span>
                         </div>
-                        <span className={`shrink-0 ml-3 text-xs font-medium px-2 py-0.5 rounded-lg ${
+                        <span className={`shrink-0 ml-3 text-[11px] font-semibold px-2.5 py-0.5 rounded-lg ${
                           c.value
-                            ? 'bg-accent/10 text-accent'
-                            : 'bg-red-400/10 text-red-400'
+                            ? 'bg-accent text-white'
+                            : 'bg-red-400 text-white'
                         }`}>
                           {c.value ? 'Yes' : 'No'}
                         </span>
@@ -400,10 +496,16 @@ export function PlaceDetailScreen() {
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}
-            className="relative w-full py-3.5 rounded-xl font-medium text-sm bg-accent text-white hover:bg-accent/90 transition-colors cursor-pointer shadow-[0_0_20px_-4px_rgba(79,70,229,0.3)] overflow-hidden"
+            className="relative w-full py-3.5 rounded-xl font-medium text-sm text-white hover:opacity-95 transition-opacity cursor-pointer shadow-[0_0_24px_-4px_rgba(79,70,229,0.4)] overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}
           >
-            <span className="relative z-10">Been here?</span>
-            <span className="cta-shimmer absolute inset-0" />
+            <span className="relative z-10 flex items-center justify-center gap-1.5">
+              <svg width={14} height={14} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+                <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z" fill="white" fillOpacity="0.9" />
+              </svg>
+              Been here?
+            </span>
+            <span className="cta-shimmer absolute inset-0" style={{ opacity: 0.25 }} />
           </button>
         </div>
       </div>

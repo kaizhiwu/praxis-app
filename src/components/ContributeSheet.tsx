@@ -19,10 +19,14 @@ const QUESTIONS: { type: AttributeType; question: string }[] = [
 ]
 
 const CONFETTI_COLORS = [
-  'bg-accent',        // teal
+  'bg-accent',        // indigo
   'bg-amber-400',     // amber
   'bg-violet-400',    // violet
   'bg-rose-400',      // rose
+  'bg-[#E2614B]',     // coral
+  'bg-[#EC4899]',     // pink
+  'bg-[#38BDF8]',     // sky
+  'bg-[#D97706]',     // amber deep
 ]
 
 function ConfettiDot({ delay, angle, colorIndex }: { delay: number; angle: number; colorIndex: number }) {
@@ -71,14 +75,21 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
     const base = 'min-h-[40px] px-4 rounded-full text-xs font-medium transition-colors cursor-pointer'
 
     if (!isSelected) {
-      return `${base} bg-white border border-surface-border text-text-secondary hover:text-text-primary`
+      switch (opt) {
+        case 'yes':
+          return `${base} bg-emerald-50/60 border border-emerald-200/40 text-text-secondary hover:text-emerald-700 hover:border-emerald-300/50`
+        case 'no':
+          return `${base} bg-red-50/60 border border-red-200/40 text-text-secondary hover:text-red-600 hover:border-red-300/50`
+        default:
+          return `${base} bg-white border border-surface-border text-text-secondary hover:text-text-primary`
+      }
     }
 
     switch (opt) {
       case 'yes':
-        return `${base} bg-accent/10 text-accent border border-accent/25`
+        return `${base} bg-emerald-100/80 text-emerald-700 border border-emerald-300/50`
       case 'no':
-        return `${base} bg-negative-dim text-negative border border-negative/20`
+        return `${base} bg-red-100/80 text-red-600 border border-red-300/50`
       case 'unsure':
         return `${base} bg-surface-hover text-text-secondary border border-surface-border`
     }
@@ -96,12 +107,17 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
             onClick={onClose}
           />
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-t border-surface-border rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-t border-surface-border rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom overflow-hidden"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 350 }}
           >
+            {/* Gradient handle bar */}
+            <div
+              className="absolute top-0 left-0 right-0 h-[3px]"
+              style={{ background: 'linear-gradient(90deg, #4F46E5, #7C3AED, #E2614B)' }}
+            />
             <AnimatePresence mode="wait">
               {submitted ? (
                 <motion.div
@@ -112,22 +128,37 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   exit={{ opacity: 0 }}
                 >
                   <div className="relative flex items-center justify-center">
+                    {/* Radial gradient glow behind checkmark */}
                     <motion.div
-                      className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center"
+                      className="absolute w-24 h-24 rounded-full pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(124,58,237,0.05) 50%, transparent 70%)',
+                      }}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    />
+                    <motion.div
+                      className="w-16 h-16 rounded-full flex items-center justify-center relative"
+                      style={{ background: 'linear-gradient(135deg, rgba(79,70,229,0.12), rgba(124,58,237,0.08))' }}
                       initial={{ scale: 0.4 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', damping: 10, stiffness: 300 }}
                     >
-                      <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </motion.div>
-                    {/* Confetti burst */}
+                    {/* Confetti burst — more dots, more colors */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <ConfettiDot delay={0} angle={45} colorIndex={0} />
-                      <ConfettiDot delay={0.05} angle={135} colorIndex={1} />
-                      <ConfettiDot delay={0.1} angle={225} colorIndex={2} />
-                      <ConfettiDot delay={0.07} angle={315} colorIndex={3} />
+                      <ConfettiDot delay={0} angle={30} colorIndex={0} />
+                      <ConfettiDot delay={0.03} angle={75} colorIndex={1} />
+                      <ConfettiDot delay={0.05} angle={120} colorIndex={2} />
+                      <ConfettiDot delay={0.07} angle={165} colorIndex={3} />
+                      <ConfettiDot delay={0.04} angle={210} colorIndex={4} />
+                      <ConfettiDot delay={0.06} angle={255} colorIndex={5} />
+                      <ConfettiDot delay={0.08} angle={300} colorIndex={6} />
+                      <ConfettiDot delay={0.02} angle={345} colorIndex={7} />
                     </div>
                   </div>
                   <p className="text-text-primary font-medium">Thanks for contributing</p>
@@ -164,7 +195,8 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   <button
                     onClick={handleSubmit}
                     disabled={!hasAnswers}
-                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed bg-accent text-white hover:bg-accent/90 shadow-[0_0_16px_-4px_rgba(79,70,229,0.2)]"
+                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-white shadow-[0_0_16px_-4px_rgba(79,70,229,0.25)]"
+                    style={{ background: hasAnswers ? 'linear-gradient(135deg, #4F46E5, #7C3AED)' : '#4F46E5' }}
                   >
                     Submit
                   </button>

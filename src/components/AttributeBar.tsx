@@ -2,6 +2,46 @@ import { motion } from 'framer-motion'
 import { cn } from '../lib/cn'
 import type { PlaceAttribute } from '../data/types'
 
+function SparkleIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
+      <path
+        d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"
+        fill="url(#sparkle-grad)"
+      />
+      <defs>
+        <linearGradient id="sparkle-grad" x1="0" y1="0" x2="16" y2="16">
+          <stop stopColor="#4F46E5" />
+          <stop offset="1" stopColor="#818CF8" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
+      <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 4V8L10.5 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 interface AttributeBarProps {
   attribute: PlaceAttribute
   compact?: boolean
@@ -55,6 +95,8 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
   const isStale = confidence < 0.5
   const isLowConfidence = confidence < 0.3
   const isHighConfidence = confidence >= 0.7
+  const isVeryHighConfidence = confidence > 0.9
+  const showSparkle = confidence > 0.8
   const recencyText = formatRecency(attribute.lastVerified)
   const recent = isRecent(attribute.lastVerified)
   const confidencePct = `${Math.round(confidence * 100)}%`
@@ -73,12 +115,17 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
             {attribute.label}
           </span>
           {isLowConfidence && <NeedsVerificationIcon />}
+          {showSparkle && <SparkleIcon />}
         </div>
 
         <div className="flex items-center gap-2">
           {/* Recency badge */}
           {recent ? (
-            <span className="text-[10px] font-medium text-accent bg-accent/10 px-1.5 py-0.5 rounded-full">
+            <span
+              className="text-[10px] font-medium text-white px-1.5 py-0.5 rounded-full flex items-center gap-1"
+              style={{ background: 'linear-gradient(135deg, #22C55E, #16A34A)' }}
+            >
+              <ClockIcon />
               {recencyText}
             </span>
           ) : (
@@ -87,9 +134,21 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
             </span>
           )}
 
-          {/* Confidence percentage */}
-          <span className="text-[10px] font-mono text-text-tertiary tabular-nums">
-            {confidencePct}
+          {/* Confidence percentage with colored dot */}
+          <span className="flex items-center gap-1">
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{
+                background: isHighConfidence
+                  ? '#22C55E'
+                  : isLowConfidence
+                    ? '#EF4444'
+                    : '#F59E0B',
+              }}
+            />
+            <span className="text-[10px] font-mono text-text-tertiary tabular-nums">
+              {confidencePct}
+            </span>
           </span>
         </div>
       </div>
@@ -99,10 +158,15 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
         className={cn(
           'relative rounded-full overflow-hidden',
           compact ? 'h-1' : 'h-2',
-          isStale
-            ? 'bg-[#ECEAE5] border border-dashed border-text-tertiary/20'
-            : 'bg-[#ECEAE5]'
         )}
+        style={{
+          background: isStale
+            ? undefined
+            : 'linear-gradient(90deg, #ECEAE5, #E7E5E0)',
+          ...(isStale
+            ? { background: 'linear-gradient(90deg, #ECEAE5, #E7E5E0)', border: '1px dashed rgba(163,162,156,0.2)' }
+            : {}),
+        }}
       >
         {/* Glow layer for high-confidence bars */}
         {isHighConfidence && (
@@ -114,6 +178,21 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           />
         )}
 
+        {/* Pulsing glow for very high confidence */}
+        {isVeryHighConfidence && (
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none"
+            animate={{
+              boxShadow: [
+                '0 0 4px 1px rgba(79, 70, 229, 0.15)',
+                '0 0 10px 3px rgba(79, 70, 229, 0.3)',
+                '0 0 4px 1px rgba(79, 70, 229, 0.15)',
+              ],
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        )}
+
         {/* Bar fill */}
         <motion.div
           className={cn(
@@ -121,9 +200,11 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
             isStale && 'pulse-stale'
           )}
           style={{
-            background: confidence >= 0.6
-              ? 'linear-gradient(90deg, #4F46E5, #818CF8)'
-              : '#C8C6C0',
+            background: isHighConfidence
+              ? 'linear-gradient(90deg, #4F46E5, #7C3AED, #818CF8)'
+              : confidence >= 0.6
+                ? 'linear-gradient(90deg, #4F46E5, #818CF8)'
+                : '#C8C6C0',
             opacity: confidence >= 0.8 ? 1 : confidence >= 0.5 ? 0.65 : 0.4,
           }}
           initial={{ width: 0 }}
