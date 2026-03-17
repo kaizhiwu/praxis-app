@@ -103,16 +103,16 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
         className="absolute -inset-[1px] rounded-2xl pointer-events-none"
         animate={{
           boxShadow: isFocused
-            ? '0 0 0 1px rgba(91,154,154,0.3), 0 0 20px -4px rgba(91,154,154,0.15)'
-            : '0 0 0 1px rgba(91,154,154,0), 0 0 20px -4px rgba(91,154,154,0)',
+            ? '0 0 0 1px rgba(26,138,138,0.25), 0 0 16px -4px rgba(26,138,138,0.1)'
+            : '0 0 0 1px rgba(26,138,138,0), 0 0 16px -4px rgba(26,138,138,0)',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       />
 
       <motion.div
         className={[
-          'glass rounded-2xl overflow-hidden relative',
-          'shadow-[0_0_60px_-15px_rgba(91,154,154,0.08)]',
+          'bg-white/80 backdrop-blur-xl rounded-2xl overflow-hidden relative',
+          'shadow-sm',
           'border',
           isFocused
             ? 'border-accent/30'
@@ -121,14 +121,6 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
         animate={{ scale: isFocused ? 1.02 : 1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
-        {/* Top-edge light highlight */}
-        <div
-          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.05) 70%, transparent 100%)',
-          }}
-        />
-
         <div className="relative flex items-center py-4.5 px-6 gap-3">
           {/* Search icon — transitions color on focus */}
           <motion.svg
@@ -160,7 +152,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
             />
             {!query && (
               <div className="absolute inset-0 flex items-center pointer-events-none">
-                <span className="text-text-secondary/50 text-[17px] tracking-[-0.01em]">
+                <span className="text-text-tertiary text-[17px] tracking-[-0.01em]">
                   {displayedPlaceholder}
                   <motion.span
                     className="inline-block w-[1px] h-[18px] bg-accent align-middle ml-[1px]"

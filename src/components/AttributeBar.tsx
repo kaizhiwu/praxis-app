@@ -23,18 +23,6 @@ function isRecent(iso: string): boolean {
   return days <= 1
 }
 
-function getBarGradient(confidence: number): string {
-  if (confidence >= 0.6) {
-    return 'linear-gradient(90deg, #5B9A9A, #D4CFC6)'
-  }
-  return 'none'
-}
-
-function getBarColor(confidence: number): string {
-  if (confidence >= 0.6) return '' // uses gradient
-  return '#2E2E30'
-}
-
 function NeedsVerificationIcon() {
   return (
     <svg
@@ -46,13 +34,13 @@ function NeedsVerificationIcon() {
       className="shrink-0"
       aria-label="Needs verification"
     >
-      <circle cx="6" cy="6" r="5" stroke="#555558" strokeWidth="1" />
+      <circle cx="6" cy="6" r="5" stroke="#A3A29C" strokeWidth="1" />
       <text
         x="6"
         y="8.5"
         textAnchor="middle"
         fontSize="7"
-        fill="#555558"
+        fill="#A3A29C"
         fontFamily="Inter, system-ui, sans-serif"
         fontWeight="500"
       >
@@ -90,7 +78,7 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
         <div className="flex items-center gap-2">
           {/* Recency badge */}
           {recent ? (
-            <span className="text-[10px] font-medium text-text-secondary bg-surface-hover px-1.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-medium text-accent bg-accent/10 px-1.5 py-0.5 rounded-full">
               {recencyText}
             </span>
           ) : (
@@ -112,8 +100,8 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           'relative rounded-full overflow-hidden',
           compact ? 'h-1' : 'h-2',
           isStale
-            ? 'bg-confidence-fade/30 border border-dashed border-text-tertiary/30'
-            : 'bg-confidence-fade/50'
+            ? 'bg-[#ECEAE5] border border-dashed border-text-tertiary/20'
+            : 'bg-[#ECEAE5]'
         )}
       >
         {/* Glow layer for high-confidence bars */}
@@ -121,7 +109,7 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           <div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              boxShadow: '0 0 8px rgba(91, 154, 154, 0.25), 0 0 16px rgba(91, 154, 154, 0.1)',
+              boxShadow: '0 2px 8px -2px rgba(26, 138, 138, 0.2)',
             }}
           />
         )}
@@ -134,8 +122,8 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           )}
           style={{
             background: confidence >= 0.6
-              ? getBarGradient(confidence)
-              : getBarColor(confidence),
+              ? 'linear-gradient(90deg, #1A8A8A, #3DB8B8)'
+              : '#C8C6C0',
             opacity: confidence >= 0.8 ? 1 : confidence >= 0.5 ? 0.65 : 0.4,
           }}
           initial={{ width: 0 }}

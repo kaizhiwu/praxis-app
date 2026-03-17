@@ -18,12 +18,11 @@ function getAttributeIcon(type: AttributeType) {
     strokeWidth: 2,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
-    className: 'shrink-0 text-text-tertiary',
+    className: 'shrink-0 text-text-secondary',
   }
 
   switch (type) {
     case 'outlet_usability':
-      // Plug icon
       return (
         <svg {...props}>
           <path d="M12 22v-5" />
@@ -33,7 +32,6 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'laptop_tolerance':
-      // Laptop icon
       return (
         <svg {...props}>
           <path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9" />
@@ -41,7 +39,6 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'noise_level':
-      // Volume icon
       return (
         <svg {...props}>
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
@@ -49,14 +46,12 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'restroom_access':
-      // Droplet icon
       return (
         <svg {...props}>
           <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z" />
         </svg>
       )
     case 'purchase_pressure':
-      // Dollar icon
       return (
         <svg {...props}>
           <line x1="12" y1="1" x2="12" y2="23" />
@@ -64,14 +59,12 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'call_friendliness':
-      // Phone icon
       return (
         <svg {...props}>
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" />
         </svg>
       )
     case 'seating_reliability':
-      // Chair/seat icon
       return (
         <svg {...props}>
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -81,7 +74,6 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'indoor_waiting':
-      // Building icon
       return (
         <svg {...props}>
           <rect x="4" y="2" width="16" height="20" rx="2" />
@@ -95,14 +87,12 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'water_access':
-      // Droplet icon
       return (
         <svg {...props}>
           <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z" />
         </svg>
       )
     case 'staff_strictness':
-      // User icon
       return (
         <svg {...props}>
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -110,14 +100,12 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'safety':
-      // Shield icon
       return (
         <svg {...props}>
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
         </svg>
       )
     case 'markdown_likelihood':
-      // Tag icon
       return (
         <svg {...props}>
           <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z" />
@@ -125,7 +113,6 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'late_food':
-      // Clock icon
       return (
         <svg {...props}>
           <circle cx="12" cy="12" r="10" />
@@ -133,7 +120,6 @@ function getAttributeIcon(type: AttributeType) {
         </svg>
       )
     case 'budget_value':
-      // Coins icon
       return (
         <svg {...props}>
           <circle cx="8" cy="8" r="6" />
@@ -167,8 +153,7 @@ function MatchScoreRing({ score }: { score: number }) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="currentColor"
-          className="text-surface-border/40"
+          stroke="#E4E2DC"
           strokeWidth={strokeWidth}
         />
         {/* Score arc */}
@@ -177,7 +162,7 @@ function MatchScoreRing({ score }: { score: number }) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#5B9A9A"
+          stroke="#1A8A8A"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -187,7 +172,7 @@ function MatchScoreRing({ score }: { score: number }) {
         />
       </svg>
       {/* Score text */}
-      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold font-mono text-accent tabular-nums">
+      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold font-mono text-text-primary tabular-nums">
         {displayScore}
       </span>
     </div>
@@ -198,21 +183,18 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
   return (
     <motion.button
       onClick={onClick}
-      className="group relative w-full text-left rounded-2xl p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden border border-surface-border border-t-[rgba(255,255,255,0.06)] transition-colors duration-200 hover:border-surface-border-hover"
-      style={{
-        background: 'linear-gradient(180deg, rgba(30, 30, 33, 1) 0%, rgba(17, 17, 19, 1) 100%)',
-      }}
+      className="group relative w-full text-left bg-white rounded-2xl border border-surface-border shadow-sm p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden transition-all duration-200 hover:shadow-md hover:border-accent/20"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{
         y: -2,
-        boxShadow: '0 4px 24px -4px rgba(91, 154, 154, 0.12), 0 0 0 1px rgba(91, 154, 154, 0.06)',
+        boxShadow: '0 8px 24px -8px rgba(26,138,138,0.12)',
       }}
       whileTap={{ scale: 0.995 }}
       transition={{ duration: 0.3, delay: index * 0.08, ease: 'easeOut' }}
     >
       {/* Rank watermark */}
-      <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-surface-border/30 select-none pointer-events-none">
+      <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-surface-border/60 select-none pointer-events-none">
         {index + 1}
       </span>
 

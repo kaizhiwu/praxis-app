@@ -25,8 +25,8 @@ export function ResultsScreen() {
 
   return (
     <div className="min-h-dvh pb-8">
-      {/* Sticky header — glass-subtle */}
-      <div className="sticky top-0 z-30 glass-subtle border-b border-surface-border/30">
+      {/* Sticky header — light glass */}
+      <div className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl border-b border-surface-border/60">
         <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <button
             onClick={() => navigate('/')}
@@ -51,13 +51,13 @@ export function ResultsScreen() {
           </p>
 
           {/* Segmented control */}
-          <div className="flex bg-surface rounded-lg border border-surface-border p-0.5">
+          <div className="flex bg-surface-hover rounded-lg border border-surface-border p-0.5">
             <button
               onClick={() => setView('list')}
               className={[
                 'cursor-pointer px-3 py-1 rounded-md text-xs font-medium transition-colors',
                 view === 'list'
-                  ? 'bg-surface-hover text-text-primary'
+                  ? 'bg-white text-text-primary shadow-sm'
                   : 'text-text-tertiary hover:text-text-secondary',
               ].join(' ')}
             >
@@ -68,7 +68,7 @@ export function ResultsScreen() {
               className={[
                 'cursor-pointer px-3 py-1 rounded-md text-xs font-medium transition-colors',
                 view === 'map'
-                  ? 'bg-surface-hover text-text-primary'
+                  ? 'bg-white text-text-primary shadow-sm'
                   : 'text-text-tertiary hover:text-text-secondary',
               ].join(' ')}
             >
@@ -81,15 +81,15 @@ export function ResultsScreen() {
           {view === 'map' ? (
             <motion.div
               key="map"
-              className="rounded-2xl bg-surface border border-surface-border h-[60vh] relative overflow-hidden"
+              className="rounded-2xl bg-surface-hover border border-surface-border h-[60vh] relative overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={transition}
             >
-              {/* Dark grid background */}
+              {/* Light grid background */}
               <div className="absolute inset-0">
-                <svg width="100%" height="100%" className="opacity-[0.08]">
+                <svg width="100%" height="100%" className="opacity-[0.15]">
                   <defs>
                     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-text-tertiary" />
@@ -143,7 +143,7 @@ export function ResultsScreen() {
                             height: dotSize + 16,
                             left: -(16 / 2),
                             top: -(16 / 2),
-                            background: `radial-gradient(circle, rgba(91,154,154,${0.08 + avgConfidence * 0.14}) 0%, transparent 70%)`,
+                            background: `radial-gradient(circle, rgba(26,138,138,${0.08 + avgConfidence * 0.14}) 0%, transparent 70%)`,
                           }}
                         />
                         {/* Dot */}
@@ -160,7 +160,7 @@ export function ResultsScreen() {
                         <AnimatePresence>
                           {isHovered && (
                             <motion.div
-                              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap px-2.5 py-1 rounded-lg bg-bg-elevated border border-surface-border text-text-primary text-[11px] font-medium shadow-lg pointer-events-none"
+                              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap px-2.5 py-1 rounded-lg bg-white border border-surface-border text-text-primary text-[11px] font-medium shadow-lg pointer-events-none"
                               initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 4 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
@@ -224,7 +224,7 @@ export function ResultsScreen() {
               height="48"
               viewBox="0 0 48 48"
               fill="none"
-              className="mx-auto text-text-tertiary/50"
+              className="mx-auto text-text-tertiary/40"
             >
               <path
                 d="M24 4C16.268 4 10 10.268 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.732-6.268-14-14-14z"

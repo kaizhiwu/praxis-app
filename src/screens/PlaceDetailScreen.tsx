@@ -15,9 +15,9 @@ const CLUSTER_LABELS: Record<AttributeCluster, string> = {
 const CLUSTER_ORDER: AttributeCluster[] = ['workability', 'relief', 'savings']
 
 const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string }> = {
-  workability: { dot: 'bg-accent', tint: 'text-accent/60' },
-  relief: { dot: 'bg-amber-400', tint: 'text-amber-400/60' },
-  savings: { dot: 'bg-emerald-400', tint: 'text-emerald-400/60' },
+  workability: { dot: 'bg-[#1A8A8A]', tint: 'text-[#1A8A8A]/70' },
+  relief: { dot: 'bg-[#D97B2B]', tint: 'text-[#D97B2B]/70' },
+  savings: { dot: 'bg-[#7C5AC7]', tint: 'text-[#7C5AC7]/70' },
 }
 
 function formatTimestamp(iso: string): string {
@@ -30,12 +30,12 @@ function formatTimestamp(iso: string): string {
 
 function getAvatarColor(name: string): string {
   const colors = [
-    'bg-accent/20 text-accent',
-    'bg-amber-400/20 text-amber-400',
-    'bg-emerald-400/20 text-emerald-400',
-    'bg-violet-400/20 text-violet-400',
-    'bg-rose-400/20 text-rose-400',
-    'bg-sky-400/20 text-sky-400',
+    'bg-[#1A8A8A]/10 text-[#1A8A8A]',
+    'bg-[#D97B2B]/10 text-[#D97B2B]',
+    'bg-[#7C5AC7]/10 text-[#7C5AC7]',
+    'bg-rose-500/10 text-rose-500',
+    'bg-sky-500/10 text-sky-500',
+    'bg-emerald-500/10 text-emerald-500',
   ]
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -54,7 +54,7 @@ function AttributeIcon({ type }: { type: AttributeType }) {
     strokeWidth: 1.5,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
-    className: 'shrink-0 text-text-tertiary',
+    className: 'shrink-0 text-text-secondary',
   }
 
   switch (type) {
@@ -199,7 +199,7 @@ export function PlaceDetailScreen() {
     <>
       <div className="min-h-dvh pb-28">
         {/* Sticky header */}
-        <div className="sticky top-0 z-30 glass-subtle border-b border-surface-border/30">
+        <div className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl border-b border-surface-border/50">
           <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
@@ -218,7 +218,7 @@ export function PlaceDetailScreen() {
           <div
             className="absolute inset-x-0 top-0 h-48 pointer-events-none"
             style={{
-              background: 'linear-gradient(180deg, rgba(91,154,154,0.08) 0%, rgba(91,154,154,0.03) 50%, transparent 100%)',
+              background: 'linear-gradient(180deg, rgba(26,138,138,0.04) 0%, rgba(26,138,138,0.01) 50%, transparent 100%)',
             }}
           />
 
@@ -230,7 +230,7 @@ export function PlaceDetailScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-text-primary to-text-secondary bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold tracking-tight text-text-primary">
                 {place.name}
               </h1>
               <p className="text-text-secondary text-sm">{place.address}</p>
@@ -271,8 +271,8 @@ export function PlaceDetailScreen() {
                               <motion.div
                                 className={`rounded-xl p-4 border transition-colors duration-200 ${
                                   isExpanded
-                                    ? 'bg-surface border-accent/20'
-                                    : 'bg-surface/50 border-transparent hover:border-accent/10'
+                                    ? 'bg-white border-accent/25 shadow-sm'
+                                    : 'bg-white border-surface-border hover:border-surface-border'
                                 }`}
                                 layout
                               >
@@ -298,7 +298,7 @@ export function PlaceDetailScreen() {
                                 >
                                   <div className="flex gap-3 pl-4 pr-4 pb-3 pt-2">
                                     {/* Connecting line */}
-                                    <div className="w-px bg-accent/20 shrink-0 ml-1.5 rounded-full" />
+                                    <div className="w-px bg-accent/30 shrink-0 ml-1.5 rounded-full" />
 
                                     <div className="flex-1 space-y-2">
                                       {contributions.map(c => {
@@ -367,7 +367,7 @@ export function PlaceDetailScreen() {
                     return (
                       <div
                         key={c.id}
-                        className="bg-surface border border-transparent hover:border-accent/10 rounded-xl p-3 flex items-center justify-between transition-colors duration-200"
+                        className="bg-white border border-surface-border hover:border-accent/15 rounded-xl p-3 flex items-center justify-between transition-colors duration-200"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold shrink-0 ${avatarColor}`}>
@@ -396,11 +396,11 @@ export function PlaceDetailScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 glass-subtle border-t border-surface-border/30">
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-xl border-t border-surface-border/50">
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}
-            className="relative w-full py-3.5 rounded-xl font-medium text-sm bg-accent text-bg-primary hover:bg-accent/90 transition-colors cursor-pointer shadow-[0_0_20px_-4px_rgba(91,154,154,0.3)] overflow-hidden"
+            className="relative w-full py-3.5 rounded-xl font-medium text-sm bg-accent text-white hover:bg-accent/90 transition-colors cursor-pointer shadow-[0_0_20px_-4px_rgba(26,138,138,0.3)] overflow-hidden"
           >
             <span className="relative z-10">Been here?</span>
             <span className="cta-shimmer absolute inset-0" />

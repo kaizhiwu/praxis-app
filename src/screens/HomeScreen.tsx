@@ -107,8 +107,10 @@ const SearchIcon = (
 )
 
 // ---------------------------------------------------------------------------
-// Chip icon mapping
+// Chip icon + color mapping
 // ---------------------------------------------------------------------------
+
+type ChipColor = 'teal' | 'amber' | 'violet'
 
 const CHIP_ICONS: Record<string, ReactNode> = {
   'Quiet work spot': LaptopIcon,
@@ -124,6 +126,23 @@ const CHIP_ICONS: Record<string, ReactNode> = {
   'Late food': MoonIcon,
 }
 
+const CHIP_COLORS: Record<string, ChipColor> = {
+  // Work-related: teal
+  'Quiet work spot': 'teal',
+  'Coffee with outlets': 'teal',
+  'Recharge spot': 'teal',
+  'Quiet call spot': 'teal',
+  // Relief: amber
+  'Restroom nearby': 'amber',
+  'Open restroom': 'amber',
+  'Indoor waiting': 'amber',
+  'Safe place to wait': 'amber',
+  // Food/savings: violet
+  'Cheap lunch': 'violet',
+  'Late food deals': 'violet',
+  'Late food': 'violet',
+}
+
 // ---------------------------------------------------------------------------
 // Brand Mark (geometric compass / pin)
 // ---------------------------------------------------------------------------
@@ -132,7 +151,7 @@ function BrandMark() {
   return (
     <div className="relative flex items-center justify-center">
       {/* Glow behind the mark */}
-      <div className="absolute w-10 h-10 rounded-full bg-accent/20 blur-xl" />
+      <div className="absolute w-10 h-10 rounded-full bg-accent/10 blur-xl" />
       <svg
         width="32"
         height="32"
@@ -143,7 +162,7 @@ function BrandMark() {
         {/* Outer diamond / compass shape */}
         <path
           d="M16 2L26 16L16 30L6 16Z"
-          stroke="#5B9A9A"
+          stroke="#1A8A8A"
           strokeWidth="1.5"
           strokeLinejoin="round"
           fill="none"
@@ -153,19 +172,19 @@ function BrandMark() {
           cx="16"
           cy="16"
           r="5"
-          stroke="#5B9A9A"
+          stroke="#1A8A8A"
           strokeWidth="1.5"
-          fill="rgba(91,154,154,0.08)"
+          fill="rgba(26,138,138,0.08)"
         />
         {/* Center dot */}
-        <circle cx="16" cy="16" r="1.5" fill="#5B9A9A" />
+        <circle cx="16" cy="16" r="1.5" fill="#1A8A8A" />
       </svg>
     </div>
   )
 }
 
 // ---------------------------------------------------------------------------
-// Aurora background orbs
+// Aurora background orbs (light theme — softer, more colorful tints)
 // ---------------------------------------------------------------------------
 
 function AuroraBackground() {
@@ -175,10 +194,10 @@ function AuroraBackground() {
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(91,154,154,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(26,138,138,0.07) 0%, transparent 70%)',
           top: '-10%',
           left: '-10%',
-          filter: 'blur(80px)',
+          filter: 'blur(60px)',
         }}
         animate={{
           x: [0, 80, 30, 0],
@@ -190,14 +209,14 @@ function AuroraBackground() {
           ease: 'easeInOut',
         }}
       />
-      {/* Warm amber orb */}
+      {/* Warm coral orb */}
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(200,160,80,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(217,123,43,0.06) 0%, transparent 70%)',
           bottom: '-5%',
           right: '-15%',
-          filter: 'blur(80px)',
+          filter: 'blur(60px)',
         }}
         animate={{
           x: [0, -60, -20, 0],
@@ -209,14 +228,14 @@ function AuroraBackground() {
           ease: 'easeInOut',
         }}
       />
-      {/* Cool purple orb */}
+      {/* Violet orb */}
       <motion.div
         className="absolute w-[450px] h-[450px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(130,100,180,0.09) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(124,90,199,0.06) 0%, transparent 70%)',
           top: '40%',
           left: '50%',
-          filter: 'blur(90px)',
+          filter: 'blur(60px)',
         }}
         animate={{
           x: [0, -40, 60, 0],
@@ -252,6 +271,7 @@ export function HomeScreen() {
   const chips = rawChips.map((c) => ({
     ...c,
     icon: CHIP_ICONS[c.label],
+    color: CHIP_COLORS[c.label] as 'teal' | 'amber' | 'violet' | undefined,
   }))
 
   function handleSearch(query: string) {
@@ -275,7 +295,7 @@ export function HomeScreen() {
 
           <div className="space-y-3 text-center">
             <motion.h1
-              className="text-5xl font-bold tracking-[-0.03em] bg-gradient-to-r from-text-primary to-text-secondary bg-clip-text text-transparent"
+              className="text-5xl font-bold tracking-[-0.03em] bg-gradient-to-r from-[#1A1917] to-[#6E6D68] bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -300,7 +320,7 @@ export function HomeScreen() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
         >
-          <div className="absolute inset-0 -inset-x-4 -inset-y-3 rounded-3xl bg-accent/[0.06] blur-2xl pointer-events-none" />
+          <div className="absolute inset-0 -inset-x-4 -inset-y-3 rounded-3xl bg-accent/[0.04] blur-2xl pointer-events-none" />
           <div className="relative">
             <QueryBar onSearch={handleSearch} autoFocus />
           </div>
