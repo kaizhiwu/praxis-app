@@ -12,7 +12,7 @@ const cardVariants = {
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: { delay: i * 0.18, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { delay: i * 0.18, duration: 0.6, ease: 'easeOut' },
   }),
 }
 
@@ -26,7 +26,7 @@ export function ProductSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-4xl font-bold text-white mb-16"
         >
           {PITCH.product.title}
@@ -80,7 +80,7 @@ export function ProductSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
           className="mt-16 border-l-[3px] border-[#4F46E5] pl-6"
         >
           <p className="text-white font-medium">Answers, not listings.</p>

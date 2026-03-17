@@ -35,12 +35,12 @@ export function BusinessSection() {
               className="h-px w-full rounded-full"
               style={{
                 background: 'linear-gradient(to right, #4F46E5, #E2614B, #D97706)',
+                transformOrigin: 'left',
               }}
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              {...{ style: { ...{ transformOrigin: 'left', background: 'linear-gradient(to right, #4F46E5, #E2614B, #D97706)' } } }}
             />
 
             {/* Nodes */}
@@ -98,12 +98,12 @@ export function BusinessSection() {
               className="absolute left-[5px] top-0 bottom-0 w-px"
               style={{
                 background: 'linear-gradient(to bottom, #4F46E5, #E2614B, #D97706)',
+                transformOrigin: 'top',
               }}
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              {...{ style: { ...{ transformOrigin: 'top', background: 'linear-gradient(to bottom, #4F46E5, #E2614B, #D97706)' } } }}
             />
 
             <div className="flex flex-col gap-10">

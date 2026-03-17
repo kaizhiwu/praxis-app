@@ -87,7 +87,7 @@ export function FlywheelSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-4xl font-bold text-white text-center mb-16"
         >
           {PITCH.flywheel.title}
@@ -97,7 +97,7 @@ export function FlywheelSection() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative mx-auto w-[320px] h-[320px] md:w-[480px] md:h-[480px]"
         >
           {/* Radial glow */}
@@ -158,7 +158,7 @@ export function FlywheelSection() {
                   pathLength: {
                     delay: 0.3 + arc.idx * 0.25,
                     duration: 0.8,
-                    ease: [0.25, 0.46, 0.45, 0.94],
+                    ease: 'easeOut',
                   },
                   opacity: {
                     delay: 0.3 + arc.idx * 0.25,
@@ -183,7 +183,7 @@ export function FlywheelSection() {
                   transition={{
                     delay: 0.5 + i * 0.25,
                     duration: 0.5,
-                    ease: [0.25, 0.46, 0.45, 0.94],
+                    ease: 'easeOut',
                   }}
                   style={{ transformOrigin: `${pos.x}px ${pos.y}px` }}
                 >
@@ -223,7 +223,7 @@ export function FlywheelSection() {
 
                     let tx = pos.x + labelPos.labelX
                     let ty = pos.y + labelPos.labelY + li * 16
-                    let anchor = 'middle'
+                    let anchor: 'start' | 'middle' | 'end' = 'middle'
 
                     if (isTop) {
                       ty = pos.y - 36 + li * 16
@@ -263,7 +263,7 @@ export function FlywheelSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           className="text-[#9CA3AF] text-center max-w-lg mx-auto mt-8 leading-relaxed"
         >
           {PITCH.flywheel.sub}
