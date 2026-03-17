@@ -85,9 +85,9 @@ Truth looks solid. Uncertainty looks fragile.
 
 ### Query Bar
 - Frosted glass surface, rounded, centered on home
-- Text input + mic icon (future voice)
+- Text input only (voice input deferred to post-prototype)
 - On focus: slight expansion, intent chips animate below
-- Placeholder cycles through example intents with typewriter effect
+- Placeholder cycles through example intents with crossfade transition
 
 ### Intent Chips
 - Horizontally scrollable pill row
@@ -113,7 +113,7 @@ Truth looks solid. Uncertainty looks fragile.
 - Full-screen push from results
 - Hero: place name, address, distance — no photo
 - Attribute groups: Workability / Relief / Savings sections
-- Each attribute is full-width indicator, more detail on tap
+- Each attribute is full-width indicator; tapping expands inline to show recent contributions and verification history for that specific attribute
 - "What people confirm" — recent contributions as timestamped pills
 - Sticky bottom: "Been here?" CTA
 
@@ -126,7 +126,7 @@ Truth looks solid. Uncertainty looks fragile.
 ### Map Toggle
 - Small pill button on results: "Map"
 - Crossfades list into map view
-- Teal dots sized by confidence density
+- Teal dots sized by average attribute confidence for each place (higher avg confidence = larger dot)
 - Tap dot → floating mini card → tap → detail
 
 ---
@@ -154,7 +154,7 @@ Home adapts chip suggestions by time of day:
 ### Flow 4: Empty State / Low Density
 - Few or no results: "Praxis doesn't know enough about this area yet. Be the first to add a place."
 - No fake results. Honesty builds trust.
-- Add-a-place: name + address + 3 quick attributes
+- Add-a-place flow is out of scope for prototype (show CTA as disabled placeholder)
 
 ### Flow 5: Map Detour
 ```
