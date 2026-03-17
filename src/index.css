@@ -78,6 +78,24 @@ html, body, #root {
   50% { box-shadow: 0 0 30px rgba(91, 154, 154, 0.12); }
 }
 
+/* CTA shimmer sweep */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%) rotate(15deg); }
+  100% { transform: translateX(100%) rotate(15deg); }
+}
+.cta-shimmer {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.12) 55%,
+    transparent 70%
+  );
+  animation: shimmer-sweep 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
 /* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

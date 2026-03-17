@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface QueryBarProps {
   onSearch: (query: string) => void
@@ -94,36 +94,59 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
     if (query.trim()) onSearch(query.trim())
   }
 
+  const hasQuery = query.trim().length > 0
+
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
+      {/* Animated focus glow ring */}
+      <motion.div
+        className="absolute -inset-[1px] rounded-2xl pointer-events-none"
+        animate={{
+          boxShadow: isFocused
+            ? '0 0 0 1px rgba(91,154,154,0.3), 0 0 20px -4px rgba(91,154,154,0.15)'
+            : '0 0 0 1px rgba(91,154,154,0), 0 0 20px -4px rgba(91,154,154,0)',
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+      />
+
       <motion.div
         className={[
-          'glass rounded-2xl overflow-hidden transition-all duration-200',
+          'glass rounded-2xl overflow-hidden relative',
           'shadow-[0_0_60px_-15px_rgba(91,154,154,0.08)]',
           'border',
           isFocused
-            ? 'border-accent/30 ring-1 ring-accent/15'
+            ? 'border-accent/30'
             : 'border-surface-border',
         ].join(' ')}
         animate={{ scale: isFocused ? 1.02 : 1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
+        {/* Top-edge light highlight */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.05) 70%, transparent 100%)',
+          }}
+        />
+
         <div className="relative flex items-center py-4.5 px-6 gap-3">
-          {/* Search icon */}
-          <svg
-            width="18"
-            height="18"
+          {/* Search icon — transitions color on focus */}
+          <motion.svg
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="shrink-0 text-text-secondary/40"
+            className="shrink-0"
+            animate={{ color: isFocused ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
+            transition={{ duration: 0.2 }}
           >
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          </motion.svg>
 
           <div className="relative flex-1">
             <input
@@ -133,17 +156,17 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               autoFocus={autoFocus}
-              className="w-full bg-transparent text-[17px] text-text-primary placeholder-transparent outline-none"
+              className="w-full bg-transparent text-[17px] tracking-[-0.01em] text-text-primary placeholder-transparent outline-none"
             />
             {!query && (
               <div className="absolute inset-0 flex items-center pointer-events-none">
-                <span className="text-text-secondary/50 text-[17px]">
+                <span className="text-text-secondary/50 text-[17px] tracking-[-0.01em]">
                   {displayedPlaceholder}
                   <motion.span
-                    className="inline-block w-[2px] h-[17px] bg-text-secondary/30 align-middle ml-px"
+                    className="inline-block w-[1px] h-[18px] bg-accent align-middle ml-[1px]"
                     animate={{ opacity: [1, 0] }}
                     transition={{
-                      duration: 0.6,
+                      duration: 0.55,
                       repeat: Infinity,
                       repeatType: 'reverse',
                       ease: 'easeInOut',
@@ -153,6 +176,35 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
               </div>
             )}
           </div>
+
+          {/* Submit arrow — appears when input has text */}
+          <AnimatePresence>
+            {hasQuery && (
+              <motion.button
+                type="submit"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                className="shrink-0 w-8 h-8 rounded-full bg-accent flex items-center justify-center hover:bg-accent-hover transition-colors cursor-pointer"
+                aria-label="Search"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
     </form>
