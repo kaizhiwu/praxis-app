@@ -133,6 +133,15 @@ export const PITCH = {
       'Not a chatbot company',
     ],
   },
+  demo: {
+    title: 'See it in action',
+    sub: 'Intent-native place intelligence. Type what you need — get structured, trust-scored answers.',
+    queries: [
+      { text: 'quiet cafe to work from near NYU', delay: 0 },
+      { text: 'open restroom near Times Square', delay: 2000 },
+      { text: 'cheap late-night food East Village', delay: 4000 },
+    ],
+  },
   team: {
     title: 'Team',
     members: [
@@ -142,12 +151,27 @@ export const PITCH = {
         bio: 'Building the behavioral utility layer for physical places.',
         url: 'https://kaizhiwu.com',
         twitter: 'https://x.com/kaizhi_wu',
+        highlights: ['Cornell University', 'Full-stack engineer', 'NYC-based'],
       },
     ],
   },
+  traction: {
+    title: 'Early signals',
+    metrics: [
+      { value: '14+', label: 'Behavioral attribute types', description: 'Proprietary ontology defining place utility' },
+      { value: '6', label: 'NYC places mapped', description: 'High-fidelity prototype with real behavioral data' },
+      { value: '3', label: 'Attribute clusters', description: 'Workability, Relief, Savings — structured for intent matching' },
+      { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
+    ],
+  },
   cta: {
-    headline: 'We\'re building the system of record for how places actually function.',
+    headline: "We're building the system of record for how places actually function.",
     sub: 'Raising pre-seed. Let\'s talk.',
     email: 'kai@kaizhiwu.com',
+    points: [
+      'Pre-seed round open',
+      'Solo founder, full-stack',
+      'NYC-first, density-first',
+    ],
   },
 } as const
