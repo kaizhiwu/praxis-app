@@ -1,0 +1,55 @@
+export type AttributeType =
+  | 'outlet_usability'
+  | 'laptop_tolerance'
+  | 'noise_level'
+  | 'restroom_access'
+  | 'purchase_pressure'
+  | 'call_friendliness'
+  | 'seating_reliability'
+  | 'indoor_waiting'
+  | 'water_access'
+  | 'staff_strictness'
+  | 'safety'
+  | 'markdown_likelihood'
+  | 'late_food'
+  | 'budget_value'
+
+export type AttributeCluster = 'workability' | 'relief' | 'savings'
+
+export interface PlaceAttribute {
+  type: AttributeType
+  label: string
+  value: number // 0-1
+  confidence: number // 0-1
+  lastVerified: string // ISO date
+  verificationCount: number
+  cluster: AttributeCluster
+}
+
+export interface Contribution {
+  id: string
+  userId: string
+  userName: string
+  attributeType: AttributeType
+  value: boolean
+  timestamp: string
+}
+
+export interface Place {
+  id: string
+  name: string
+  address: string
+  lat: number
+  lng: number
+  neighborhood: string
+  distance: string
+  attributes: PlaceAttribute[]
+  contributions: Contribution[]
+}
+
+export interface SearchResult {
+  place: Place
+  matchScore: number
+  summary: string
+  topAttributes: PlaceAttribute[]
+}
