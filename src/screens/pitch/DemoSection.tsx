@@ -1,10 +1,30 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export function DemoSection() {
   const [activeQuery, setActiveQuery] = useState(0)
   const queries = PITCH.demo.queries
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
+
+  // 3D perspective transforms — phone starts tilted, rotates flat as user scrolls
+  const rotateX = useTransform(scrollYProgress, [0, 0.4], [isMobile ? 12 : 20, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.4], [isMobile ? 0.85 : 0.9, 1])
+  const translateY = useTransform(scrollYProgress, [0, 0.4], [60, 0])
+  const opacity = useTransform(scrollYProgress, [0, 0.25], [0.3, 1])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,7 +34,10 @@ export function DemoSection() {
   }, [queries.length])
 
   return (
-    <section className="bg-[#09090B] py-32 px-6 relative overflow-hidden">
+    <section
+      ref={containerRef}
+      className="bg-[#09090B] py-24 md:py-40 px-6 relative overflow-hidden"
+    >
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#4F46E5]/[0.02] via-transparent to-transparent" />
 
@@ -30,48 +53,65 @@ export function DemoSection() {
           <p className="text-[#9CA3AF] mt-4 max-w-xl mx-auto">{PITCH.demo.sub}</p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="flex justify-center"
-        >
-          {/* Phone frame */}
-          <div className="relative">
-            {/* Glow behind phone */}
-            <div
-              className="absolute -inset-8 rounded-[3rem] blur-[60px] opacity-20"
-              style={{
-                background: 'linear-gradient(135deg, #4F46E5, #E2614B, #D97706)',
-              }}
-            />
+        {/* 3D Container Scroll — phone rotates from tilted to flat */}
+        <div style={{ perspective: '1200px' }}>
+          <motion.div
+            style={{
+              rotateX,
+              scale,
+              translateY,
+              opacity,
+            }}
+            className="flex justify-center"
+          >
+            {/* Phone frame */}
+            <div className="relative">
+              {/* Glow behind phone */}
+              <div
+                className="absolute -inset-8 rounded-[3rem] blur-[60px] opacity-20"
+                style={{
+                  background: 'linear-gradient(135deg, #4F46E5, #E2614B, #D97706)',
+                }}
+              />
 
-            {/* Phone body */}
-            <div className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-white/[0.08] bg-[#141416] overflow-hidden shadow-2xl">
-              {/* Status bar */}
-              <div className="h-11 bg-[#F8F7F4] flex items-center justify-between px-6">
-                <span className="text-[10px] text-[#6B7280] font-medium">9:41</span>
-                <div className="w-[80px] h-[24px] bg-black rounded-full mx-auto" />
-                <div className="flex items-center gap-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280"><rect x="2" y="6" width="18" height="12" rx="2" stroke="#6B7280" strokeWidth="2" fill="none"/><rect x="4" y="8" width="12" height="8" rx="1" fill="#6B7280"/><path d="M22 10v4" stroke="#6B7280" strokeWidth="2" strokeLinecap="round"/></svg>
+              {/* Phone body */}
+              <div
+                className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-white/[0.08] bg-[#141416] overflow-hidden"
+                style={{
+                  boxShadow:
+                    '0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003',
+                }}
+              >
+                {/* Status bar */}
+                <div className="h-11 bg-[#F8F7F4] flex items-center justify-between px-6">
+                  <span className="text-[10px] text-[#6B7280] font-medium">9:41</span>
+                  <div className="w-[80px] h-[24px] bg-black rounded-full mx-auto" />
+                  <div className="flex items-center gap-1">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280">
+                      <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                    </svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280">
+                      <rect x="2" y="6" width="18" height="12" rx="2" stroke="#6B7280" strokeWidth="2" fill="none" />
+                      <rect x="4" y="8" width="12" height="8" rx="1" fill="#6B7280" />
+                      <path d="M22 10v4" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                  </div>
                 </div>
+
+                {/* App content — iframe */}
+                <iframe
+                  src="/"
+                  className="w-full border-0"
+                  style={{ height: 'calc(100% - 44px)' }}
+                  title="Praxis App Demo"
+                />
               </div>
 
-              {/* App content — iframe pointing to / */}
-              <iframe
-                src="/"
-                className="w-full border-0"
-                style={{ height: 'calc(100% - 44px)' }}
-                title="Praxis App Demo"
-              />
+              {/* Reflection/shine */}
+              <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none bg-gradient-to-br from-white/[0.06] via-transparent to-transparent" />
             </div>
-
-            {/* Reflection/shine */}
-            <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none bg-gradient-to-br from-white/[0.04] via-transparent to-transparent" />
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Query chips cycling below */}
         <div className="flex flex-wrap justify-center gap-3 mt-12">

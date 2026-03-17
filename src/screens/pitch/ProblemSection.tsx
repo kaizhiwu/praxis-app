@@ -1,90 +1,171 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
+import { useRef } from 'react'
 
 const icons: Record<string, React.ReactNode> = {
   laptop: (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="14" height="10" rx="1.5" />
       <path d="M1 16h18" />
     </svg>
   ),
   droplet: (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M10 2C10 2 4 9 4 12.5a6 6 0 0 0 12 0C16 9 10 2 10 2z" />
     </svg>
   ),
   dollar: (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M10 1v18M14 5H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" />
     </svg>
   ),
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: 'easeOut' as const },
-  }),
+function StoryCard({
+  story,
+  index,
+}: {
+  story: (typeof PITCH.problem.stories)[number]
+  index: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'center start'],
+  })
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1])
+  const translateY = useTransform(scrollYProgress, [0, 0.7], [60, 0])
+  // Image reveal — clip path wipes in from left
+  const clipPath = useTransform(
+    scrollYProgress,
+    [0.1, 0.6],
+    ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'],
+  )
+  const reverse = index % 2 !== 0
+
+  return (
+    <div
+      ref={ref}
+      className={`min-h-[80vh] md:min-h-screen flex items-center py-16 ${
+        index > 0 ? '' : ''
+      }`}
+    >
+      <div
+        className={`max-w-5xl mx-auto px-6 w-full flex flex-col ${
+          reverse ? 'md:flex-row-reverse' : 'md:flex-row'
+        } items-center gap-10 md:gap-20`}
+      >
+        {/* Text side */}
+        <motion.div style={{ opacity, y: translateY }} className="flex-1 max-w-md">
+          <div className="text-[#6B7280] mb-4">{icons[story.icon]}</div>
+
+          <p className="text-white text-xl md:text-2xl font-semibold">
+            &ldquo;{story.query.replace(/^"|"$/g, '')}&rdquo;
+          </p>
+
+          <div className="mt-6">
+            <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+              What Maps says:
+            </p>
+            <p className="text-[#9CA3AF]">{story.mapsResult}</p>
+          </div>
+
+          <div className="h-px bg-white/[0.06] my-5" />
+
+          <div>
+            <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+              What actually happened:
+            </p>
+            <p className="text-[#E2614B] font-medium">{story.reality}</p>
+          </div>
+        </motion.div>
+
+        {/* Visual side — parallax clip-path reveal */}
+        <motion.div
+          style={{ clipPath }}
+          className="flex-1 max-w-sm w-full"
+        >
+          <div className="relative rounded-2xl overflow-hidden bg-[#141416] border border-white/[0.06] aspect-[4/3]">
+            {/* Abstract visual per story type */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {story.icon === 'laptop' && (
+                <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
+                  {/* Cafe scene — tables with X marks */}
+                  <rect x="20" y="60" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
+                  <line x1="30" y1="70" x2="60" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
+                  <line x1="60" y1="70" x2="30" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
+                  <rect x="80" y="40" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
+                  <circle cx="105" cy="57" r="8" stroke="#4F46E5" strokeWidth="1" opacity="0.2" />
+                  <path d="M101 57l3 3 5-6" stroke="#4F46E5" strokeWidth="1.5" opacity="0.5" />
+                  <rect x="140" y="70" width="45" height="30" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
+                  <line x1="148" y1="78" x2="177" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
+                  <line x1="177" y1="78" x2="148" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
+                  <text x="100" y="130" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">2 of 3 spots unusable</text>
+                </svg>
+              )}
+              {story.icon === 'droplet' && (
+                <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
+                  {/* Locked doors */}
+                  <rect x="20" y="30" width="40" height="60" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.4" />
+                  <circle cx="50" cy="60" r="3" fill="#E2614B" opacity="0.5" />
+                  <text x="40" y="105" textAnchor="middle" fill="#E2614B" fontSize="7" fontFamily="system-ui">CLOSED</text>
+                  <rect x="80" y="30" width="40" height="60" rx="3" stroke="#D97706" strokeWidth="1" opacity="0.4" />
+                  <text x="100" y="65" textAnchor="middle" fill="#D97706" fontSize="7" fontFamily="system-ui">$$$</text>
+                  <text x="100" y="105" textAnchor="middle" fill="#D97706" fontSize="7" fontFamily="system-ui">PURCHASE</text>
+                  <rect x="140" y="30" width="40" height="60" rx="3" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
+                  <path d="M155 55h10M160 50v10" stroke="#6B7280" strokeWidth="1" opacity="0.3" />
+                  <text x="160" y="105" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">LOCKED 6PM</text>
+                  <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">0 of 3 actually available</text>
+                </svg>
+              )}
+              {story.icon === 'dollar' && (
+                <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
+                  {/* Expired deals */}
+                  <rect x="30" y="30" width="140" height="28" rx="6" fill="#D97706" fillOpacity="0.08" stroke="#D97706" strokeWidth="0.5" strokeOpacity="0.2" />
+                  <text x="100" y="48" textAnchor="middle" fill="#D97706" fontSize="10" fontFamily="system-ui">$6 dumpling deal</text>
+                  <line x1="50" y1="44" x2="150" y2="44" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
+                  <rect x="30" y="70" width="140" height="28" rx="6" fill="#D97706" fillOpacity="0.08" stroke="#D97706" strokeWidth="0.5" strokeOpacity="0.2" />
+                  <text x="100" y="88" textAnchor="middle" fill="#D97706" fontSize="10" fontFamily="system-ui">Late-night special</text>
+                  <text x="100" y="116" textAnchor="middle" fill="#E2614B" fontSize="8" fontFamily="system-ui">weekdays only — expired last month</text>
+                </svg>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  )
 }
 
 export function ProblemSection() {
   return (
-    <section id="problem" className="bg-[#09090B] py-32 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="problem" className="bg-[#09090B]">
+      <div className="max-w-5xl mx-auto px-6 pt-32">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-white mb-12"
+          className="text-4xl font-bold text-white mb-4"
         >
           {PITCH.problem.title}
         </motion.h2>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {PITCH.problem.stories.map((story, i) => (
-            <motion.div
-              key={i}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-              className="bg-[#141416] rounded-2xl p-6 border border-white/[0.06] flex flex-col gap-4"
-            >
-              <div className="text-[#6B7280]">
-                {icons[story.icon]}
-              </div>
+      {/* Full-viewport parallax story cards */}
+      {PITCH.problem.stories.map((story, i) => (
+        <StoryCard key={i} story={story} index={i} />
+      ))}
 
-              <p className="text-white font-medium">&ldquo;{story.query.replace(/^"|"$/g, '')}&rdquo;</p>
-
-              <div>
-                <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
-                  What Maps says:
-                </p>
-                <p className="text-[#9CA3AF] text-sm">{story.mapsResult}</p>
-              </div>
-
-              <div className="h-px bg-white/[0.06]" />
-
-              <div>
-                <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
-                  What actually happened:
-                </p>
-                <p className="text-[#E2614B] text-sm">{story.reality}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
+      {/* Insight blockquote */}
+      <div className="max-w-5xl mx-auto px-6 pb-32">
         <motion.blockquote
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-          className="mt-16 border-l-[3px] border-[#4F46E5] pl-6"
+          className="border-l-[3px] border-[#4F46E5] pl-6"
         >
           <p className="text-lg text-[#9CA3AF] italic">{PITCH.problem.insight}</p>
         </motion.blockquote>
