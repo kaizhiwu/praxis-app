@@ -143,7 +143,7 @@ export function ResultsScreen() {
                             height: dotSize + 16,
                             left: -(16 / 2),
                             top: -(16 / 2),
-                            background: `radial-gradient(circle, rgba(26,138,138,${0.08 + avgConfidence * 0.14}) 0%, transparent 70%)`,
+                            background: `radial-gradient(circle, rgba(79,70,229,${0.08 + avgConfidence * 0.14}) 0%, transparent 70%)`,
                           }}
                         />
                         {/* Dot */}

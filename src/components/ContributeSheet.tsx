@@ -164,7 +164,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   <button
                     onClick={handleSubmit}
                     disabled={!hasAnswers}
-                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed bg-accent text-white hover:bg-accent/90 shadow-[0_0_16px_-4px_rgba(26,138,138,0.2)]"
+                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed bg-accent text-white hover:bg-accent/90 shadow-[0_0_16px_-4px_rgba(79,70,229,0.2)]"
                   >
                     Submit
                   </button>

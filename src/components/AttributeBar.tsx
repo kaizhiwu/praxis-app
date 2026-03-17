@@ -109,7 +109,7 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           <div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              boxShadow: '0 2px 8px -2px rgba(26, 138, 138, 0.2)',
+              boxShadow: '0 2px 8px -2px rgba(79, 70, 229, 0.2)',
             }}
           />
         )}
@@ -122,7 +122,7 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           )}
           style={{
             background: confidence >= 0.6
-              ? 'linear-gradient(90deg, #1A8A8A, #3DB8B8)'
+              ? 'linear-gradient(90deg, #4F46E5, #818CF8)'
               : '#C8C6C0',
             opacity: confidence >= 0.8 ? 1 : confidence >= 0.5 ? 0.65 : 0.4,
           }}

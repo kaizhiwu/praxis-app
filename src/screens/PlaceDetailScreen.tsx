@@ -15,9 +15,9 @@ const CLUSTER_LABELS: Record<AttributeCluster, string> = {
 const CLUSTER_ORDER: AttributeCluster[] = ['workability', 'relief', 'savings']
 
 const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string }> = {
-  workability: { dot: 'bg-[#1A8A8A]', tint: 'text-[#1A8A8A]/70' },
-  relief: { dot: 'bg-[#D97B2B]', tint: 'text-[#D97B2B]/70' },
-  savings: { dot: 'bg-[#7C5AC7]', tint: 'text-[#7C5AC7]/70' },
+  workability: { dot: 'bg-[#4F46E5]', tint: 'text-[#4F46E5]/70' },
+  relief: { dot: 'bg-[#E2614B]', tint: 'text-[#E2614B]/70' },
+  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70' },
 }
 
 function formatTimestamp(iso: string): string {
@@ -30,9 +30,9 @@ function formatTimestamp(iso: string): string {
 
 function getAvatarColor(name: string): string {
   const colors = [
-    'bg-[#1A8A8A]/10 text-[#1A8A8A]',
-    'bg-[#D97B2B]/10 text-[#D97B2B]',
-    'bg-[#7C5AC7]/10 text-[#7C5AC7]',
+    'bg-[#4F46E5]/10 text-[#4F46E5]',
+    'bg-[#E2614B]/10 text-[#E2614B]',
+    'bg-[#D97706]/10 text-[#D97706]',
     'bg-rose-500/10 text-rose-500',
     'bg-sky-500/10 text-sky-500',
     'bg-emerald-500/10 text-emerald-500',
@@ -218,7 +218,7 @@ export function PlaceDetailScreen() {
           <div
             className="absolute inset-x-0 top-0 h-48 pointer-events-none"
             style={{
-              background: 'linear-gradient(180deg, rgba(26,138,138,0.04) 0%, rgba(26,138,138,0.01) 50%, transparent 100%)',
+              background: 'linear-gradient(180deg, rgba(79,70,229,0.04) 0%, rgba(79,70,229,0.01) 50%, transparent 100%)',
             }}
           />
 
@@ -400,7 +400,7 @@ export function PlaceDetailScreen() {
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}
-            className="relative w-full py-3.5 rounded-xl font-medium text-sm bg-accent text-white hover:bg-accent/90 transition-colors cursor-pointer shadow-[0_0_20px_-4px_rgba(26,138,138,0.3)] overflow-hidden"
+            className="relative w-full py-3.5 rounded-xl font-medium text-sm bg-accent text-white hover:bg-accent/90 transition-colors cursor-pointer shadow-[0_0_20px_-4px_rgba(79,70,229,0.3)] overflow-hidden"
           >
             <span className="relative z-10">Been here?</span>
             <span className="cta-shimmer absolute inset-0" />

@@ -110,7 +110,7 @@ const SearchIcon = (
 // Chip icon + color mapping
 // ---------------------------------------------------------------------------
 
-type ChipColor = 'teal' | 'amber' | 'violet'
+type ChipColor = 'indigo' | 'coral' | 'amber'
 
 const CHIP_ICONS: Record<string, ReactNode> = {
   'Quiet work spot': LaptopIcon,
@@ -127,20 +127,20 @@ const CHIP_ICONS: Record<string, ReactNode> = {
 }
 
 const CHIP_COLORS: Record<string, ChipColor> = {
-  // Work-related: teal
-  'Quiet work spot': 'teal',
-  'Coffee with outlets': 'teal',
-  'Recharge spot': 'teal',
-  'Quiet call spot': 'teal',
-  // Relief: amber
-  'Restroom nearby': 'amber',
-  'Open restroom': 'amber',
-  'Indoor waiting': 'amber',
-  'Safe place to wait': 'amber',
-  // Food/savings: violet
-  'Cheap lunch': 'violet',
-  'Late food deals': 'violet',
-  'Late food': 'violet',
+  // Work-related: indigo
+  'Quiet work spot': 'indigo',
+  'Coffee with outlets': 'indigo',
+  'Recharge spot': 'indigo',
+  'Quiet call spot': 'indigo',
+  // Relief: coral
+  'Restroom nearby': 'coral',
+  'Open restroom': 'coral',
+  'Indoor waiting': 'coral',
+  'Safe place to wait': 'coral',
+  // Food/savings: amber
+  'Cheap lunch': 'amber',
+  'Late food deals': 'amber',
+  'Late food': 'amber',
 }
 
 // ---------------------------------------------------------------------------
@@ -162,7 +162,7 @@ function BrandMark() {
         {/* Outer diamond / compass shape */}
         <path
           d="M16 2L26 16L16 30L6 16Z"
-          stroke="#1A8A8A"
+          stroke="#4F46E5"
           strokeWidth="1.5"
           strokeLinejoin="round"
           fill="none"
@@ -172,12 +172,12 @@ function BrandMark() {
           cx="16"
           cy="16"
           r="5"
-          stroke="#1A8A8A"
+          stroke="#4F46E5"
           strokeWidth="1.5"
-          fill="rgba(26,138,138,0.08)"
+          fill="rgba(79,70,229,0.08)"
         />
         {/* Center dot */}
-        <circle cx="16" cy="16" r="1.5" fill="#1A8A8A" />
+        <circle cx="16" cy="16" r="1.5" fill="#4F46E5" />
       </svg>
     </div>
   )
@@ -190,11 +190,11 @@ function BrandMark() {
 function AuroraBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
-      {/* Teal orb */}
+      {/* Indigo orb */}
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(26,138,138,0.07) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(79,70,229,0.07) 0%, transparent 70%)',
           top: '-10%',
           left: '-10%',
           filter: 'blur(60px)',
@@ -209,11 +209,11 @@ function AuroraBackground() {
           ease: 'easeInOut',
         }}
       />
-      {/* Warm coral orb */}
+      {/* Coral orb */}
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(217,123,43,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(226,97,75,0.06) 0%, transparent 70%)',
           bottom: '-5%',
           right: '-15%',
           filter: 'blur(60px)',
@@ -228,11 +228,11 @@ function AuroraBackground() {
           ease: 'easeInOut',
         }}
       />
-      {/* Violet orb */}
+      {/* Amber orb */}
       <motion.div
         className="absolute w-[450px] h-[450px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(124,90,199,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(217,119,6,0.06) 0%, transparent 70%)',
           top: '40%',
           left: '50%',
           filter: 'blur(60px)',
@@ -271,7 +271,7 @@ export function HomeScreen() {
   const chips = rawChips.map((c) => ({
     ...c,
     icon: CHIP_ICONS[c.label],
-    color: CHIP_COLORS[c.label] as 'teal' | 'amber' | 'violet' | undefined,
+    color: CHIP_COLORS[c.label] as 'indigo' | 'coral' | 'amber' | undefined,
   }))
 
   function handleSearch(query: string) {
@@ -295,7 +295,7 @@ export function HomeScreen() {
 
           <div className="space-y-3 text-center">
             <motion.h1
-              className="text-5xl font-bold tracking-[-0.03em] bg-gradient-to-r from-[#1A1917] to-[#6E6D68] bg-clip-text text-transparent"
+              className="text-5xl font-bold tracking-[-0.03em] bg-gradient-to-r from-[#1C1917] to-[#78716C] bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}

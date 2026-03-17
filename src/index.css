@@ -13,15 +13,15 @@
   --color-confidence-high: #3A3935;
   --color-confidence-mid: #8A8984;
   --color-confidence-fade: #D8D6D0;
-  --color-accent: #1A8A8A;
-  --color-accent-hover: #0F7A7A;
-  --color-accent-dim: #E0F3F3;
-  --color-accent-glow: rgba(26, 138, 138, 0.1);
-  --color-negative: #D94545;
-  --color-negative-dim: rgba(217, 69, 69, 0.08);
-  --color-cluster-work: #1A8A8A;
-  --color-cluster-relief: #D97B2B;
-  --color-cluster-savings: #7C5AC7;
+  --color-accent: #4F46E5;
+  --color-accent-hover: #4338CA;
+  --color-accent-dim: #EEF2FF;
+  --color-accent-glow: rgba(79, 70, 229, 0.1);
+  --color-negative: #DC2626;
+  --color-negative-dim: rgba(220, 38, 38, 0.08);
+  --color-cluster-work: #4F46E5;
+  --color-cluster-relief: #E2614B;
+  --color-cluster-savings: #D97706;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
@@ -73,8 +73,8 @@ html, body, #root {
 
 /* Ambient glow for accent elements */
 @keyframes ambient-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(26, 138, 138, 0.06); }
-  50% { box-shadow: 0 0 30px rgba(26, 138, 138, 0.12); }
+  0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.06); }
+  50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.12); }
 }
 
 /* CTA shimmer sweep */

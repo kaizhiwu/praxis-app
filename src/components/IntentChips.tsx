@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 
-type ChipColor = 'teal' | 'amber' | 'violet'
+type ChipColor = 'indigo' | 'coral' | 'amber'
 
 interface ChipData {
   label: string
@@ -16,12 +16,12 @@ interface IntentChipsProps {
 }
 
 const colorStyles: Record<ChipColor, string> = {
-  teal: 'bg-[#1A8A8A]/5 border-[#1A8A8A]/30 text-[#1A8A8A] hover:bg-[#1A8A8A]/12 hover:border-[#1A8A8A]/45',
-  amber: 'bg-[#D97B2B]/5 border-[#D97B2B]/30 text-[#D97B2B] hover:bg-[#D97B2B]/12 hover:border-[#D97B2B]/45',
-  violet: 'bg-[#7C5AC7]/5 border-[#7C5AC7]/30 text-[#7C5AC7] hover:bg-[#7C5AC7]/12 hover:border-[#7C5AC7]/45',
+  indigo: 'bg-[#4F46E5]/5 border-[#4F46E5]/30 text-[#4F46E5] hover:bg-[#4F46E5]/12 hover:border-[#4F46E5]/45',
+  coral: 'bg-[#E2614B]/5 border-[#E2614B]/30 text-[#E2614B] hover:bg-[#E2614B]/12 hover:border-[#E2614B]/45',
+  amber: 'bg-[#D97706]/5 border-[#D97706]/30 text-[#D97706] hover:bg-[#D97706]/12 hover:border-[#D97706]/45',
 }
 
-const defaultColor = 'teal'
+const defaultColor = 'indigo'
 
 export function IntentChips({ chips, onSelect }: IntentChipsProps) {
   return (

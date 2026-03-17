@@ -162,7 +162,7 @@ function MatchScoreRing({ score }: { score: number }) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#1A8A8A"
+          stroke="#4F46E5"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -188,7 +188,7 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{
         y: -2,
-        boxShadow: '0 8px 24px -8px rgba(26,138,138,0.12)',
+        boxShadow: '0 8px 24px -8px rgba(79,70,229,0.12)',
       }}
       whileTap={{ scale: 0.995 }}
       transition={{ duration: 0.3, delay: index * 0.08, ease: 'easeOut' }}

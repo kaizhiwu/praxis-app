@@ -103,8 +103,8 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
         className="absolute -inset-[1px] rounded-2xl pointer-events-none"
         animate={{
           boxShadow: isFocused
-            ? '0 0 0 1px rgba(26,138,138,0.25), 0 0 16px -4px rgba(26,138,138,0.1)'
-            : '0 0 0 1px rgba(26,138,138,0), 0 0 16px -4px rgba(26,138,138,0)',
+            ? '0 0 0 1px rgba(79,70,229,0.25), 0 0 16px -4px rgba(79,70,229,0.1)'
+            : '0 0 0 1px rgba(79,70,229,0), 0 0 16px -4px rgba(79,70,229,0)',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       />
