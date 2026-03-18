@@ -6,7 +6,7 @@ import * as THREE from 'three'
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-type BType = 'box' | 'tapered' | 'memorial' | 'park' | 'wing' | 'cylinder'
+type BType = 'box' | 'tapered' | 'memorial' | 'park' | 'cylinder'
 
 interface BData {
   pos: [number, number, number]
@@ -15,190 +15,202 @@ interface BData {
   mapped: boolean
   mapAt: number
   label?: string
-  color: string
-  fill: string
-  name?: string
+  baseColor: string
+  emissiveColor: string
 }
 
 // ---------------------------------------------------------------------------
-// Lower Manhattan layout — WTC area
+// Lower Manhattan — higher fidelity
 // ---------------------------------------------------------------------------
 
 function generateLowerManhattan(): BData[] {
   const b: BData[] = []
   const labels = ['outlets ✓', 'quiet ✓', 'open now', 'wifi ✓', '$$ deals', 'pet ok', 'late hrs', 'cozy ✓']
   let li = 0
-  const mapped = (i: number) => i < labels.length
-  const mp = (i: number) => 0.1 + i * 0.08
+  const mapped = () => li < labels.length
+  const mp = () => 0.1 + li * 0.08
 
-  const cyan = '#38BDF8'
-  const cyanFill = '#0C4A6E'
-  const gold = '#FBBF24'
-  const goldFill = '#78350F'
-  const green = '#34D399'
-  const greenFill = '#065F46'
-  const white = '#E2E8F0'
-  const whiteFill = '#334155'
+  const steel = '#334155'
+  const steelGlow = '#38BDF8'
+  const glass = '#1E293B'
+  const glassGlow = '#818CF8'
+  const warm = '#44403C'
+  const warmGlow = '#F59E0B'
+  const green = '#166534'
+  const greenGlow = '#34D399'
 
-  // === One WTC (Freedom Tower) — tallest, center anchor ===
-  // Tapered tower: wide base narrowing upward, antenna spire
-  b.push({ pos: [0, 3.5, 0], size: [1.1, 7, 1.1], type: 'tapered', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill, name: 'One WTC' })
+  // === ONE WTC (Freedom Tower) — tallest landmark ===
+  b.push({ pos: [0, 4, 0], size: [1.0, 8, 1.0], type: 'tapered', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: glass, emissiveColor: glassGlow })
   li++
 
-  // === Two WTC — shorter, slightly SE ===
-  b.push({ pos: [1.8, 2, 1.2], size: [0.8, 4, 0.8], type: 'box', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill })
+  // === 7 WTC — north ===
+  b.push({ pos: [0.3, 2.2, -2], size: [0.7, 4.4, 0.7], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: glass, emissiveColor: glassGlow })
   li++
 
-  // === Three WTC — medium, SW ===
-  b.push({ pos: [-1.5, 1.75, 1.5], size: [0.7, 3.5, 0.7], type: 'box', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill })
+  // === Two WTC (unbuilt but planned) ===
+  b.push({ pos: [1.6, 2.5, 0.8], size: [0.8, 5, 0.8], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: glass, emissiveColor: glassGlow })
   li++
 
-  // === Four WTC — shorter, SE ===
-  b.push({ pos: [1.5, 1.25, -0.8], size: [0.6, 2.5, 0.6], type: 'box', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill })
+  // === Three WTC ===
+  b.push({ pos: [-1.4, 1.9, 1.2], size: [0.65, 3.8, 0.65], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: steel, emissiveColor: steelGlow })
   li++
 
-  // === 9/11 Memorial — two square pools (voids) ===
-  b.push({ pos: [-0.8, 0.02, 1.8], size: [1.2, 0.04, 1.2], type: 'memorial', mapped: false, mapAt: 1, color: '#94A3B8', fill: '#1E293B' })
-  b.push({ pos: [0.8, 0.02, 2.2], size: [1.2, 0.04, 1.2], type: 'memorial', mapped: false, mapAt: 1, color: '#94A3B8', fill: '#1E293B' })
-
-  // === Oculus — winged transit hub ===
-  b.push({ pos: [0, 0.4, 3.2], size: [2.0, 0.8, 0.6], type: 'wing', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: white, fill: whiteFill })
+  // === Four WTC ===
+  b.push({ pos: [1.4, 1.4, -0.6], size: [0.55, 2.8, 0.55], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: steel, emissiveColor: steelGlow })
   li++
 
-  // === Brookfield Place — cluster of 3 mid-rise ===
-  b.push({ pos: [-3.0, 1.25, 0], size: [0.7, 2.5, 0.6], type: 'box', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill })
+  // === 9/11 Memorial pools ===
+  b.push({ pos: [-0.7, 0.015, 1.8], size: [1.1, 0.03, 1.1], type: 'memorial', mapped: false, mapAt: 1, baseColor: '#0C4A6E', emissiveColor: '#38BDF8' })
+  b.push({ pos: [0.7, 0.015, 2.1], size: [1.1, 0.03, 1.1], type: 'memorial', mapped: false, mapAt: 1, baseColor: '#0C4A6E', emissiveColor: '#38BDF8' })
+
+  // === Brookfield Place ===
+  b.push({ pos: [-3, 1.5, 0.2], size: [0.7, 3, 0.6], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: steel, emissiveColor: steelGlow })
   li++
-  b.push({ pos: [-3.5, 1, -0.8], size: [0.6, 2, 0.5], type: 'box', mapped: false, mapAt: 1, color: cyan, fill: cyanFill })
-  b.push({ pos: [-2.6, 0.9, -1.0], size: [0.5, 1.8, 0.5], type: 'box', mapped: false, mapAt: 1, color: cyan, fill: cyanFill })
+  b.push({ pos: [-3.5, 1.1, -0.7], size: [0.55, 2.2, 0.5], type: 'box', mapped: false, mapAt: 1, baseColor: steel, emissiveColor: steelGlow })
+  b.push({ pos: [-2.5, 0.95, -0.9], size: [0.5, 1.9, 0.45], type: 'box', mapped: false, mapAt: 1, baseColor: steel, emissiveColor: steelGlow })
+  b.push({ pos: [-3.2, 0.7, 1.1], size: [0.45, 1.4, 0.4], type: 'box', mapped: false, mapAt: 1, baseColor: steel, emissiveColor: steelGlow })
 
   // === One Liberty Plaza ===
-  b.push({ pos: [2.8, 1.5, 2.5], size: [0.8, 3, 0.6], type: 'box', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: cyan, fill: cyanFill })
+  b.push({ pos: [2.6, 1.7, 2.2], size: [0.7, 3.4, 0.6], type: 'box', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: steel, emissiveColor: steelGlow })
   li++
 
-  // === Battery Park — green area at southern tip ===
-  b.push({ pos: [-1.5, 0.03, 4.5], size: [3, 0.06, 2], type: 'park', mapped: mapped(li), mapAt: mp(li), label: labels[li], color: green, fill: greenFill })
+  // === 30 Hudson Yards style tower ===
+  b.push({ pos: [-1.8, 1.3, -1.8], size: [0.6, 2.6, 0.5], type: 'box', mapped: false, mapAt: 1, baseColor: glass, emissiveColor: glassGlow })
+
+  // === Battery Park ===
+  b.push({ pos: [-1.2, 0.02, 4.8], size: [3, 0.04, 1.8], type: 'park', mapped: mapped(), mapAt: mp(), label: labels[li], baseColor: green, emissiveColor: greenGlow })
   if (li < labels.length) li++
 
-  // === Wall Street area — cluster of old financial buildings ===
-  b.push({ pos: [3.5, 1, -2], size: [0.5, 2, 0.5], type: 'box', mapped: false, mapAt: 1, color: gold, fill: goldFill })
-  b.push({ pos: [4.2, 0.7, -1.5], size: [0.4, 1.4, 0.6], type: 'box', mapped: false, mapAt: 1, color: gold, fill: goldFill })
-  b.push({ pos: [3.8, 0.5, -0.5], size: [0.5, 1, 0.4], type: 'box', mapped: false, mapAt: 1, color: gold, fill: goldFill })
-
-  // === Filler buildings — generic smaller structures ===
-  const fillers: [number, number, number, number][] = [
-    [-2, 0.6, 3, 1.2], [1, 0.4, 4, 0.8], [3, 0.5, 0.5, 1],
-    [-3.5, 0.8, 2.5, 1.6], [2.5, 0.6, -2, 1.2], [-1, 0.5, -1.5, 1],
-    [-4, 0.7, -1.5, 1.4], [0.5, 0.45, -2.5, 0.9], [-2.5, 0.55, -2, 1.1],
-    [4, 0.4, 1.5, 0.8], [-4.2, 0.5, 1, 1], [1.5, 0.35, -3, 0.7],
+  // === Wall Street cluster ===
+  const wallSt: [number, number, number, number][] = [
+    [3.2, 2.4, -1.8, 0.5], [3.8, 1.6, -1.2, 0.45], [4.2, 1.0, -0.4, 0.4],
+    [3.5, 0.8, 0.2, 0.35], [4.0, 1.3, -2.5, 0.4], [2.8, 0.6, -2.8, 0.35],
   ]
-  for (const [fx, fh, fz, fht] of fillers) {
-    b.push({ pos: [fx, fht / 2, fz], size: [0.4 + fh * 0.3, fht, 0.4 + fh * 0.2], type: 'box', mapped: false, mapAt: 1, color: cyan, fill: cyanFill })
+  for (const [wx, wh, wz, ww] of wallSt) {
+    b.push({ pos: [wx, wh / 2, wz], size: [ww, wh, ww * 0.9], type: 'box', mapped: false, mapAt: 1, baseColor: warm, emissiveColor: warmGlow })
+  }
+
+  // === Filler buildings — denser urban fabric ===
+  const fillers: [number, number, number, number, number][] = [
+    [-2, 1.4, 3, 0.4, 2.8], [0.8, 0.8, 4, 0.35, 1.6], [2.8, 0.5, 0.5, 0.3, 1],
+    [-3.8, 1.0, 2.5, 0.4, 2], [2.2, 0.7, -2.2, 0.35, 1.4], [-0.8, 0.6, -1.8, 0.35, 1.2],
+    [-4.2, 0.8, -1.2, 0.4, 1.6], [0.3, 0.5, -2.8, 0.3, 1], [-2.8, 0.6, -2.2, 0.35, 1.2],
+    [3.8, 0.5, 1.8, 0.3, 1], [-4.0, 0.6, 1.2, 0.35, 1.2], [1.2, 0.4, -3.2, 0.3, 0.8],
+    [-1, 0.9, -3, 0.4, 1.8], [1.8, 0.5, 3.5, 0.3, 1], [-0.3, 0.45, 3.8, 0.3, 0.9],
+    [3, 0.6, 3.2, 0.35, 1.2], [-3, 0.5, 3.5, 0.3, 1], [0, 0.4, -3.5, 0.3, 0.8],
+    [-4.5, 0.5, 0, 0.3, 1], [4.5, 0.4, 0.5, 0.25, 0.8],
+  ]
+  for (const [fx, _fh, fz, fw, fht] of fillers) {
+    b.push({ pos: [fx, fht / 2, fz], size: [fw, fht, fw * 0.85], type: 'box', mapped: false, mapAt: 1, baseColor: steel, emissiveColor: steelGlow })
   }
 
   return b
 }
 
 // ---------------------------------------------------------------------------
-// Building component
+// Building — solid mesh with subtle edge highlight
 // ---------------------------------------------------------------------------
 
 function Building({ data, scrollRef }: { data: BData; scrollRef: React.MutableRefObject<number> }) {
-  const edgesRef = useRef<THREE.LineSegments>(null)
-  const mapRef = useRef<THREE.Mesh>(null)
+  const meshRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef<THREE.Mesh>(null)
+  const edgeRef = useRef<THREE.LineSegments>(null)
 
-  const mainGeo = useMemo(() => {
+  const geo = useMemo(() => {
     const [w, h, d] = data.size
+    if (data.type === 'tapered') return new THREE.CylinderGeometry(w * 0.38, w * 0.52, h, 4)
     if (data.type === 'cylinder') return new THREE.CylinderGeometry(w / 2, w / 2, h, 16)
-    if (data.type === 'tapered') return new THREE.CylinderGeometry(w * 0.35, w * 0.5, h, 4)
     return new THREE.BoxGeometry(w, h, d)
   }, [data.size, data.type])
 
-  const edgesGeo = useMemo(() => new THREE.EdgesGeometry(mainGeo, 15), [mainGeo])
+  const edgeGeo = useMemo(() => new THREE.EdgesGeometry(geo, 20), [geo])
 
   useFrame(() => {
     if (!data.mapped) return
     const t = Math.max(0, Math.min(1, (scrollRef.current - data.mapAt) / 0.15))
-    if (mapRef.current) (mapRef.current.material as THREE.MeshBasicMaterial).opacity = t * 0.3
-    if (glowRef.current) {
-      glowRef.current.scale.setScalar(1 + t * 0.12)
-      ;(glowRef.current.material as THREE.MeshBasicMaterial).opacity = t * 0.1
+    if (meshRef.current) {
+      const mat = meshRef.current.material as THREE.MeshStandardMaterial
+      mat.emissiveIntensity = 0.3 + t * 0.8
     }
-    if (edgesRef.current) (edgesRef.current.material as THREE.LineBasicMaterial).opacity = 0.7 + t * 0.3
+    if (glowRef.current) {
+      glowRef.current.scale.setScalar(1 + t * 0.08)
+      ;(glowRef.current.material as THREE.MeshBasicMaterial).opacity = t * 0.15
+    }
+    if (edgeRef.current) {
+      ;(edgeRef.current.material as THREE.LineBasicMaterial).opacity = 0.15 + t * 0.4
+    }
   })
+
+  const isMem = data.type === 'memorial'
 
   return (
     <group position={data.pos} rotation={data.type === 'tapered' ? [0, Math.PI / 4, 0] : undefined}>
-      {/* Solid fill */}
-      <mesh geometry={mainGeo}>
-        <meshBasicMaterial color={data.fill} transparent opacity={data.type === 'memorial' ? 0.15 : 0.08} />
+      {/* Main solid mesh */}
+      <mesh ref={meshRef} geometry={geo} castShadow receiveShadow>
+        <meshStandardMaterial
+          color={data.baseColor}
+          roughness={isMem ? 0.9 : 0.4}
+          metalness={isMem ? 0 : 0.6}
+          emissive={data.emissiveColor}
+          emissiveIntensity={data.mapped ? 0 : isMem ? 0.5 : 0.3}
+          transparent={isMem}
+          opacity={isMem ? 0.6 : 1}
+        />
       </mesh>
 
-      {/* Edges */}
-      <lineSegments ref={edgesRef} geometry={edgesGeo}>
-        <lineBasicMaterial color={data.color} transparent opacity={0.7} />
+      {/* Subtle edge lines for definition */}
+      <lineSegments ref={edgeRef} geometry={edgeGeo}>
+        <lineBasicMaterial color={data.emissiveColor} transparent opacity={0.15} />
       </lineSegments>
 
-      {/* Memorial inner void lines */}
-      {data.type === 'memorial' && (
-        <lineSegments geometry={new THREE.EdgesGeometry(new THREE.BoxGeometry(data.size[0] * 0.8, 0.02, data.size[2] * 0.8))}>
-          <lineBasicMaterial color="#60A5FA" transparent opacity={0.4} />
-        </lineSegments>
-      )}
-
-      {/* Oculus wing spines */}
-      {data.type === 'wing' && (
-        <>
-          {[-1, 1].map((side) => (
-            <group key={side} position={[side * 0.8, 0.3, 0]} rotation={[0, 0, side * 0.4]}>
-              <Line points={[[0, 0, 0], [side * 0.6, 0.5, 0]]} color={data.color} lineWidth={1.5} transparent opacity={0.6} />
-              <Line points={[[0, 0, -0.15], [side * 0.5, 0.4, -0.15]]} color={data.color} lineWidth={1} transparent opacity={0.4} />
-              <Line points={[[0, 0, 0.15], [side * 0.5, 0.4, 0.15]]} color={data.color} lineWidth={1} transparent opacity={0.4} />
-            </group>
-          ))}
-        </>
-      )}
-
-      {/* Antenna spire for One WTC */}
+      {/* Antenna for One WTC */}
       {data.type === 'tapered' && (
         <group position={[0, data.size[1] / 2, 0]}>
-          <Line points={[[0, 0, 0], [0, 1.5, 0]]} color={data.color} lineWidth={1.5} transparent opacity={0.6} />
-          <mesh position={[0, 1.5, 0]}>
-            <sphereGeometry args={[0.04, 8, 8]} />
-            <meshBasicMaterial color="#38BDF8" transparent opacity={0.8} />
+          <mesh>
+            <cylinderGeometry args={[0.02, 0.03, 1.8, 8]} />
+            <meshStandardMaterial color="#475569" metalness={0.8} roughness={0.2} />
           </mesh>
+          <mesh position={[0, 0.95, 0]}>
+            <sphereGeometry args={[0.04, 8, 8]} />
+            <meshBasicMaterial color="#38BDF8" />
+          </mesh>
+          {/* Beacon light */}
+          <pointLight position={[0, 1, 0]} color="#38BDF8" intensity={0.5} distance={3} />
         </group>
+      )}
+
+      {/* Memorial inner pool glow */}
+      {isMem && (
+        <mesh position={[0, 0.005, 0]}>
+          <boxGeometry args={[data.size[0] * 0.85, 0.01, data.size[2] * 0.85]} />
+          <meshBasicMaterial color="#1E40AF" transparent opacity={0.4} />
+        </mesh>
       )}
 
       {/* Park trees */}
       {data.type === 'park' && (
         <>
-          {[[-0.6, 0.03, -0.3], [0.3, 0.03, 0.2], [-0.2, 0.03, 0.5], [0.7, 0.03, -0.4], [1.0, 0.03, 0.3]].map(([tx, ty, tz], i) => (
-            <group key={i} position={[tx, ty, tz]}>
-              <Line points={[[0, 0, 0], [0, 0.3, 0]]} color="#059669" lineWidth={1} transparent opacity={0.4} />
-              <mesh position={[0, 0.55, 0]}>
-                <coneGeometry args={[0.15, 0.4, 6]} />
-                <meshBasicMaterial color={data.fill} transparent opacity={0.12} />
+          {[[-0.5, -0.3], [0.4, 0.3], [-0.1, 0.6], [0.7, -0.4], [1.0, 0.2], [-0.8, 0.1], [0.2, -0.6]].map(([tx, tz], i) => (
+            <group key={i} position={[tx, 0.02, tz]}>
+              <mesh position={[0, 0.18, 0]}>
+                <cylinderGeometry args={[0.02, 0.03, 0.35, 6]} />
+                <meshStandardMaterial color="#3F2D17" roughness={0.9} />
               </mesh>
-              <lineSegments geometry={new THREE.EdgesGeometry(new THREE.ConeGeometry(0.15, 0.4, 6), 15)} position={[0, 0.55, 0]}>
-                <lineBasicMaterial color={data.color} transparent opacity={0.5} />
-              </lineSegments>
+              <mesh position={[0, 0.5, 0]}>
+                <coneGeometry args={[0.14, 0.45, 6]} />
+                <meshStandardMaterial color="#166534" roughness={0.7} emissive="#22C55E" emissiveIntensity={0.08} />
+              </mesh>
             </group>
           ))}
         </>
       )}
 
-      {/* Mapped overlay */}
+      {/* Mapped glow shell */}
       {data.mapped && (
-        <>
-          <mesh ref={mapRef} geometry={mainGeo}>
-            <meshBasicMaterial color="#818CF8" transparent opacity={0} />
-          </mesh>
-          <mesh ref={glowRef}>
-            <boxGeometry args={[data.size[0] + 0.15, data.size[1] + 0.15, data.size[2] + 0.15]} />
-            <meshBasicMaterial color="#A5B4FC" transparent opacity={0} />
-          </mesh>
-        </>
+        <mesh ref={glowRef}>
+          <boxGeometry args={[data.size[0] + 0.1, data.size[1] + 0.1, data.size[2] + 0.1]} />
+          <meshBasicMaterial color={data.emissiveColor} transparent opacity={0} />
+        </mesh>
       )}
     </group>
   )
@@ -219,19 +231,19 @@ function DataNode({ position, label, scrollRef, threshold }: {
     if (!ref.current) return
     const t = Math.max(0, Math.min(1, (scrollRef.current - threshold - 0.05) / 0.12))
     ref.current.scale.setScalar(t)
-    ref.current.position.y = ny + Math.sin(Date.now() * 0.002) * 0.06
+    ref.current.position.y = ny + Math.sin(Date.now() * 0.002) * 0.05
   })
 
   return (
     <group>
       <mesh ref={ref} position={[position[0], ny, position[2]]}>
-        <sphereGeometry args={[0.07, 10, 10]} />
-        <meshBasicMaterial color="#A5B4FC" transparent opacity={0.9} />
+        <sphereGeometry args={[0.06, 10, 10]} />
+        <meshBasicMaterial color="#A5B4FC" />
       </mesh>
-      <Line points={[position, [position[0], ny - 0.07, position[2]]]} color="#818CF8" lineWidth={0.5} transparent opacity={0.2} />
-      <Html position={[position[0], ny + 0.28, position[2]]} center>
+      <Line points={[position, [position[0], ny - 0.06, position[2]]]} color="#818CF8" lineWidth={0.5} transparent opacity={0.3} />
+      <Html position={[position[0], ny + 0.25, position[2]]} center>
         <div className="text-[10px] text-[#A5B4FC] font-mono whitespace-nowrap pointer-events-none select-none"
-          style={{ opacity: scrollRef.current > threshold + 0.1 ? 0.9 : 0, transition: 'opacity 0.4s', textShadow: '0 0 6px rgba(99,102,241,0.5)' }}>
+          style={{ opacity: scrollRef.current > threshold + 0.1 ? 0.9 : 0, transition: 'opacity 0.4s', textShadow: '0 0 8px rgba(99,102,241,0.6)' }}>
           {label}
         </div>
       </Html>
@@ -244,30 +256,30 @@ function DataNode({ position, label, scrollRef, threshold }: {
 // ---------------------------------------------------------------------------
 
 function Ground() {
-  const lines = useMemo(() => {
+  const grid = useMemo(() => {
     const r: [THREE.Vector3, THREE.Vector3][] = []
     for (let i = -10; i <= 10; i++) {
-      r.push([new THREE.Vector3(i, 0.01, -10), new THREE.Vector3(i, 0.01, 10)])
-      r.push([new THREE.Vector3(-10, 0.01, i), new THREE.Vector3(10, 0.01, i)])
+      r.push([new THREE.Vector3(i, 0.005, -10), new THREE.Vector3(i, 0.005, 10)])
+      r.push([new THREE.Vector3(-10, 0.005, i), new THREE.Vector3(10, 0.005, i)])
     }
     return r
   }, [])
 
   return (
     <>
-      <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[20, 20]} />
-        <meshBasicMaterial color="#09090B" transparent opacity={0.9} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[24, 24]} />
+        <meshStandardMaterial color="#111118" roughness={0.95} metalness={0} emissive="#0F172A" emissiveIntensity={0.2} />
       </mesh>
-      {lines.map((pts, i) => (
-        <Line key={i} points={pts} color="#38BDF8" lineWidth={0.5} transparent opacity={0.04} />
+      {grid.map((pts, i) => (
+        <Line key={i} points={pts} color="#1E293B" lineWidth={0.5} transparent opacity={0.3} />
       ))}
     </>
   )
 }
 
 // ---------------------------------------------------------------------------
-// Camera rig
+// Camera
 // ---------------------------------------------------------------------------
 
 function CameraRig({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
@@ -299,9 +311,21 @@ function Scene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
   return (
     <>
       <CameraRig scrollRef={scrollRef} />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 10, 5]} intensity={0.3} color="#38BDF8" />
-      <directionalLight position={[-3, 8, -3]} intensity={0.15} color="#818CF8" />
+
+      {/* Lighting — strong enough to see solid geometry */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[8, 15, 6]} intensity={1.5} color="#CBD5E1" castShadow
+        shadow-mapSize-width={1024} shadow-mapSize-height={1024}
+        shadow-camera-far={30} shadow-camera-left={-10} shadow-camera-right={10}
+        shadow-camera-top={10} shadow-camera-bottom={-10}
+      />
+      <directionalLight position={[-5, 8, -4]} intensity={0.6} color="#818CF8" />
+      <pointLight position={[0, 8, 0]} intensity={1} color="#38BDF8" distance={15} />
+      <pointLight position={[3, 3, 3]} intensity={0.4} color="#6366F1" distance={10} />
+
+      {/* Subtle fog for depth — start far enough to not obscure buildings */}
+      <fog attach="fog" args={['#09090B', 15, 28]} />
+
       <Ground />
       {buildings.map((b, i) => <Building key={i} data={b} scrollRef={scrollRef} />)}
       {nodes.map((n, i) => <DataNode key={i} position={n.position} label={n.label} scrollRef={scrollRef} threshold={n.threshold} />)}
@@ -315,8 +339,13 @@ function Scene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
 
 export function CitySceneCanvas({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
   return (
-    <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}
-      camera={{ position: [6, 10, 12], fov: 50 }} style={{ background: 'transparent' }}>
+    <Canvas
+      dpr={[1, 2]}
+      gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
+      camera={{ position: [6, 10, 12], fov: 50 }}
+      shadows
+      style={{ background: 'transparent' }}
+    >
       <Scene scrollRef={scrollRef} />
     </Canvas>
   )
