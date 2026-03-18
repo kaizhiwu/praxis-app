@@ -11,18 +11,6 @@ const fadeUp = {
 }
 
 export function HeroSection() {
-  const [beforeGlow, glowText, afterGlow] = (() => {
-    const full = PITCH.hero.headline
-    const glowPhrase = 'actually let you do'
-    const idx = full.indexOf(glowPhrase)
-    if (idx === -1) return [full, '', '']
-    return [
-      full.slice(0, idx),
-      glowPhrase,
-      full.slice(idx + glowPhrase.length),
-    ]
-  })()
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#09090B]">
       {/* Animated gradient mesh background */}
@@ -44,15 +32,6 @@ export function HeroSection() {
           }}
           transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
           style={{ top: '30%', right: '10%' }}
-        />
-        <motion.div
-          className="absolute w-[550px] h-[550px] rounded-full blur-[170px] bg-[#D97706] opacity-[0.04]"
-          animate={{
-            x: [0, 40, -60, 0],
-            y: [0, -50, 30, 0],
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-          style={{ bottom: '5%', left: '40%' }}
         />
       </div>
 
@@ -77,26 +56,15 @@ export function HeroSection() {
           animate="visible"
           className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]"
         >
-          {beforeGlow.split('\n').map((line, i, arr) => (
-            <span key={i}>
-              {line}
-              {i < arr.length - 1 && <br />}
-            </span>
-          ))}
+          What happens when one person{'\n'}
           <span
             className="text-[#4F46E5]"
             style={{
               textShadow: '0 0 40px rgba(79, 70, 229, 0.4), 0 0 80px rgba(79, 70, 229, 0.2)',
             }}
           >
-            {glowText}
+            builds with AI
           </span>
-          {afterGlow.split('\n').map((line, i, arr) => (
-            <span key={i}>
-              {line}
-              {i < arr.length - 1 && <br />}
-            </span>
-          ))}
         </motion.h1>
 
         <motion.p
@@ -120,7 +88,7 @@ export function HeroSection() {
             href="/"
             className="inline-flex items-center gap-2 rounded-lg bg-[#4F46E5] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#4338CA]"
           >
-            See the product &rarr;
+            Try the product &rarr;
           </a>
           <a
             href="#problem"

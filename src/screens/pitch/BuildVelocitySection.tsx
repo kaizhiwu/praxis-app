@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react'
 const colors = ['#4F46E5', '#E2614B', '#D97706', '#818CF8']
 
 function AnimatedValue({ value }: { value: string }) {
-  // For numeric values, animate the number
   const numMatch = value.match(/^([<>]?\s*)(\d+)(\+?)$/)
   if (!numMatch) {
     return <span>{value}</span>
@@ -35,7 +34,7 @@ function AnimatedValue({ value }: { value: string }) {
   return <span ref={ref}>{prefix}0{suffix}</span>
 }
 
-export function TractionSection() {
+export function BuildVelocitySection() {
   return (
     <section className="py-32 px-6 relative overflow-hidden">
       {/* Subtle grid background */}
@@ -56,18 +55,18 @@ export function TractionSection() {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold text-white mb-16"
         >
-          {PITCH.traction.title}
+          {PITCH.buildVelocity.title}
         </motion.h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {PITCH.traction.metrics.map((metric, i) => (
+          {PITCH.buildVelocity.metrics.map((metric, i) => (
             <motion.div
               key={metric.label}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative group"
+              className="relative"
             >
               {/* Top accent line */}
               <div

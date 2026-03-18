@@ -1,8 +1,8 @@
 export const PITCH = {
   hero: {
-    tagline: 'Behavioral Place Intelligence',
-    headline: 'Maps tell you what a place is.\nWe tell you what it will actually let you do.',
-    sub: 'A trust-weighted graph of how physical places actually function — restroom access, outlet usability, laptop tolerance, noise levels, markdown windows — queryable by intent.',
+    tagline: 'One founder. Zero employees. Full-stack product.',
+    headline: 'What happens when one person\nbuilds with AI',
+    sub: 'Praxis is a behavioral utility layer for physical places — designed, engineered, and shipped by a single founder using Claude, Cursor, and Vercel.',
   },
   problem: {
     title: 'The data gap nobody owns',
@@ -67,32 +67,14 @@ export const PITCH = {
     ],
     sub: 'Each contribution makes every future answer better. The graph compounds. Incumbents can\'t replicate years of structured behavioral data.',
   },
-  market: {
-    title: 'Market opportunity',
-    tam: { value: '$48B', label: 'Global location intelligence & local search', description: 'Location-based services, local advertising, place data APIs' },
-    sam: { value: '$12B', label: 'Urban place discovery & intent-based local search', description: 'Dense-city users making utility-driven place decisions' },
-    som: { value: '$800M', label: 'US top-10 metro behavioral utility queries', description: 'Freelancers, students, commuters, travelers in NYC, SF, LA, Chicago...' },
-    wedge: 'Start with one city. One use case. Win density before breadth.',
-  },
-  businessModel: {
-    title: 'Staged monetization',
-    stages: [
-      { phase: 'Phase 1', name: 'Build trust & density', revenue: 'Free', timeline: 'Year 1', description: 'Win one city. Establish contribution loops. No aggressive monetization.' },
-      { phase: 'Phase 2', name: 'Premium consumer', revenue: '$4.99/mo', timeline: 'Year 2', description: 'Saved intents, advanced filters, priority results, offline access.' },
-      { phase: 'Phase 3', name: 'Merchant tools', revenue: 'SaaS', timeline: 'Year 2-3', description: 'Verified utility profiles, analytics dashboard, attribute management.' },
-      { phase: 'Phase 4', name: 'Sponsored discovery', revenue: 'CPC/CPM', timeline: 'Year 3+', description: 'After trust is established. Native, non-intrusive placement.' },
-      { phase: 'Phase 5', name: 'Data & API', revenue: 'Enterprise', timeline: 'Year 3+', description: 'Travel, hospitality, urban tech, mobility, real estate verticals.' },
+  demo: {
+    title: 'See it in action',
+    sub: 'Intent-native place intelligence. Type what you need — get structured, trust-scored answers.',
+    queries: [
+      { text: 'quiet cafe to work from near NYU', delay: 0 },
+      { text: 'open restroom near Times Square', delay: 2000 },
+      { text: 'cheap late-night food East Village', delay: 4000 },
     ],
-    unitEconomics: {
-      cac: '$3.20',
-      cacNote: 'Ambassador-driven, campus/neighborhood seeding',
-      ltv: '$47',
-      ltvNote: 'Blended: free users (ad-supported) + premium subscribers',
-      ratio: '14.7x',
-      ratioNote: 'LTV/CAC — healthy even at conservative assumptions',
-      payback: '< 3 months',
-      paybackNote: 'Premium conversion within first 90 days of active use',
-    },
   },
   moat: {
     title: 'Three layers of defensibility',
@@ -115,7 +97,7 @@ export const PITCH = {
     ],
   },
   risks: {
-    title: 'What could kill us',
+    title: 'What could kill this',
     items: [
       { risk: 'Cold start density', mitigation: 'City-first, intent-first. Win one neighborhood before expanding.' },
       { risk: 'Data decay', mitigation: 'Aggressive recency scoring. Stale data is visually marked. Contribution prompts at point of need.' },
@@ -124,7 +106,7 @@ export const PITCH = {
     ],
   },
   notList: {
-    title: 'What we are not',
+    title: 'What this is not',
     items: [
       'Not "Google Maps but cooler"',
       'Not a review product',
@@ -133,45 +115,34 @@ export const PITCH = {
       'Not a chatbot company',
     ],
   },
-  demo: {
-    title: 'See it in action',
-    sub: 'Intent-native place intelligence. Type what you need — get structured, trust-scored answers.',
-    queries: [
-      { text: 'quiet cafe to work from near NYU', delay: 0 },
-      { text: 'open restroom near Times Square', delay: 2000 },
-      { text: 'cheap late-night food East Village', delay: 4000 },
+  howIBuild: {
+    title: 'How I build',
+    sub: 'One person shipping a full product using AI-native development.',
+    tools: [
+      { name: 'Claude', role: 'Architecture, code generation, debugging, content', icon: 'brain' },
+      { name: 'Cursor', role: 'AI-powered IDE for rapid iteration', icon: 'code' },
+      { name: 'Vercel', role: 'Deploy on push, edge functions, analytics', icon: 'deploy' },
+      { name: 'React + TypeScript', role: 'Type-safe frontend with Vite + Tailwind', icon: 'stack' },
     ],
+    philosophy: 'The agentic era means one person with taste and conviction can build what used to take a team of ten. The constraint isn\'t headcount — it\'s clarity of vision.',
   },
-  team: {
-    title: 'Team',
-    members: [
-      {
-        name: 'Kai Wu',
-        role: 'Founder',
-        bio: 'Building the behavioral utility layer for physical places.',
-        url: 'https://kaizhiwu.com',
-        twitter: 'https://x.com/kaizhi_wu',
-        highlights: ['Cornell University', 'Full-stack engineer', 'NYC-based'],
-      },
-    ],
-  },
-  traction: {
-    title: 'Early signals',
+  buildVelocity: {
+    title: 'Build velocity',
     metrics: [
-      { value: '14+', label: 'Behavioral attribute types', description: 'Proprietary ontology defining place utility' },
-      { value: '6', label: 'NYC places mapped', description: 'High-fidelity prototype with real behavioral data' },
-      { value: '3', label: 'Attribute clusters', description: 'Workability, Relief, Savings — structured for intent matching' },
+      { value: '1', label: 'Founder', description: 'Solo — design, engineering, product, strategy' },
+      { value: '0', label: 'Employees', description: 'AI handles what used to require a team' },
+      { value: '14+', label: 'Behavioral attributes', description: 'Proprietary ontology built from scratch' },
       { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
     ],
   },
   cta: {
-    headline: "We're building the system of record for how places actually function.",
-    sub: 'Raising pre-seed. Let\'s talk.',
+    headline: 'One person. One product. One city to prove it works.',
+    sub: 'Looking for early users and design partners in NYC.',
     email: 'kai@kaizhiwu.com',
     points: [
-      'Pre-seed round open',
       'Solo founder, full-stack',
       'NYC-first, density-first',
+      'Looking for design partners',
     ],
   },
 } as const

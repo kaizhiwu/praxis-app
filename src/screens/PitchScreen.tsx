@@ -3,12 +3,10 @@ import { ProblemSection } from './pitch/ProblemSection'
 import { DemoSection } from './pitch/DemoSection'
 import { ProductSection } from './pitch/ProductSection'
 import { FlywheelSection } from './pitch/FlywheelSection'
-import { MarketSection } from './pitch/MarketSection'
-import { BusinessSection } from './pitch/BusinessSection'
 import { MoatSection } from './pitch/MoatSection'
-import { TractionSection } from './pitch/TractionSection'
+import { HowIBuildSection } from './pitch/HowIBuildSection'
+import { BuildVelocitySection } from './pitch/BuildVelocitySection'
 import { RisksSection } from './pitch/RisksSection'
-import { TeamSection } from './pitch/TeamSection'
 import { CTASection } from './pitch/CTASection'
 
 function SectionDivider() {
@@ -38,7 +36,7 @@ export function PitchScreen() {
           <span className="text-white font-semibold tracking-tight">Praxis</span>
         </div>
         <a href="/" className="text-xs text-[#9CA3AF] hover:text-white transition-colors inline-flex items-center gap-1">
-          See the product
+          Try the product
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -56,21 +54,17 @@ export function PitchScreen() {
       <FlywheelSection />
 
       <SectionDivider />
-      <MarketSection />
-      <BusinessSection />
-
-      <SectionDivider />
       <MoatSection />
-      <TractionSection />
+      <RisksSection />
 
       <SectionDivider />
-      <RisksSection />
-      <TeamSection />
+      <HowIBuildSection />
+      <BuildVelocitySection />
       <CTASection />
 
       {/* Footer */}
       <footer className="py-12 px-6 text-center border-t border-white/[0.04]">
-        <p className="text-[#6B7280] text-xs">&copy; 2026 Praxis &middot; Behavioral Place Intelligence</p>
+        <p className="text-[#6B7280] text-xs">&copy; 2026 Praxis &middot; Built by <a href="https://kaizhiwu.com" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Kai Wu</a></p>
       </footer>
     </div>
   )
