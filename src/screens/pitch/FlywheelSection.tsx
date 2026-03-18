@@ -68,7 +68,9 @@ function buildArcPath(
 export function FlywheelSection() {
   const nodes = PITCH.flywheel.nodes
   // SVG viewBox has padding for labels outside the orbit
-  const size = 600
+  const pad = 100
+  const inner = 400
+  const size = inner + pad * 2
   const cx = size / 2
   const cy = size / 2
   const orbitRadius = 170
@@ -112,6 +114,7 @@ export function FlywheelSection() {
             viewBox={`0 0 ${size} ${size}`}
             className="w-full h-full"
             fill="none"
+            overflow="visible"
           >
             <defs>
               {arcs.map((arc) => (
