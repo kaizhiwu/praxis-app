@@ -139,7 +139,7 @@ export const PITCH = {
   cta: {
     headline: 'The behavioral utility layer starts with one city.',
     sub: 'Looking for early users and design partners in NYC.',
-    email: 'kai@kaizhiwu.com',
+    email: 'kaizhi.j.wu@gmail.com',
     points: [
       'NYC-first, density-first',
       'Looking for design partners',
