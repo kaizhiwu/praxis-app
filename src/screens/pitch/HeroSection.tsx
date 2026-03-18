@@ -136,19 +136,10 @@ export function HeroSection() {
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, #A5B4FC 0%, #818CF8 40%, #6366F1 100%)',
+                  backgroundImage: 'linear-gradient(135deg, #A5B4FC 0%, #818CF8 30%, #6366F1 60%, #4F46E5 100%)',
                 }}
               >
-                what you can
-              </span>
-              <br />
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: 'linear-gradient(135deg, #818CF8 0%, #6366F1 50%, #4F46E5 100%)',
-                }}
-              >
-                actually do there.
+                what you can actually do there.
               </span>
             </motion.h1>
 
