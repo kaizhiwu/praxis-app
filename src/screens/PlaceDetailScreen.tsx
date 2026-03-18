@@ -202,6 +202,78 @@ function AttributeIcon({ type }: { type: AttributeType }) {
           <line x1="5" y1="8" x2="9" y2="8" />
         </svg>
       )
+    case 'wifi_reliability':
+      return (
+        <svg {...iconProps}>
+          <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9z" />
+          <path d="M5 13l2 2a7.074 7.074 0 0 1 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+          <path d="M9 17l3 3 3-3a4.237 4.237 0 0 0-6 0z" />
+        </svg>
+      )
+    case 'meeting_friendly':
+      return (
+        <svg {...iconProps}>
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      )
+    case 'pet_friendly':
+      return (
+        <svg {...iconProps}>
+          <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5" />
+          <path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5" />
+          <path d="M8 14v.5" />
+          <path d="M16 14v.5" />
+          <path d="M11.25 16.25h1.5L12 17l-.75-.75z" />
+          <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306" />
+        </svg>
+      )
+    case 'stroller_access':
+      return (
+        <svg {...iconProps}>
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8v8" />
+          <path d="M8 12h8" />
+        </svg>
+      )
+    case 'phone_charging':
+      return (
+        <svg {...iconProps}>
+          <rect x="6" y="2" width="12" height="20" rx="2" />
+          <path d="M12 18h.01" />
+          <path d="M11 8l2 4h-2l2 4" />
+        </svg>
+      )
+    case 'happy_hour':
+      return (
+        <svg {...iconProps}>
+          <path d="M8 2h8l-1 9H9z" />
+          <path d="M12 11v7" />
+          <path d="M8 22h8" />
+          <path d="M7 11h10" />
+        </svg>
+      )
+    case 'free_samples':
+      return (
+        <svg {...iconProps}>
+          <path d="M20 12v10H4V12" />
+          <path d="M2 7h20v5H2z" />
+          <path d="M12 22V7" />
+          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+        </svg>
+      )
+    case 'byob_allowed':
+      return (
+        <svg {...iconProps}>
+          <path d="M17 11h1a3 3 0 0 1 0 6h-1" />
+          <path d="M9 12a4 4 0 0 1 8 0v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a4 4 0 0 1 4-4z" />
+          <line x1="9" y1="2" x2="9" y2="7" />
+          <line x1="13" y1="2" x2="13" y2="7" />
+        </svg>
+      )
     default:
       return null
   }

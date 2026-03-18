@@ -13,6 +13,14 @@ export type AttributeType =
   | 'markdown_likelihood'
   | 'late_food'
   | 'budget_value'
+  | 'wifi_reliability'
+  | 'meeting_friendly'
+  | 'pet_friendly'
+  | 'stroller_access'
+  | 'phone_charging'
+  | 'happy_hour'
+  | 'free_samples'
+  | 'byob_allowed'
 
 export type AttributeCluster = 'workability' | 'relief' | 'savings'
 
