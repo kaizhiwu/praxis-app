@@ -40,7 +40,7 @@ function getAttributeIcon(type: AttributeType) {
     strokeWidth: 2,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
-    className: 'shrink-0 text-text-secondary',
+    className: 'shrink-0 text-[#86868B]',
   }
 
   switch (type) {
@@ -153,41 +153,7 @@ function getAttributeIcon(type: AttributeType) {
   }
 }
 
-function DecorativePattern({ color }: { color: string }) {
-  return (
-    <svg
-      className="absolute top-3 right-14 pointer-events-none"
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-    >
-      <path
-        d="M32 0 A32 32 0 0 1 0 32"
-        stroke={color}
-        strokeWidth="1.5"
-        opacity="0.04"
-        fill="none"
-      />
-      <path
-        d="M32 0 A22 22 0 0 1 10 32"
-        stroke={color}
-        strokeWidth="1.5"
-        opacity="0.04"
-        fill="none"
-      />
-      <path
-        d="M32 0 A12 12 0 0 1 20 32"
-        stroke={color}
-        strokeWidth="1.5"
-        opacity="0.04"
-        fill="none"
-      />
-    </svg>
-  )
-}
-
-function MatchScoreRing({ score, glowColor }: { score: number; glowColor: string }) {
+function MatchScoreRing({ score }: { score: number }) {
   const size = 36
   const strokeWidth = 2.5
   const radius = (size - strokeWidth) / 2
@@ -202,7 +168,7 @@ function MatchScoreRing({ score, glowColor }: { score: number; glowColor: string
       style={{
         width: size,
         height: size,
-        filter: hasGlow ? `drop-shadow(0 0 6px ${glowColor}40)` : undefined,
+        filter: hasGlow ? 'drop-shadow(0 0 6px rgba(79,70,229,0.25))' : undefined,
       }}
     >
       <svg
@@ -223,7 +189,7 @@ function MatchScoreRing({ score, glowColor }: { score: number; glowColor: string
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#E4E2DC"
+          stroke="rgba(0,0,0,0.06)"
           strokeWidth={strokeWidth}
         />
         {/* Score arc */}
@@ -242,7 +208,7 @@ function MatchScoreRing({ score, glowColor }: { score: number; glowColor: string
         />
       </svg>
       {/* Score text */}
-      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold font-mono text-text-primary tabular-nums">
+      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold font-mono text-[#1D1D1F] tabular-nums">
         {displayScore}
       </span>
     </div>
@@ -256,17 +222,10 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
   return (
     <motion.button
       onClick={onClick}
-      className="group relative w-full text-left bg-white rounded-2xl border border-surface-border shadow-sm p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden"
-      style={{
-        borderLeft: `3px solid ${clusterColor.hex}30`,
-      }}
+      className="group relative w-full text-left glass rounded-2xl border border-white/20 p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden transition-all duration-300 ease-out hover:bg-white/35 hover:backdrop-blur-[24px] hover:shadow-[inset_2px_2px_1px_0_rgba(255,255,255,0.55),inset_-1px_-1px_1px_1px_rgba(255,255,255,0.45),0_8px_32px_rgba(0,0,0,0.06)]"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{
-        scale: 1.01,
-        borderLeftColor: `${clusterColor.hex}90`,
-        boxShadow: '0 12px 32px -8px rgba(79,70,229,0.15)',
-      }}
+      whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.995 }}
       transition={{
         duration: 0.3,
@@ -275,79 +234,62 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
         scale: { type: 'spring', stiffness: 300, damping: 20 },
       }}
     >
-      {/* Decorative pattern */}
-      <DecorativePattern color={clusterColor.hex} />
-
       {/* Rank watermark */}
-      <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-surface-border/60 select-none pointer-events-none">
+      <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-black/[0.04] select-none pointer-events-none">
         {index + 1}
       </span>
 
       {/* Match score ring */}
       <div className="absolute top-4 right-4 z-10">
-        <MatchScoreRing score={result.matchScore} glowColor={clusterColor.hex} />
+        <MatchScoreRing score={result.matchScore} />
       </div>
 
       {/* Category pill */}
       <div className="relative z-10 flex items-center gap-2">
-        <span
-          className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium tracking-wide"
-          style={{
-            backgroundColor: `${clusterColor.hex}10`,
-            color: clusterColor.hex,
-          }}
-        >
+        <span className="inline-flex items-center glass-subtle rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-wide border border-white/20">
           <span
-            className="mr-1.5 inline-block w-1.5 h-1.5 rounded-full"
+            className="mr-1.5 inline-block w-1 h-1 rounded-full shrink-0"
             style={{ backgroundColor: clusterColor.hex }}
           />
-          {clusterColor.label}
+          <span style={{ color: clusterColor.hex }}>{clusterColor.label}</span>
         </span>
       </div>
 
       {/* Header */}
       <div className="relative z-10">
         <div className="flex items-baseline justify-between gap-3 pr-12">
-          <h3 className="text-text-primary font-semibold text-lg tracking-tight">
+          <h3 className="text-[#1D1D1F] font-semibold text-lg tracking-tight">
             {result.place.name}
           </h3>
-          <span className="bg-surface-hover rounded-full px-2 py-0.5 text-text-secondary text-[11px] shrink-0">
+          <span className="glass-subtle rounded-full px-2 py-0.5 text-[#86868B] text-[11px] shrink-0 border border-white/15">
             {result.place.distance}
           </span>
         </div>
-        <p className="text-text-tertiary text-[11px] tracking-wide mt-0.5">
+        <p className="text-[#86868B] text-[11px] tracking-wide mt-0.5">
           {result.place.neighborhood}
         </p>
       </div>
 
-      {/* Summary with accent border */}
-      <div className="relative z-10 flex gap-3">
-        <div
-          className="w-0.5 shrink-0 rounded-full"
-          style={{ backgroundColor: `${clusterColor.hex}50` }}
-        />
-        <p className="text-text-primary/70 text-[13px] leading-relaxed">
+      {/* Summary */}
+      <div className="relative z-10">
+        <p className="text-[#86868B] text-[13px] leading-relaxed">
           {result.summary}
         </p>
       </div>
 
-      {/* Attribute bars with icons */}
+      {/* Attribute bars with glass pill treatment */}
       <div className="relative z-10 space-y-3">
         {result.topAttributes.slice(0, 3).map(attr => {
-          const attrColor = CLUSTER_COLORS[attr.cluster].hex
           return (
             <div key={attr.type} className="flex items-start gap-2">
               <div className="mt-[3px] flex items-center gap-1.5">
                 <span
                   className="inline-block w-1 h-1 rounded-full shrink-0"
-                  style={{ backgroundColor: attrColor }}
+                  style={{ backgroundColor: CLUSTER_COLORS[attr.cluster].hex }}
                 />
                 {getAttributeIcon(attr.type)}
               </div>
-              <div
-                className="flex-1 min-w-0 rounded-md px-1.5 py-0.5 -mx-1.5 -my-0.5"
-                style={{ backgroundColor: `${attrColor}06` }}
-              >
+              <div className="flex-1 min-w-0 glass-subtle rounded-lg px-2 py-1 -mx-1 -my-0.5 border border-white/10">
                 <AttributeBar attribute={attr} compact />
               </div>
             </div>
@@ -355,8 +297,8 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
         })}
       </div>
 
-      {/* Hover arrow — slides in from left on card hover */}
-      <span className="absolute bottom-4 right-4 text-text-tertiary text-sm pointer-events-none opacity-0 translate-x-[-6px] transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0">
+      {/* Hover arrow */}
+      <span className="absolute bottom-4 right-4 text-[#86868B] text-sm pointer-events-none opacity-0 translate-x-[-6px] transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0">
         &rarr;
       </span>
     </motion.button>

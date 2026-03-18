@@ -111,7 +111,6 @@ const SearchIcon = (
 // Chip icon + color mapping
 // ---------------------------------------------------------------------------
 
-type ChipColor = 'indigo' | 'coral' | 'amber'
 
 const CHIP_ICONS: Record<string, ReactNode> = {
   'Quiet work spot': LaptopIcon,
@@ -127,22 +126,6 @@ const CHIP_ICONS: Record<string, ReactNode> = {
   'Late food': MoonIcon,
 }
 
-const CHIP_COLORS: Record<string, ChipColor> = {
-  // Work-related: indigo
-  'Quiet work spot': 'indigo',
-  'Coffee with outlets': 'indigo',
-  'Recharge spot': 'indigo',
-  'Quiet call spot': 'indigo',
-  // Relief: coral
-  'Restroom nearby': 'coral',
-  'Open restroom': 'coral',
-  'Indoor waiting': 'coral',
-  'Safe place to wait': 'coral',
-  // Food/savings: amber
-  'Cheap lunch': 'amber',
-  'Late food deals': 'amber',
-  'Late food': 'amber',
-}
 
 // ---------------------------------------------------------------------------
 // Brand Mark (geometric compass / pin)
@@ -427,7 +410,6 @@ export function HomeScreen() {
   const chips = rawChips.map((c) => ({
     ...c,
     icon: CHIP_ICONS[c.label],
-    color: CHIP_COLORS[c.label] as 'indigo' | 'coral' | 'amber' | undefined,
   }))
 
   const [linkInput, setLinkInput] = useState('')
@@ -468,11 +450,7 @@ export function HomeScreen() {
 
           <div className="space-y-3 text-center">
             <motion.h1
-              className="text-5xl font-bold tracking-[-0.03em] bg-clip-text text-transparent"
-              style={{
-                backgroundImage: 'linear-gradient(to right, #4F46E5, #7C3AED, #E2614B)',
-                textShadow: '0 0 30px rgba(79,70,229,0.15), 0 0 60px rgba(226,97,75,0.08)',
-              }}
+              className="text-5xl font-bold tracking-[-0.03em] text-text-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -482,8 +460,7 @@ export function HomeScreen() {
 
             {/* Greeting */}
             <motion.p
-              className="text-base font-medium"
-              style={{ color: '#92784A' }}
+              className="text-base font-medium text-text-secondary"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}

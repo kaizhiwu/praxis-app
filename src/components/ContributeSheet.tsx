@@ -19,14 +19,14 @@ const QUESTIONS: { type: AttributeType; question: string }[] = [
 ]
 
 const CONFETTI_COLORS = [
-  'bg-accent',        // indigo
-  'bg-amber-400',     // amber
-  'bg-violet-400',    // violet
-  'bg-rose-400',      // rose
-  'bg-[#E2614B]',     // coral
-  'bg-[#EC4899]',     // pink
-  'bg-[#38BDF8]',     // sky
-  'bg-[#D97706]',     // amber deep
+  'bg-accent',
+  'bg-indigo-400',
+  'bg-violet-400',
+  'bg-purple-400',
+  'bg-sky-400',
+  'bg-teal-400',
+  'bg-fuchsia-400',
+  'bg-blue-400',
 ]
 
 function ConfettiDot({ delay, angle, colorIndex }: { delay: number; angle: number; colorIndex: number }) {
@@ -75,23 +75,16 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
     const base = 'min-h-[40px] px-4 rounded-full text-xs font-medium transition-colors cursor-pointer'
 
     if (!isSelected) {
-      switch (opt) {
-        case 'yes':
-          return `${base} bg-emerald-50/60 border border-emerald-200/40 text-text-secondary hover:text-emerald-700 hover:border-emerald-300/50`
-        case 'no':
-          return `${base} bg-red-50/60 border border-red-200/40 text-text-secondary hover:text-red-600 hover:border-red-300/50`
-        default:
-          return `${base} bg-white border border-surface-border text-text-secondary hover:text-text-primary`
-      }
+      return `${base} glass-subtle border border-surface-border text-text-secondary hover:text-text-primary hover:border-surface-border-hover`
     }
 
     switch (opt) {
       case 'yes':
-        return `${base} bg-emerald-100/80 text-emerald-700 border border-emerald-300/50`
+        return `${base} bg-emerald-500/15 text-emerald-700 border border-emerald-400/30 backdrop-blur-sm`
       case 'no':
-        return `${base} bg-red-100/80 text-red-600 border border-red-300/50`
+        return `${base} bg-red-500/15 text-red-600 border border-red-400/30 backdrop-blur-sm`
       case 'unsure':
-        return `${base} bg-surface-hover text-text-secondary border border-surface-border`
+        return `${base} bg-[rgba(0,0,0,0.06)] text-text-secondary border border-surface-border backdrop-blur-sm`
     }
   }
 
@@ -100,24 +93,22 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black/30 z-40"
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-t border-surface-border rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom overflow-hidden"
+            className="fixed bottom-0 left-0 right-0 z-50 glass-elevated border-t border-surface-border rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom overflow-hidden"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 350 }}
           >
-            {/* Gradient handle bar */}
-            <div
-              className="absolute top-0 left-0 right-0 h-[3px]"
-              style={{ background: 'linear-gradient(90deg, #4F46E5, #7C3AED, #E2614B)' }}
-            />
+            {/* Glass handle bar */}
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 w-9 h-1 rounded-full" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2))' }} />
+
             <AnimatePresence mode="wait">
               {submitted ? (
                 <motion.div
@@ -132,15 +123,14 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                     <motion.div
                       className="absolute w-24 h-24 rounded-full pointer-events-none"
                       style={{
-                        background: 'radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(124,58,237,0.05) 50%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(79,70,229,0.12) 0%, rgba(79,70,229,0.04) 50%, transparent 70%)',
                       }}
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}
                     />
                     <motion.div
-                      className="w-16 h-16 rounded-full flex items-center justify-center relative"
-                      style={{ background: 'linear-gradient(135deg, rgba(79,70,229,0.12), rgba(124,58,237,0.08))' }}
+                      className="glass w-16 h-16 rounded-full flex items-center justify-center relative border border-surface-border"
                       initial={{ scale: 0.4 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', damping: 10, stiffness: 300 }}
@@ -149,7 +139,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </motion.div>
-                    {/* Confetti burst — more dots, more colors */}
+                    {/* Confetti burst */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <ConfettiDot delay={0} angle={30} colorIndex={0} />
                       <ConfettiDot delay={0.03} angle={75} colorIndex={1} />
@@ -165,7 +155,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   <p className="text-text-secondary text-sm">Your data makes Praxis better</p>
                 </motion.div>
               ) : (
-                <motion.div key="form" className="space-y-5">
+                <motion.div key="form" className="space-y-5 mt-2">
                   <div>
                     <h3 className="text-text-primary font-semibold text-xl">
                       Been to {place.name}?
@@ -175,7 +165,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
 
                   <div className="space-y-2.5">
                     {relevantQuestions.map(q => (
-                      <div key={q.type} className="flex items-center justify-between bg-surface-hover/50 rounded-xl px-4 py-3">
+                      <div key={q.type} className="flex items-center justify-between glass-subtle rounded-xl px-4 py-3 border border-surface-border">
                         <span className="text-text-primary text-sm">{q.question}</span>
                         <div className="flex gap-1.5">
                           {(['yes', 'no', 'unsure'] as const).map(opt => (

@@ -14,10 +14,10 @@ const CLUSTER_LABELS: Record<AttributeCluster, string> = {
 
 const CLUSTER_ORDER: AttributeCluster[] = ['workability', 'relief', 'savings']
 
-const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string; hex: string; border: string }> = {
-  workability: { dot: 'bg-[#4F46E5]', tint: 'text-[#4F46E5]/70', hex: '#4F46E5', border: 'border-l-[#4F46E5]/30' },
-  relief: { dot: 'bg-[#E2614B]', tint: 'text-[#E2614B]/70', hex: '#E2614B', border: 'border-l-[#E2614B]/30' },
-  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70', hex: '#D97706', border: 'border-l-[#D97706]/30' },
+const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string; hex: string }> = {
+  workability: { dot: 'bg-[#4F46E5]', tint: 'text-[#4F46E5]/70', hex: '#4F46E5' },
+  relief: { dot: 'bg-[#E2614B]', tint: 'text-[#E2614B]/70', hex: '#E2614B' },
+  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70', hex: '#D97706' },
 }
 
 function isRecentContribution(timestamp: string): boolean {
@@ -338,7 +338,7 @@ export function PlaceDetailScreen() {
     <>
       <div className="min-h-dvh pb-28">
         {/* Sticky header */}
-        <div className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl border-b border-surface-border/50">
+        <div className="sticky top-0 z-30 glass-elevated border-b border-white/20">
           <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
@@ -352,18 +352,9 @@ export function PlaceDetailScreen() {
           </div>
         </div>
 
-        {/* Hero gradient band — mesh-style with overlapping radials */}
+        {/* Hero gradient band — clean subtle indigo */}
         <div className="relative">
-          <div
-            className="absolute inset-x-0 top-0 h-56 pointer-events-none"
-            style={{
-              background: [
-                'radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,70,229,0.04) 0%, transparent 70%)',
-                'radial-gradient(ellipse 60% 50% at 70% 20%, rgba(226,97,75,0.03) 0%, transparent 70%)',
-                'radial-gradient(ellipse 70% 40% at 50% 40%, rgba(217,119,6,0.02) 0%, transparent 70%)',
-              ].join(', '),
-            }}
-          />
+          <div className="absolute inset-x-0 top-0 h-56 pointer-events-none bg-gradient-to-b from-accent/[0.03] to-transparent" />
 
           <div className="max-w-lg mx-auto px-4 sm:px-6 pt-8 relative">
             {/* Place hero */}
@@ -411,13 +402,13 @@ export function PlaceDetailScreen() {
                   />
                 )}
 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="glass rounded-xl px-3 py-2.5 flex items-center gap-2 flex-wrap">
                   {/* Open/Closed badge */}
                   {place.google.openNow !== undefined && (
                     <span className={`inline-flex items-center gap-1 text-[11px] font-medium rounded-full px-2.5 py-1 ${
                       place.google.openNow
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        : 'bg-red-50 text-red-700 border border-red-200'
+                        ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/20'
+                        : 'bg-red-500/10 text-red-700 border border-red-500/20'
                     }`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${place.google.openNow ? 'bg-emerald-500' : 'bg-red-500'}`} />
                       {place.google.openNow ? 'Open now' : 'Closed'}
@@ -457,7 +448,7 @@ export function PlaceDetailScreen() {
                   {/* Share button */}
                   <button
                     onClick={handleShare}
-                    className="inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer ml-auto"
+                    className="glass-subtle inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer ml-auto rounded-full px-2.5 py-1"
                   >
                     <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="18" cy="5" r="3" />
@@ -521,7 +512,7 @@ export function PlaceDetailScreen() {
               >
                 <button
                   onClick={handleShare}
-                  className="inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer"
+                  className="glass-subtle inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer rounded-full px-2.5 py-1"
                 >
                   <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="18" cy="5" r="3" />
@@ -599,7 +590,7 @@ export function PlaceDetailScreen() {
                           />
                         </div>
                       </div>
-                      <hr className="flex-1 border-surface-border/40" />
+                      <hr className="flex-1 border-white/20" />
                     </div>
                     <div className="space-y-3">
                       {group.attributes.map(attr => {
@@ -613,10 +604,10 @@ export function PlaceDetailScreen() {
                               onClick={() => setExpandedAttr(isExpanded ? null : attr.type)}
                             >
                               <motion.div
-                                className={`rounded-xl p-4 border border-l-2 transition-colors duration-200 ${clusterColor.border} ${
+                                className={`glass rounded-xl p-4 transition-colors duration-200 ${
                                   isExpanded
-                                    ? 'bg-white border-accent/25 shadow-sm'
-                                    : 'bg-white border-surface-border hover:border-surface-border'
+                                    ? 'ring-1 ring-accent/25 shadow-sm'
+                                    : ''
                                 }`}
                                 layout="position"
                                 transition={{ layout: { duration: 0.25, ease: 'easeOut' } }}
@@ -707,14 +698,14 @@ export function PlaceDetailScreen() {
                   <h3 className="text-xs uppercase tracking-widest text-text-tertiary font-medium whitespace-nowrap">
                     What people confirm
                   </h3>
-                  <hr className="flex-1 border-surface-border/40" />
+                  <hr className="flex-1 border-white/20" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {place.contributions.map(c => {
                     return (
                       <div
                         key={c.id}
-                        className="bg-white border border-surface-border hover:border-accent/15 rounded-xl p-3 flex items-center justify-between transition-colors duration-200"
+                        className="glass-subtle rounded-xl p-3 flex items-center justify-between transition-colors duration-200 hover:ring-1 hover:ring-accent/15"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <span
@@ -749,7 +740,7 @@ export function PlaceDetailScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-xl border-t border-surface-border/50">
+      <div className="fixed bottom-0 left-0 right-0 z-30 glass-elevated border-t border-white/20">
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}

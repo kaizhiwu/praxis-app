@@ -74,13 +74,13 @@ function NeedsVerificationIcon() {
       className="shrink-0"
       aria-label="Needs verification"
     >
-      <circle cx="6" cy="6" r="5" stroke="#A3A29C" strokeWidth="1" />
+      <circle cx="6" cy="6" r="5" stroke="#AEAEB2" strokeWidth="1" />
       <text
         x="6"
         y="8.5"
         textAnchor="middle"
         fontSize="7"
-        fill="#A3A29C"
+        fill="#AEAEB2"
         fontFamily="Inter, system-ui, sans-serif"
         fontWeight="500"
       >
@@ -95,7 +95,6 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
   const isStale = confidence < 0.5
   const isLowConfidence = confidence < 0.3
   const isHighConfidence = confidence >= 0.7
-  const isVeryHighConfidence = confidence > 0.9
   const showSparkle = confidence > 0.8
   const recencyText = formatRecency(attribute.lastVerified)
   const recent = isRecent(attribute.lastVerified)
@@ -119,12 +118,9 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Recency badge */}
+          {/* Recency badge — glass-subtle pill */}
           {recent ? (
-            <span
-              className="text-[10px] font-medium text-white px-1.5 py-0.5 rounded-full flex items-center gap-1"
-              style={{ background: 'linear-gradient(135deg, #22C55E, #16A34A)' }}
-            >
+            <span className="glass-subtle text-[10px] font-medium text-text-primary px-1.5 py-0.5 rounded-full flex items-center gap-1 border border-surface-border">
               <ClockIcon />
               {recencyText}
             </span>
@@ -140,10 +136,10 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
               className="w-1.5 h-1.5 rounded-full shrink-0"
               style={{
                 background: isHighConfidence
-                  ? '#22C55E'
+                  ? '#1D1D1F'
                   : isLowConfidence
-                    ? '#EF4444'
-                    : '#F59E0B',
+                    ? '#DC2626'
+                    : '#86868B',
               }}
             />
             <span className="text-[10px] font-mono text-text-tertiary tabular-nums">
@@ -160,40 +156,21 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           compact ? 'h-1' : 'h-2',
         )}
         style={{
-          background: isStale
-            ? undefined
-            : 'linear-gradient(90deg, #ECEAE5, #E7E5E0)',
-          ...(isStale
-            ? { background: 'linear-gradient(90deg, #ECEAE5, #E7E5E0)', border: '1px dashed rgba(163,162,156,0.2)' }
-            : {}),
+          background: 'rgba(0, 0, 0, 0.04)',
+          ...(isStale ? { border: '1px dashed rgba(0, 0, 0, 0.08)' } : {}),
         }}
       >
-        {/* Glow layer for high-confidence bars */}
+        {/* Subtle inner shadow for depth on high-confidence bars */}
         {isHighConfidence && (
           <div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              boxShadow: '0 2px 8px -2px rgba(79, 70, 229, 0.2)',
+              boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.04)',
             }}
           />
         )}
 
-        {/* Pulsing glow for very high confidence */}
-        {isVeryHighConfidence && (
-          <motion.div
-            className="absolute inset-0 rounded-full pointer-events-none"
-            animate={{
-              boxShadow: [
-                '0 0 4px 1px rgba(79, 70, 229, 0.15)',
-                '0 0 10px 3px rgba(79, 70, 229, 0.3)',
-                '0 0 4px 1px rgba(79, 70, 229, 0.15)',
-              ],
-            }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        )}
-
-        {/* Bar fill */}
+        {/* Bar fill — indigo gradient, opacity encodes confidence */}
         <motion.div
           className={cn(
             'h-full rounded-full',
@@ -204,7 +181,7 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
               ? 'linear-gradient(90deg, #4F46E5, #7C3AED, #818CF8)'
               : confidence >= 0.6
                 ? 'linear-gradient(90deg, #4F46E5, #818CF8)'
-                : '#C8C6C0',
+                : '#D1D1D6',
             opacity: confidence >= 0.8 ? 1 : confidence >= 0.5 ? 0.65 : 0.4,
           }}
           initial={{ width: 0 }}

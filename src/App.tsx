@@ -3,10 +3,12 @@ import { HomeScreen } from './screens/HomeScreen'
 import { ResultsScreen } from './screens/ResultsScreen'
 import { PlaceDetailScreen } from './screens/PlaceDetailScreen'
 import { PitchScreen } from './screens/PitchScreen'
+import { LiquidGlassFilter } from './components/LiquidGlass'
 
 function App() {
   return (
     <BrowserRouter>
+      <LiquidGlassFilter />
       <div className="grain">
         <Routes>
           <Route path="/" element={<HomeScreen />} />

@@ -98,42 +98,24 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
 
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
-      {/* Animated gradient border on focus */}
-      <motion.div
-        className="absolute -inset-[2px] rounded-[18px] pointer-events-none"
-        style={{
-          background: isFocused
-            ? 'linear-gradient(135deg, #4F46E5, #7C3AED, #E2614B)'
-            : 'transparent',
-          opacity: isFocused ? 1 : 0,
-          transition: 'opacity 0.3s ease-out',
-        }}
-      />
-      {/* Inner mask to create border effect */}
+      {/* Indigo glow ring on focus */}
       <motion.div
         className="absolute -inset-[1px] rounded-2xl pointer-events-none"
         animate={{
           boxShadow: isFocused
-            ? '0 0 16px -4px rgba(79,70,229,0.15)'
-            : '0 0 16px -4px rgba(79,70,229,0)',
+            ? '0 0 0 2px rgba(79,70,229,0.2), 0 0 20px rgba(79,70,229,0.08)'
+            : '0 0 0 0px rgba(79,70,229,0), 0 0 0px rgba(79,70,229,0)',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       />
 
       <motion.div
-        className={[
-          'bg-white/80 backdrop-blur-xl rounded-2xl overflow-hidden relative',
-          'shadow-sm',
-          'border',
-          isFocused
-            ? 'border-accent/30'
-            : 'border-surface-border',
-        ].join(' ')}
+        className="glass-elevated rounded-2xl overflow-hidden relative"
         animate={{ scale: isFocused ? 1.02 : 1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
-        <div className="relative flex items-center py-4.5 px-6 gap-3" style={{ boxShadow: 'inset 0 1px 3px -1px rgba(0,0,0,0.06)' }}>
-          {/* Search icon — transitions color on focus + subtle bounce */}
+        <div className="relative flex items-center py-4.5 px-6 gap-3">
+          {/* Search icon */}
           <motion.svg
             width="16"
             height="16"
@@ -145,7 +127,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
             strokeLinejoin="round"
             className="shrink-0"
             animate={{
-              color: isFocused ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
+              color: isFocused ? '#4F46E5' : '#AEAEB2',
               y: isFocused ? [0, -2, 0] : 0,
             }}
             transition={{
@@ -165,14 +147,16 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               autoFocus={autoFocus}
-              className="w-full bg-transparent text-[17px] tracking-[-0.01em] text-text-primary placeholder-transparent outline-none"
+              className="w-full bg-transparent text-[17px] tracking-[-0.01em] outline-none"
+              style={{ color: '#1D1D1F' }}
             />
             {!query && (
               <div className="absolute inset-0 flex items-center pointer-events-none">
-                <span className="text-text-tertiary text-[17px] tracking-[-0.01em]">
+                <span className="text-[17px] tracking-[-0.01em]" style={{ color: '#AEAEB2' }}>
                   {displayedPlaceholder}
                   <motion.span
-                    className="inline-block w-[1px] h-[18px] bg-accent align-middle ml-[1px]"
+                    className="inline-block w-[1px] h-[18px] align-middle ml-[1px]"
+                    style={{ backgroundColor: '#4F46E5' }}
                     animate={{ opacity: [1, 0] }}
                     transition={{
                       duration: 0.55,
@@ -186,7 +170,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
             )}
           </div>
 
-          {/* Submit arrow — appears when input has text */}
+          {/* Submit button — glass pill with indigo accent */}
           <AnimatePresence>
             {hasQuery && (
               <motion.button
@@ -195,28 +179,19 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}
+                className="shrink-0 h-8 px-3 rounded-full glass flex items-center justify-center cursor-pointer relative overflow-hidden"
+                style={{
+                  border: '1px solid rgba(79,70,229,0.25)',
+                  boxShadow: '0 0 8px rgba(79,70,229,0.1)',
+                }}
                 aria-label="Search"
               >
-                {/* Subtle sparkle pulse */}
-                <motion.div
-                  className="absolute inset-0 rounded-full pointer-events-none"
-                  animate={{
-                    boxShadow: [
-                      '0 0 6px 1px rgba(99, 102, 241, 0.2)',
-                      '0 0 12px 3px rgba(99, 102, 241, 0.4)',
-                      '0 0 6px 1px rgba(99, 102, 241, 0.2)',
-                    ],
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
                 <svg
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="white"
+                  stroke="#4F46E5"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"

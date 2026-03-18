@@ -38,12 +38,12 @@ export function ResultsScreen() {
 
   return (
     <div className="min-h-dvh pb-8">
-      {/* Sticky header — light glass */}
-      <div className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl">
+      {/* Sticky header — glass elevated */}
+      <div className="sticky top-0 z-30 glass-elevated rounded-none">
         <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <button
             onClick={() => navigate('/')}
-            className="cursor-pointer relative p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface-hover/80 transition-all"
+            className="cursor-pointer relative p-1.5 rounded-full text-text-secondary hover:text-text-primary transition-all"
             aria-label="Back to home"
           >
             <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -58,7 +58,7 @@ export function ResultsScreen() {
         <div
           className="h-px w-full"
           style={{
-            background: 'linear-gradient(to right, rgba(79,70,229,0.15), rgba(248,113,113,0.15), rgba(245,158,11,0.15))',
+            background: 'linear-gradient(to right, rgba(79,70,229,0.12), rgba(79,70,229,0.04), rgba(79,70,229,0.12))',
           }}
         />
       </div>
@@ -85,7 +85,7 @@ export function ResultsScreen() {
           </p>
 
           {/* Segmented control */}
-          <div className="relative flex bg-surface-hover rounded-lg border border-surface-border p-0.5">
+          <div className="relative flex glass-subtle rounded-lg p-0.5">
             {/* Sliding indicator */}
             <motion.div
               className="absolute top-0.5 bottom-0.5 rounded-md bg-accent shadow-sm"
@@ -134,36 +134,36 @@ export function ResultsScreen() {
           {view === 'map' ? (
             <motion.div
               key="map"
-              className="rounded-2xl bg-surface-hover border border-surface-border h-[60vh] relative overflow-hidden"
+              className="rounded-2xl glass-subtle h-[60vh] relative overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={transition}
             >
-              {/* Topographic contour background */}
+              {/* Topographic contour background — cool blue tint */}
               <div className="absolute inset-0">
                 <svg width="100%" height="100%" className="opacity-100">
                   <defs>
-                    {/* Grid pattern */}
+                    {/* Grid pattern — cool blue */}
                     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.3" className="text-text-tertiary" opacity="0.1" />
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgb(99,130,190)" strokeWidth="0.3" opacity="0.08" />
                     </pattern>
-                    {/* Contour lines - indigo */}
+                    {/* Contour lines — cool indigo-blue */}
                     <pattern id="contour-indigo" width="120" height="120" patternUnits="userSpaceOnUse">
-                      <circle cx="60" cy="60" r="20" fill="none" stroke="rgb(79,70,229)" strokeWidth="0.5" opacity="0.04" />
-                      <circle cx="60" cy="60" r="35" fill="none" stroke="rgb(79,70,229)" strokeWidth="0.5" opacity="0.03" />
-                      <circle cx="60" cy="60" r="50" fill="none" stroke="rgb(79,70,229)" strokeWidth="0.5" opacity="0.02" />
+                      <circle cx="60" cy="60" r="20" fill="none" stroke="rgb(79,100,229)" strokeWidth="0.5" opacity="0.05" />
+                      <circle cx="60" cy="60" r="35" fill="none" stroke="rgb(79,100,229)" strokeWidth="0.5" opacity="0.035" />
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="rgb(79,100,229)" strokeWidth="0.5" opacity="0.02" />
                     </pattern>
-                    {/* Contour lines - coral */}
-                    <pattern id="contour-coral" width="180" height="180" patternUnits="userSpaceOnUse" patternTransform="translate(40, 30)">
-                      <circle cx="90" cy="90" r="30" fill="none" stroke="rgb(248,113,113)" strokeWidth="0.5" opacity="0.03" />
-                      <circle cx="90" cy="90" r="50" fill="none" stroke="rgb(248,113,113)" strokeWidth="0.5" opacity="0.025" />
-                      <circle cx="90" cy="90" r="70" fill="none" stroke="rgb(248,113,113)" strokeWidth="0.5" opacity="0.02" />
+                    {/* Contour lines — slate blue */}
+                    <pattern id="contour-blue" width="180" height="180" patternUnits="userSpaceOnUse" patternTransform="translate(40, 30)">
+                      <circle cx="90" cy="90" r="30" fill="none" stroke="rgb(100,140,210)" strokeWidth="0.5" opacity="0.04" />
+                      <circle cx="90" cy="90" r="50" fill="none" stroke="rgb(100,140,210)" strokeWidth="0.5" opacity="0.03" />
+                      <circle cx="90" cy="90" r="70" fill="none" stroke="rgb(100,140,210)" strokeWidth="0.5" opacity="0.02" />
                     </pattern>
                   </defs>
                   <rect width="100%" height="100%" fill="url(#grid)" />
                   <rect width="100%" height="100%" fill="url(#contour-indigo)" />
-                  <rect width="100%" height="100%" fill="url(#contour-coral)" />
+                  <rect width="100%" height="100%" fill="url(#contour-blue)" />
                 </svg>
               </div>
 
@@ -261,7 +261,7 @@ export function ResultsScreen() {
                         <AnimatePresence>
                           {isHovered && (
                             <motion.div
-                              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap px-2.5 py-1 rounded-lg bg-white border border-surface-border text-text-primary text-[11px] font-medium shadow-lg pointer-events-none"
+                              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap px-2.5 py-1 rounded-lg glass-elevated text-text-primary text-[11px] font-medium pointer-events-none"
                               initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 4 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
@@ -333,9 +333,9 @@ export function ResultsScreen() {
             <div className="relative inline-block mx-auto">
               {/* Decorative circles */}
               <div className="absolute -top-2 -right-3 w-2 h-2 rounded-full bg-accent/20" />
-              <div className="absolute -bottom-1 -left-4 w-1.5 h-1.5 rounded-full bg-coral/20" />
-              <div className="absolute top-1/2 -right-5 w-1 h-1 rounded-full bg-amber-400/25" />
-              <div className="absolute -top-3 left-1/3 w-1 h-1 rounded-full bg-accent/15" />
+              <div className="absolute -bottom-1 -left-4 w-1.5 h-1.5 rounded-full bg-accent/10" />
+              <div className="absolute top-1/2 -right-5 w-1 h-1 rounded-full bg-accent/15" />
+              <div className="absolute -top-3 left-1/3 w-1 h-1 rounded-full bg-accent/10" />
 
               <svg
                 width="48"
@@ -347,7 +347,7 @@ export function ResultsScreen() {
                 <defs>
                   <linearGradient id="pin-gradient" x1="10" y1="4" x2="38" y2="44" gradientUnits="userSpaceOnUse">
                     <stop offset="0%" stopColor="rgb(79, 70, 229)" />
-                    <stop offset="100%" stopColor="rgb(248, 113, 113)" />
+                    <stop offset="100%" stopColor="rgb(99, 130, 210)" />
                   </linearGradient>
                 </defs>
                 <path
@@ -382,7 +382,7 @@ export function ResultsScreen() {
             </p>
             <button
               disabled
-              className="mt-2 px-5 py-2 rounded-full border border-surface-border text-text-tertiary text-sm cursor-not-allowed"
+              className="mt-2 px-5 py-2 rounded-full glass-subtle text-text-tertiary text-sm cursor-not-allowed"
             >
               Add a place (coming soon)
             </button>
