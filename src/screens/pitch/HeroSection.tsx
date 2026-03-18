@@ -75,14 +75,20 @@ export function HeroSection() {
             playsInline
             preload="auto"
             className="w-full h-full object-cover"
-            style={{ filter: 'brightness(0.7) saturate(0.85)' }}
+            style={{ filter: 'brightness(0.35) saturate(0.15) contrast(1.1)' }}
+          />
+
+          {/* Indigo color wash — tints the desaturated city to match brand */}
+          <div
+            className="absolute inset-0 mix-blend-color"
+            style={{ background: 'rgba(79, 70, 229, 0.15)' }}
           />
 
           {/* Dark overlay so text is readable */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(to right, rgba(9,9,11,0.85) 0%, rgba(9,9,11,0.5) 40%, rgba(9,9,11,0.15) 70%, rgba(9,9,11,0.3) 100%)',
+              background: 'linear-gradient(to right, rgba(9,9,11,0.8) 0%, rgba(9,9,11,0.45) 40%, rgba(9,9,11,0.1) 65%, rgba(9,9,11,0.25) 100%)',
             }}
           />
 
