@@ -214,8 +214,8 @@ function Ground() {
 function CameraRig({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
   const { camera } = useThree()
   const target = useMemo(() => new THREE.Vector3(0, 0, 0), [])
-  const startPos = useMemo(() => new THREE.Vector3(0, 14, 14), [])
-  const endPos = useMemo(() => new THREE.Vector3(2, 6, 8), [])
+  const startPos = useMemo(() => new THREE.Vector3(0, 12, 10), [])
+  const endPos = useMemo(() => new THREE.Vector3(3, 5, 6), [])
 
   useFrame(() => {
     const t = scrollRef.current
@@ -270,7 +270,7 @@ export function CitySceneCanvas({ scrollRef }: { scrollRef: React.MutableRefObje
     <Canvas
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true }}
-      camera={{ position: [0, 14, 14], fov: 45 }}
+      camera={{ position: [0, 12, 10], fov: 50 }}
       style={{ background: 'transparent' }}
     >
       <Scene scrollRef={scrollRef} />
