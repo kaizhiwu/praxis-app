@@ -2,11 +2,11 @@ export const PITCH = {
   hero: {
     tagline: 'Behavioral Place Intelligence',
     headline: 'Maps tell you where.\nWe tell you what you can actually do there.',
-    sub: 'Praxis is building the system of record for how physical places actually function — queryable by intent, scored by trust, updated by the people who use them.',
+    sub: 'Places are experience goods — you can\'t know if the outlets work or the restrooms are open until you\'re already there. Praxis converts that tacit knowledge into structured, queryable data.',
     founderNote: 'Designed, engineered, and shipped by a solo founder with AI.',
   },
   problem: {
-    title: 'The data gap nobody owns',
+    title: 'The information asymmetry nobody fixes',
     stories: [
       {
         query: '"Cafe to work from near me"',
@@ -27,20 +27,20 @@ export const PITCH = {
         icon: 'dollar',
       },
     ],
-    insight: 'Places have two identities: what businesses say (merchant identity) and how they actually function for your specific need (behavioral utility). Maps digitized the first. Nobody has digitized the second.',
+    insight: 'Google Maps is a merchant-serving platform. Their revenue comes from local ads and business listings. Behavioral truth — "outlets don\'t work," "restrooms require purchase" — undermines the merchants who pay them. This isn\'t a gap they haven\'t noticed. It\'s one they\'re structurally incentivized to maintain.',
   },
   product: {
-    title: 'Four layers of truth',
+    title: 'Tacit knowledge, made explicit',
     layers: [
       {
         name: 'Behavioral Place Graph',
-        description: 'Structured attributes describing what people can actually do in a place under real conditions. Not reviews. Not ratings. Structured, queryable behavioral data.',
-        detail: '14+ attribute types across workability, relief, and savings clusters',
+        description: 'Structured attributes describing what people can actually do in a place. Not reviews. Not ratings. Externalized tacit knowledge — the things you only learn after visiting.',
+        detail: '22 attribute types across workability, relief, and savings clusters',
         color: 'indigo',
       },
       {
         name: 'Truth Engine',
-        description: 'Recency decay, contributor weighting, confidence scoring, contradiction handling, fraud detection. Data expires. Truth is temporal.',
+        description: 'Recency decay, contributor weighting, confidence scoring, contradiction handling. Data expires. Truth is temporal. Stale knowledge is worse than no knowledge.',
         detail: 'Confidence scores that literally fade as data gets stale',
         color: 'coral',
       },
@@ -52,21 +52,21 @@ export const PITCH = {
       },
       {
         name: 'Answer Layer',
-        description: 'Ranked options with tradeoff explanations, confidence indicators, and contribution prompts. Answers, not listings.',
-        detail: 'Shows you why, not just what',
+        description: 'Ranked options with tradeoff explanations, confidence indicators, and contribution prompts. Turns experience goods into search goods.',
+        detail: 'You know before you go, not after',
         color: 'indigo',
       },
     ],
   },
   flywheel: {
-    title: 'The compounding loop',
+    title: 'Commons-based peer production',
     nodes: [
       { label: 'Users contribute\nbehavioral data', icon: 'users' },
       { label: 'Denser, more accurate\nplace graph', icon: 'graph' },
       { label: 'Better intent-matched\nanswers', icon: 'target' },
       { label: 'Higher trust\n& retention', icon: 'shield' },
     ],
-    sub: 'Each contribution makes every future answer better. The graph compounds. Incumbents can\'t replicate years of structured behavioral data.',
+    sub: 'Same production model as Wikipedia and OpenStreetMap. Each contribution makes every future answer better. The graph compounds. This is knowledge infrastructure, not a feature.',
   },
   demo: {
     title: 'See it in action',
@@ -78,21 +78,21 @@ export const PITCH = {
     ],
   },
   moat: {
-    title: 'Three layers of defensibility',
+    title: 'Counter-positioned by design',
     layers: [
       {
-        name: 'Ontology Moat',
-        description: 'Proprietary schema for place utility. 14+ behavioral attribute types that don\'t exist in any public dataset. We defined the language for how places function.',
+        name: 'Structural Conflict',
+        description: 'Google Maps monetizes merchants. Behavioral truth often undermines merchant narratives. The incumbent\'s rational response is to do nothing — classic counter-positioning. This gap is permanent, not temporary.',
         icon: 'schema',
       },
       {
-        name: 'Data Moat',
-        description: 'Structured, local, high-frequency utility data that\'s hard to rebuild. Not scraped — contributed by real users with real needs. Time-stamped, confidence-scored, geographically dense.',
+        name: 'Knowledge Moat',
+        description: 'Structured behavioral data contributed by real users with real needs. Not scraped, not inferred — externalized from lived experience. Time-stamped, confidence-scored, geographically dense. This takes years to rebuild.',
         icon: 'database',
       },
       {
         name: 'Trust Moat',
-        description: 'Learned contributor reliability and signal weighting. Our trust engine knows which contributors are accurate, which are stale, and how to weight conflicting signals. This takes years to build.',
+        description: 'Learned contributor reliability and signal weighting. The system knows which contributors are accurate, which are stale, and how to weight conflicting signals. Trust compounds; it can\'t be shortcut.',
         icon: 'shield',
       },
     ],
@@ -103,7 +103,7 @@ export const PITCH = {
       { risk: 'Cold start density', mitigation: 'City-first, intent-first. Win one neighborhood before expanding.' },
       { risk: 'Data decay', mitigation: 'Aggressive recency scoring. Stale data is visually marked. Contribution prompts at point of need.' },
       { risk: 'Contribution fatigue', mitigation: 'Binary questions only. 2-tap confirmations. Zero friction.' },
-      { risk: 'Incumbent copying', mitigation: 'Google can add outlet data. They can\'t build a trust-weighted behavioral graph with community verification overnight.' },
+      { risk: 'Google copies it', mitigation: 'Counter-positioning: adding behavioral truth would undermine their merchant ad revenue. The rational incumbent response is inaction.' },
     ],
   },
   notList: {
@@ -112,38 +112,38 @@ export const PITCH = {
       'Not "Google Maps but cooler"',
       'Not a review product',
       'Not a social network',
-      'Not a creator-economy play',
-      'Not a chatbot company',
+      'Not a venture-scale land grab',
+      'Not dependent on a large team to operate',
     ],
   },
   howIBuild: {
-    title: 'Why this is possible now',
-    sub: 'AI-native development means one person can ship what used to take a team.',
+    title: 'Why the economics work now',
+    sub: 'The traditional VC objection: map and data businesses require large teams and don\'t scale profitably. That objection assumed human-heavy operations.',
     tools: [
       { name: 'Claude', role: 'Architecture, code generation, debugging, content', icon: 'brain' },
       { name: 'Cursor', role: 'AI-powered IDE for rapid iteration', icon: 'code' },
       { name: 'Vercel', role: 'Deploy on push, edge functions, analytics', icon: 'deploy' },
       { name: 'React + TypeScript', role: 'Type-safe frontend with Vite + Tailwind', icon: 'stack' },
     ],
-    philosophy: 'Everything you see on this site — the product, the data model, the pitch — was built by one person using these tools. The constraint isn\'t headcount. It\'s clarity of vision.',
+    philosophy: 'AI-native cost structure collapses the break-even point by 10-50x. A knowledge commons that once required 50 people to operate can now run with one. This product is default alive — profitable before needing outside capital.',
   },
   buildVelocity: {
     title: 'Where it stands',
     metrics: [
-      { value: '14+', label: 'Behavioral attributes', description: 'Proprietary ontology for place utility' },
-      { value: '3', label: 'Attribute clusters', description: 'Workability, Relief, Savings' },
+      { value: '22', label: 'Behavioral attributes', description: 'Proprietary ontology — the language for how places function' },
+      { value: '14', label: 'Places mapped', description: 'NYC-dense behavioral data, ready for expansion' },
       { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
-      { value: '1', label: 'Founder', description: 'Solo — design, engineering, product, strategy' },
+      { value: '1', label: 'Headcount', description: 'AI-native cost structure — default alive' },
     ],
   },
   cta: {
-    headline: 'The behavioral utility layer for places starts with one city.',
+    headline: 'The behavioral utility layer starts with one city.',
     sub: 'Looking for early users and design partners in NYC.',
     email: 'kai@kaizhiwu.com',
     points: [
       'NYC-first, density-first',
       'Looking for design partners',
-      'Built by one founder with AI',
+      'Default alive — profitable before outside capital',
     ],
   },
 } as const
