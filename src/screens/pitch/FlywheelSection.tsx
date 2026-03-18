@@ -90,7 +90,13 @@ export function FlywheelSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-white text-center mb-16"
+          className="text-4xl font-bold text-center mb-16"
+          style={{
+            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           {PITCH.flywheel.title}
         </motion.h2>
@@ -102,9 +108,11 @@ export function FlywheelSection() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative mx-auto w-[360px] h-[360px] md:w-[540px] md:h-[540px]"
         >
-          {/* Radial glow */}
-          <div
-            className="absolute inset-0 rounded-full opacity-[0.07]"
+          {/* Animated radial glow */}
+          <motion.div
+            className="absolute inset-0 rounded-full"
+            animate={{ opacity: [0.05, 0.1, 0.05] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background: 'radial-gradient(circle, #4F46E5 0%, transparent 70%)',
             }}
@@ -190,6 +198,16 @@ export function FlywheelSection() {
                   }}
                   style={{ transformOrigin: `${pos.x}px ${pos.y}px` }}
                 >
+                  {/* Node glow pulse */}
+                  <motion.circle
+                    cx={pos.x}
+                    cy={pos.y}
+                    r="32"
+                    fill={color}
+                    opacity={0}
+                    animate={{ opacity: [0, 0.12, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.75 }}
+                  />
                   {/* Node circle */}
                   <circle
                     cx={pos.x}

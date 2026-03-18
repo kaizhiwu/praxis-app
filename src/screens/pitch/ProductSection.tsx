@@ -123,7 +123,13 @@ export function ProductSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-white mb-4"
+          className="text-4xl font-bold mb-4"
+          style={{
+            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           {PITCH.product.title}
         </motion.h2>
@@ -201,12 +207,23 @@ export function ProductSection() {
                 })}
               </div>
 
-              {/* Right: Sticky visual that morphs */}
-              <div className="w-full md:w-[320px] h-[280px] md:h-[320px] shrink-0 relative">
+              {/* Right: Sticky visual — glass morphism panel */}
+              <div className="w-full md:w-[340px] h-[300px] md:h-[340px] shrink-0 relative">
+                {/* Gradient glow behind panel */}
+                <motion.div
+                  className="absolute -inset-4 rounded-3xl blur-[40px] opacity-20"
+                  animate={{
+                    background: `radial-gradient(ellipse at 50% 50%, ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}40, transparent 70%)`,
+                  }}
+                  transition={{ duration: 0.8 }}
+                />
                 <div
-                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-[#141416] overflow-hidden"
+                  className="absolute inset-0 rounded-2xl overflow-hidden backdrop-blur-sm"
                   style={{
-                    boxShadow: `0 0 60px ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}10`,
+                    background: 'linear-gradient(135deg, rgba(20,20,22,0.9), rgba(20,20,22,0.7))',
+                    border: `1px solid ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).border}`,
+                    boxShadow: `0 0 80px -12px ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}20, inset 0 -20px 80px -20px ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}08, inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    transition: 'border-color 0.5s, box-shadow 0.5s',
                   }}
                 >
                   {layers.map((layer, i) => (

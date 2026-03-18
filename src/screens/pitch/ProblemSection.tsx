@@ -68,7 +68,19 @@ function StoryCard({
             <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
               What Maps says:
             </p>
-            <p className="text-[#9CA3AF]">{story.mapsResult}</p>
+            <p className="text-[#9CA3AF] relative">
+              <span className="relative">
+                {story.mapsResult}
+                <motion.span
+                  className="absolute left-0 top-1/2 h-[1.5px] bg-[#E2614B]/60"
+                  style={{ width: '100%' }}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.8, ease: 'easeOut' }}
+                />
+              </span>
+            </p>
           </div>
 
           <div className="h-px bg-white/[0.06] my-5" />
@@ -140,14 +152,28 @@ function StoryCard({
 
 export function ProblemSection() {
   return (
-    <section id="problem" className="bg-[#09090B]">
-      <div className="max-w-5xl mx-auto px-6 pt-32">
+    <section id="problem" className="bg-[#09090B] relative">
+      {/* Dot grid texture */}
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+      <div className="max-w-5xl mx-auto px-6 pt-32 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-white mb-4"
+          className="text-4xl font-bold mb-4"
+          style={{
+            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           {PITCH.problem.title}
         </motion.h2>

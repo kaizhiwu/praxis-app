@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { HeroSection } from './pitch/HeroSection'
 import { ProblemSection } from './pitch/ProblemSection'
 import { DemoSection } from './pitch/DemoSection'
@@ -11,24 +13,87 @@ import { CTASection } from './pitch/CTASection'
 
 function SectionDivider() {
   return (
-    <div className="flex items-center justify-center py-2">
-      <div className="h-px w-16 bg-gradient-to-r from-transparent to-white/[0.06]" />
-      <div className="w-1 h-1 rounded-full bg-white/[0.08] mx-3" />
-      <div className="h-px w-16 bg-gradient-to-l from-transparent to-white/[0.06]" />
-    </div>
+    <motion.div
+      className="flex items-center justify-center py-2"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#4F46E5]/15" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#4F46E5]/20 mx-3" />
+      <div className="h-px w-20 bg-gradient-to-l from-transparent to-[#4F46E5]/15" />
+    </motion.div>
+  )
+}
+
+function MouseGlow() {
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY })
+      setVisible(true)
+    }
+    const handleLeave = () => setVisible(false)
+    window.addEventListener('mousemove', handleMove)
+    document.addEventListener('mouseleave', handleLeave)
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      document.removeEventListener('mouseleave', handleLeave)
+    }
+  }, [])
+
+  return (
+    <div
+      className="fixed pointer-events-none z-40 w-[500px] h-[500px] rounded-full transition-opacity duration-300"
+      style={{
+        left: pos.x,
+        top: pos.y,
+        transform: 'translate(-50%, -50%)',
+        background: 'radial-gradient(circle, rgba(79,70,229,0.04) 0%, transparent 70%)',
+        opacity: visible ? 1 : 0,
+      }}
+    />
   )
 }
 
 export function PitchScreen() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="bg-[#09090B] text-white min-h-screen">
       {/* Grain overlay */}
       <div className="grain" />
 
-      {/* Floating nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between bg-[#09090B]/80 backdrop-blur-xl border-b border-white/[0.04]">
+      {/* Mouse-following gradient */}
+      <MouseGlow />
+
+      {/* Floating nav with animated gradient border on scroll */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between backdrop-blur-xl transition-all duration-300"
+        style={{
+          background: scrolled ? 'rgba(9,9,11,0.85)' : 'rgba(9,9,11,0.4)',
+          borderBottom: scrolled
+            ? '1px solid rgba(79,70,229,0.1)'
+            : '1px solid rgba(255,255,255,0.02)',
+        }}
+      >
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}>
+          <div
+            className="w-5 h-5 rounded-md flex items-center justify-center"
+            style={{
+              background: 'linear-gradient(135deg, #4F46E5, #6366F1)',
+              boxShadow: '0 0 12px rgba(79,70,229,0.3)',
+            }}
+          >
             <svg width="10" height="10" viewBox="0 0 20 20" fill="white">
               <path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5M2 10l8 5 8-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -64,7 +129,12 @@ export function PitchScreen() {
 
       {/* Footer */}
       <footer className="py-12 px-6 text-center border-t border-white/[0.04]">
-        <p className="text-[#6B7280] text-xs">&copy; 2026 Praxis &middot; Built by <a href="https://kaizhiwu.com" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Kai Wu</a></p>
+        <p className="text-[#6B7280] text-xs">
+          &copy; 2026 Praxis &middot; Built by{' '}
+          <a href="https://kaizhiwu.com" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+            Kai Wu
+          </a>
+        </p>
       </footer>
     </div>
   )
