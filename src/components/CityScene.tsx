@@ -84,17 +84,17 @@ function Building({
       const t = Math.max(0, Math.min(1, (progress - data.mapProgress) / 0.2))
       if (solidRef.current) {
         const mat = solidRef.current.material as THREE.MeshPhysicalMaterial
-        mat.opacity = t * 0.7
-        mat.emissiveIntensity = t * 0.3
+        mat.opacity = t * 0.85
+        mat.emissiveIntensity = t * 0.5
       }
       if (glowRef.current) {
-        glowRef.current.scale.setScalar(1 + t * 0.15)
+        glowRef.current.scale.setScalar(1 + t * 0.2)
         const gMat = glowRef.current.material as THREE.MeshBasicMaterial
-        gMat.opacity = t * 0.15
+        gMat.opacity = t * 0.25
       }
       if (edgesRef.current) {
         const eMat = edgesRef.current.material as THREE.LineBasicMaterial
-        eMat.opacity = 0.25 + t * 0.5
+        eMat.opacity = 0.5 + t * 0.5
       }
     }
   })
@@ -102,8 +102,13 @@ function Building({
   return (
     <group position={data.position}>
       <lineSegments ref={edgesRef} geometry={edgesGeo}>
-        <lineBasicMaterial color="#4F46E5" transparent opacity={0.25} />
+        <lineBasicMaterial color="#6366F1" transparent opacity={0.5} />
       </lineSegments>
+      {/* Faint fill so buildings have volume */}
+      <mesh>
+        <boxGeometry args={data.size} />
+        <meshBasicMaterial color="#4F46E5" transparent opacity={0.03} />
+      </mesh>
 
       {data.mapped && (
         <>
@@ -196,7 +201,7 @@ function Ground() {
         <meshBasicMaterial color="#0A0A0C" transparent opacity={0.8} />
       </mesh>
       {lines.map((pts, i) => (
-        <Line key={i} points={pts} color="#4F46E5" lineWidth={0.5} transparent opacity={0.06} />
+        <Line key={i} points={pts} color="#6366F1" lineWidth={0.5} transparent opacity={0.1} />
       ))}
     </>
   )
