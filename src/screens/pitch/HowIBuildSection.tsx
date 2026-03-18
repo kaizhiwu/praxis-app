@@ -49,7 +49,7 @@ export function HowIBuildSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#9CA3AF] mb-16 max-w-lg"
+          className="text-[#9CA3AF] mb-16 max-w-xl"
         >
           {PITCH.howIBuild.sub}
         </motion.p>

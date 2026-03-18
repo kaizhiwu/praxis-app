@@ -11,6 +11,13 @@ const fadeUp = {
 }
 
 export function HeroSection() {
+  const headline = PITCH.hero.headline
+  const glowPhrase = 'what you can actually do there'
+  const idx = headline.indexOf(glowPhrase)
+  const beforeGlow = idx >= 0 ? headline.slice(0, idx) : headline
+  const glowText = idx >= 0 ? glowPhrase : ''
+  const afterGlow = idx >= 0 ? headline.slice(idx + glowPhrase.length) : ''
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#09090B]">
       {/* Animated gradient mesh background */}
@@ -56,15 +63,21 @@ export function HeroSection() {
           animate="visible"
           className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]"
         >
-          What happens when one person{'\n'}
+          {beforeGlow.split('\n').map((line, i, arr) => (
+            <span key={i}>
+              {line}
+              {i < arr.length - 1 && <br />}
+            </span>
+          ))}
           <span
             className="text-[#4F46E5]"
             style={{
               textShadow: '0 0 40px rgba(79, 70, 229, 0.4), 0 0 80px rgba(79, 70, 229, 0.2)',
             }}
           >
-            builds with AI
+            {glowText}
           </span>
+          {afterGlow}
         </motion.h1>
 
         <motion.p
@@ -77,8 +90,19 @@ export function HeroSection() {
           {PITCH.hero.sub}
         </motion.p>
 
-        <motion.div
+        {/* Founder note — supporting detail, not the headline */}
+        <motion.p
           custom={3}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="mt-3 text-sm text-[#6B7280]"
+        >
+          {PITCH.hero.founderNote}
+        </motion.p>
+
+        <motion.div
+          custom={4}
           variants={fadeUp}
           initial="hidden"
           animate="visible"

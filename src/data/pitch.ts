@@ -1,8 +1,9 @@
 export const PITCH = {
   hero: {
-    tagline: 'One founder. Zero employees. Full-stack product.',
-    headline: 'What happens when one person\nbuilds with AI',
-    sub: 'Praxis is a behavioral utility layer for physical places — designed, engineered, and shipped by a single founder using Claude, Cursor, and Vercel.',
+    tagline: 'Behavioral Place Intelligence',
+    headline: 'Maps tell you where.\nWe tell you what you can actually do there.',
+    sub: 'Praxis is building the system of record for how physical places actually function — queryable by intent, scored by trust, updated by the people who use them.',
+    founderNote: 'Designed, engineered, and shipped by a solo founder with AI.',
   },
   problem: {
     title: 'The data gap nobody owns',
@@ -116,33 +117,33 @@ export const PITCH = {
     ],
   },
   howIBuild: {
-    title: 'How I build',
-    sub: 'One person shipping a full product using AI-native development.',
+    title: 'Why this is possible now',
+    sub: 'AI-native development means one person can ship what used to take a team.',
     tools: [
       { name: 'Claude', role: 'Architecture, code generation, debugging, content', icon: 'brain' },
       { name: 'Cursor', role: 'AI-powered IDE for rapid iteration', icon: 'code' },
       { name: 'Vercel', role: 'Deploy on push, edge functions, analytics', icon: 'deploy' },
       { name: 'React + TypeScript', role: 'Type-safe frontend with Vite + Tailwind', icon: 'stack' },
     ],
-    philosophy: 'The agentic era means one person with taste and conviction can build what used to take a team of ten. The constraint isn\'t headcount — it\'s clarity of vision.',
+    philosophy: 'Everything you see on this site — the product, the data model, the pitch — was built by one person using these tools. The constraint isn\'t headcount. It\'s clarity of vision.',
   },
   buildVelocity: {
-    title: 'Build velocity',
+    title: 'Where it stands',
     metrics: [
-      { value: '1', label: 'Founder', description: 'Solo — design, engineering, product, strategy' },
-      { value: '0', label: 'Employees', description: 'AI handles what used to require a team' },
-      { value: '14+', label: 'Behavioral attributes', description: 'Proprietary ontology built from scratch' },
+      { value: '14+', label: 'Behavioral attributes', description: 'Proprietary ontology for place utility' },
+      { value: '3', label: 'Attribute clusters', description: 'Workability, Relief, Savings' },
       { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
+      { value: '1', label: 'Founder', description: 'Solo — design, engineering, product, strategy' },
     ],
   },
   cta: {
-    headline: 'One person. One product. One city to prove it works.',
+    headline: 'The behavioral utility layer for places starts with one city.',
     sub: 'Looking for early users and design partners in NYC.',
     email: 'kai@kaizhiwu.com',
     points: [
-      'Solo founder, full-stack',
       'NYC-first, density-first',
       'Looking for design partners',
+      'Built by one founder with AI',
     ],
   },
 } as const
