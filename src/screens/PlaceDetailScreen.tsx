@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AttributeBar } from '../components/AttributeBar'
 import { ContributeSheet } from '../components/ContributeSheet'
-import { getPlaceById } from '../data/mock'
-import type { AttributeCluster, AttributeType } from '../data/types'
+import { getPlaceByIdAsync } from '../data/mock'
+import type { Place, AttributeCluster, AttributeType } from '../data/types'
 
 const CLUSTER_LABELS: Record<AttributeCluster, string> = {
   workability: 'Workability',
@@ -212,8 +212,39 @@ export function PlaceDetailScreen() {
   const navigate = useNavigate()
   const [showContribute, setShowContribute] = useState(false)
   const [expandedAttr, setExpandedAttr] = useState<string | null>(null)
+  const [place, setPlace] = useState<Place | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
+  const [showHours, setShowHours] = useState(false)
 
-  const place = getPlaceById(id || '')
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    getPlaceByIdAsync(id || '').then(p => {
+      if (!cancelled) {
+        setPlace(p)
+        setLoading(false)
+      }
+    })
+    return () => { cancelled = true }
+  }, [id])
+
+  function handleShare() {
+    const placeId = place?.googlePlaceId || place?.id || id
+    const url = `${window.location.origin}/place/${placeId}`
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-dvh flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   if (!place) {
     return (
@@ -290,6 +321,160 @@ export function PlaceDetailScreen() {
                 </p>
               </div>
             </motion.div>
+
+            {/* Google base info */}
+            {place.google && (
+              <motion.div
+                className="mb-6 space-y-3"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
+              >
+                {/* Photo */}
+                {place.google.photoUri && (
+                  <img
+                    src={place.google.photoUri}
+                    alt={place.name}
+                    className="w-full h-40 object-cover rounded-xl"
+                  />
+                )}
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Open/Closed badge */}
+                  {place.google.openNow !== undefined && (
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-medium rounded-full px-2.5 py-1 ${
+                      place.google.openNow
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-red-50 text-red-700 border border-red-200'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${place.google.openNow ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                      {place.google.openNow ? 'Open now' : 'Closed'}
+                    </span>
+                  )}
+
+                  {/* Google rating */}
+                  {place.google.rating && (
+                    <span className="inline-flex items-center gap-1 text-[11px] text-text-secondary">
+                      <svg width={12} height={12} viewBox="0 0 24 24" fill="#FBBF24" stroke="none">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                      {place.google.rating}
+                      {place.google.userRatingCount && (
+                        <span className="text-text-tertiary">({place.google.userRatingCount})</span>
+                      )}
+                    </span>
+                  )}
+
+                  {/* Google Maps link */}
+                  {place.google.googleMapsUri && (
+                    <a
+                      href={place.google.googleMapsUri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[11px] text-accent hover:underline"
+                    >
+                      <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                      </svg>
+                      Google Maps
+                    </a>
+                  )}
+
+                  {/* Share button */}
+                  <button
+                    onClick={handleShare}
+                    className="inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer ml-auto"
+                  >
+                    <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="18" cy="5" r="3" />
+                      <circle cx="6" cy="12" r="3" />
+                      <circle cx="18" cy="19" r="3" />
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                    </svg>
+                    {copied ? 'Copied!' : 'Share'}
+                  </button>
+                </div>
+
+                {/* Hours (collapsible) */}
+                {place.google.weekdayHours && place.google.weekdayHours.length > 0 && (
+                  <div>
+                    <button
+                      onClick={() => setShowHours(!showHours)}
+                      className="text-[11px] text-text-tertiary hover:text-text-secondary transition-colors cursor-pointer flex items-center gap-1"
+                    >
+                      <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                      </svg>
+                      {showHours ? 'Hide hours' : 'Show hours'}
+                      <svg
+                        width={8} height={8} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
+                        className={`transition-transform ${showHours ? 'rotate-180' : ''}`}
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
+                    <AnimatePresence>
+                      {showHours && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-2 space-y-0.5">
+                            {place.google.weekdayHours.map((h, i) => (
+                              <p key={i} className="text-[11px] text-text-tertiary">{h}</p>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )}
+              </motion.div>
+            )}
+
+            {/* Share button (when no Google data) */}
+            {!place.google && (
+              <motion.div
+                className="mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                <button
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer"
+                >
+                  <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                  </svg>
+                  {copied ? 'Copied!' : 'Share this place'}
+                </button>
+              </motion.div>
+            )}
+
+            {/* Empty behavioral state for unmapped places */}
+            {place.attributes.length === 0 && (
+              <motion.div
+                className="mb-10 rounded-xl border border-dashed border-accent/20 bg-accent/[0.03] p-6 text-center"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+              >
+                <p className="text-sm text-text-secondary">No one has mapped this place yet.</p>
+                <p className="text-xs text-text-tertiary mt-1">Tap "Been here?" to be the first to contribute.</p>
+              </motion.div>
+            )}
 
             {/* Verified by X people badge */}
             {(() => {

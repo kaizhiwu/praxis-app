@@ -198,7 +198,7 @@ export function ResultsScreen() {
                             ? { duration: 0 }
                             : { delay: i * 0.08, type: 'spring', stiffness: 300, damping: 20 }
                         }
-                        onClick={() => navigate(`/place/${r.place.id}`)}
+                        onClick={() => navigate(`/place/${r.place.googlePlaceId || r.place.id}`)}
                         onMouseEnter={() => setHoveredDot(r.place.id)}
                         onMouseLeave={() => setHoveredDot(null)}
                         onTouchStart={() => setHoveredDot(r.place.id)}
@@ -314,7 +314,7 @@ export function ResultsScreen() {
                   <ResultCard
                     result={result}
                     index={i}
-                    onClick={() => navigate(`/place/${result.place.id}`)}
+                    onClick={() => navigate(`/place/${result.place.googlePlaceId || result.place.id}`)}
                   />
                 </motion.div>
               ))}

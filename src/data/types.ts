@@ -35,8 +35,19 @@ export interface Contribution {
   timestamp: string
 }
 
+export interface GooglePlaceBase {
+  rating?: number
+  userRatingCount?: number
+  openNow?: boolean
+  weekdayHours?: string[]
+  photoUri?: string
+  googleMapsUri?: string
+  types?: string[]
+}
+
 export interface Place {
   id: string
+  googlePlaceId?: string
   name: string
   address: string
   lat: number
@@ -45,6 +56,7 @@ export interface Place {
   distance: string
   attributes: PlaceAttribute[]
   contributions: Contribution[]
+  google?: GooglePlaceBase
 }
 
 export interface SearchResult {

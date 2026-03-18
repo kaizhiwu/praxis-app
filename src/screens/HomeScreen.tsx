@@ -1,9 +1,10 @@
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { QueryBar } from '../components/QueryBar'
 import { IntentChips } from '../components/IntentChips'
 import { getTimeContextChips } from '../data/mock'
+import { extractPlaceId, isGoogleEnabled } from '../lib/google-places'
 
 // ---------------------------------------------------------------------------
 // Icon helpers (Lucide-style, 24 viewBox, stroke-based)
@@ -429,8 +430,22 @@ export function HomeScreen() {
     color: CHIP_COLORS[c.label] as 'indigo' | 'coral' | 'amber' | undefined,
   }))
 
+  const [linkInput, setLinkInput] = useState('')
+  const [linkError, setLinkError] = useState('')
+
   function handleSearch(query: string) {
     navigate(`/results?q=${encodeURIComponent(query)}`)
+  }
+
+  function handlePasteLink() {
+    if (!linkInput.trim()) return
+    const placeId = extractPlaceId(linkInput.trim())
+    if (placeId) {
+      setLinkError('')
+      navigate(`/place/${placeId}`)
+    } else {
+      setLinkError('Could not extract a place from that link')
+    }
   }
 
   return (
@@ -508,6 +523,41 @@ export function HomeScreen() {
         >
           <IntentChips chips={chips} onSelect={handleSearch} />
         </motion.div>
+
+        {/* Paste Google Maps link */}
+        {isGoogleEnabled() && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
+          >
+            <div className="flex items-center gap-2">
+              <div className="h-px flex-1 bg-surface-border/50" />
+              <span className="text-text-tertiary text-[10px] uppercase tracking-widest">or</span>
+              <div className="h-px flex-1 bg-surface-border/50" />
+            </div>
+            <div className="mt-3 flex gap-2">
+              <input
+                type="text"
+                value={linkInput}
+                onChange={(e) => { setLinkInput(e.target.value); setLinkError('') }}
+                onKeyDown={(e) => e.key === 'Enter' && handlePasteLink()}
+                placeholder="Paste a Google Maps link"
+                className="flex-1 min-w-0 text-sm text-text-primary bg-white/70 border border-surface-border rounded-xl px-3.5 py-2.5 placeholder:text-text-tertiary focus:outline-none focus:border-accent/30 focus:ring-1 focus:ring-accent/10 transition-colors"
+              />
+              <button
+                onClick={handlePasteLink}
+                className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity hover:opacity-90"
+                style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}
+              >
+                Go
+              </button>
+            </div>
+            {linkError && (
+              <p className="text-[11px] text-red-500 mt-1.5 px-1">{linkError}</p>
+            )}
+          </motion.div>
+        )}
 
         {/* Decorative divider */}
         <motion.div

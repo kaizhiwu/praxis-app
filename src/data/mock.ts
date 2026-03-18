@@ -1,4 +1,5 @@
 import type { Place, SearchResult, AttributeType, AttributeCluster } from './types'
+import { fetchPlaceBase, fetchPlaceFull, isGoogleEnabled } from '../lib/google-places'
 
 const ATTRIBUTE_META: Record<AttributeType, { label: string; cluster: AttributeCluster }> = {
   outlet_usability: { label: 'Outlet Usability', cluster: 'workability' },
@@ -26,6 +27,7 @@ function daysAgo(n: number): string {
 export const places: Place[] = [
   {
     id: '01',
+    googlePlaceId: 'ChIJhz8mAp9ZwokRXCe_5sVrn5s',
     name: 'Think Coffee',
     address: '248 Mercer St',
     lat: 40.7291,
@@ -48,6 +50,7 @@ export const places: Place[] = [
   },
   {
     id: '02',
+    googlePlaceId: 'ChIJH-tBOc1ZwokR1mfwHdHMbUI',
     name: 'Starbucks Reserve Roastery',
     address: '61 9th Ave',
     lat: 40.7425,
@@ -69,6 +72,7 @@ export const places: Place[] = [
   },
   {
     id: '03',
+    googlePlaceId: 'ChIJ0wFRACBbwokRm7S8ge7QkP0',
     name: 'Brooklyn Public Library',
     address: '10 Grand Army Plaza',
     lat: 40.6724,
@@ -90,6 +94,7 @@ export const places: Place[] = [
   },
   {
     id: '04',
+    googlePlaceId: 'ChIJgdJfB59ZwokRBXmrG_sUlJQ',
     name: 'Vanessa\'s Dumpling House',
     address: '118A Eldridge St',
     lat: 40.7188,
@@ -111,6 +116,7 @@ export const places: Place[] = [
   },
   {
     id: '05',
+    googlePlaceId: 'ChIJr0cnd39ZwokRVZ7KFCljvNs',
     name: 'Penn Station Amtrak Lounge',
     address: '8th Ave & 31st St',
     lat: 40.7506,
@@ -131,6 +137,7 @@ export const places: Place[] = [
   },
   {
     id: '06',
+    googlePlaceId: 'ChIJb0n2sJdZwokRGnrFpDnFk7k',
     name: 'Whole Foods Market Bowery',
     address: '95 E Houston St',
     lat: 40.7243,
@@ -190,7 +197,53 @@ export function searchByIntent(query: string): SearchResult[] {
 }
 
 export function getPlaceById(id: string): Place | undefined {
-  return places.find(p => p.id === id)
+  return places.find(p => p.id === id || p.googlePlaceId === id)
+}
+
+/**
+ * Enrich a place with live Google base data (rating, hours, photo, etc.).
+ * No-op if API key is not set or place has no googlePlaceId.
+ */
+export async function enrichWithGoogle(place: Place): Promise<Place> {
+  if (!place.googlePlaceId || !isGoogleEnabled()) return place
+  const base = await fetchPlaceBase(place.googlePlaceId)
+  if (!base) return place
+  return { ...place, google: base }
+}
+
+/**
+ * Look up a place by ID, including Google API fetch for unknown places.
+ * Returns enriched place if found locally, or creates a new stub from Google.
+ */
+export async function getPlaceByIdAsync(id: string): Promise<Place | null> {
+  // Check local places first
+  const local = places.find(p => p.id === id || p.googlePlaceId === id)
+  if (local) {
+    return enrichWithGoogle(local)
+  }
+
+  // If it looks like a Google Place ID and API is enabled, fetch from Google
+  if (isGoogleEnabled() && id.startsWith('ChIJ')) {
+    const full = await fetchPlaceFull(id)
+    if (!full) return null
+
+    const newPlace: Place = {
+      id: id,
+      googlePlaceId: id,
+      name: full.name,
+      address: full.address,
+      lat: full.lat,
+      lng: full.lng,
+      neighborhood: '',
+      distance: '',
+      attributes: [],
+      contributions: [],
+      google: full.google,
+    }
+    return newPlace
+  }
+
+  return null
 }
 
 export function getTimeContextChips(): { label: string; query: string }[] {
