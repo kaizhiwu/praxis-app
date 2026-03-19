@@ -28,16 +28,16 @@ function DataLabel({ data, scrollYProgress }: { data: typeof DATA_LABELS[number]
     >
       <div className="flex items-center gap-2">
         <div className="relative">
-          <div className="w-2 h-2 rounded-full bg-[#818CF8]" />
-          <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#818CF8] animate-ping opacity-30" />
+          <div className="w-2 h-2 rounded-full bg-[#4F46E5]" />
+          <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#4F46E5] animate-ping opacity-30" />
         </div>
         <div
           className="px-2.5 py-1 rounded-md backdrop-blur-md text-[11px] font-mono tracking-wide"
           style={{
-            background: 'rgba(99, 102, 241, 0.08)',
-            border: '1px solid rgba(99, 102, 241, 0.15)',
-            color: '#A5B4FC',
-            textShadow: '0 0 12px rgba(99,102,241,0.4)',
+            background: 'rgba(255, 255, 255, 0.7)',
+            border: '1px solid rgba(79, 70, 229, 0.2)',
+            color: '#4F46E5',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
           }}
         >
           {data.label}
@@ -87,8 +87,8 @@ export function HeroSection() {
   const textOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
   const textY = useTransform(scrollYProgress, [0, 0.15], [0, -30])
 
-  // Video overlay darkens less as you scroll (city reveals)
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.3], [0.45, 0.15])
+  // Video overlay lightens less as you scroll (city reveals)
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.3], [0.7, 0.3])
 
   // Scroll CTA fades in mid-scroll
   const ctaOpacity = useTransform(scrollYProgress, [0.65, 0.85], [0, 1])
@@ -97,7 +97,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#09090B]"
+      className="relative bg-[#FAFAFA]"
       style={{ height: '280vh' }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -110,33 +110,33 @@ export function HeroSection() {
             playsInline
             preload="auto"
             className="w-full h-full object-cover"
-            style={{ filter: 'brightness(0.4) saturate(0.12) contrast(1.15)' }}
+            style={{ filter: 'brightness(1.1) saturate(0.15) contrast(0.9)' }}
           />
 
-          {/* Indigo color wash */}
+          {/* Light warm wash */}
           <div
             className="absolute inset-0 mix-blend-color"
-            style={{ background: 'rgba(99, 102, 241, 0.12)' }}
+            style={{ background: 'rgba(79, 70, 229, 0.06)' }}
           />
 
-          {/* Dynamic overlay — darker at start (text readable), lighter on scroll (city reveals) */}
+          {/* Dynamic overlay — lighter at start (text readable), more transparent on scroll (city reveals) */}
           <motion.div
             className="absolute inset-0"
-            style={{ opacity: overlayOpacity, background: '#09090B' }}
+            style={{ opacity: overlayOpacity, background: 'rgba(250,250,250,0.92)' }}
           />
 
-          {/* Constant edge vignette for depth */}
+          {/* Constant edge vignette for depth — light version */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse at 60% 50%, transparent 30%, rgba(9,9,11,0.6) 100%)',
+              background: 'radial-gradient(ellipse at 60% 50%, transparent 30%, rgba(245,245,247,0.5) 100%)',
             }}
           />
 
           {/* Bottom fade to next section */}
           <div
             className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, #09090B, transparent)' }}
+            style={{ background: 'linear-gradient(to top, #FAFAFA, transparent)' }}
           />
         </div>
 
@@ -150,9 +150,9 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="inline-flex mb-6 rounded-full border border-white/[0.08] px-4 py-1.5 backdrop-blur-md bg-white/[0.03]"
+              className="inline-flex mb-6 rounded-full border border-[#E5E5EA] px-4 py-1.5 backdrop-blur-md bg-white/60"
             >
-              <span className="text-[11px] uppercase tracking-[0.2em] text-white/40">
+              <span className="text-[11px] uppercase tracking-[0.2em] text-[#86868B]">
                 {PITCH.hero.tagline}
               </span>
             </motion.div>
@@ -163,12 +163,12 @@ export function HeroSection() {
               transition={{ delay: 0.6, duration: 0.7 }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05]"
             >
-              <span className="text-white">The behavioral layer</span>
+              <span className="text-[#1D1D1F]">The behavioral layer</span>
               <br />
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, #A5B4FC 0%, #818CF8 30%, #6366F1 60%, #4F46E5 100%)',
+                  backgroundImage: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 40%, #4338CA 80%, #3730A3 100%)',
                 }}
               >
                 maps won&apos;t build.
@@ -179,7 +179,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.5 }}
-              className="mt-6 text-base sm:text-lg text-white/50 max-w-lg mx-auto leading-relaxed font-light"
+              className="mt-6 text-base sm:text-lg text-[#6E6E73] max-w-lg mx-auto leading-relaxed font-light"
             >
               {PITCH.hero.sub}
             </motion.p>
@@ -188,7 +188,7 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1, duration: 0.5 }}
-              className="mt-3 text-xs text-white/25 tracking-wide"
+              className="mt-3 text-xs text-[#AEAEB2] tracking-wide"
             >
               {PITCH.hero.founderNote}
             </motion.p>
@@ -215,7 +215,7 @@ export function HeroSection() {
               </a>
               <a
                 href="#problem"
-                className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] px-6 py-2.5 text-sm font-medium text-white/60 transition-all duration-300 hover:text-white/80 hover:border-white/15 hover:bg-white/[0.03]"
+                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-2.5 text-sm font-medium text-[#6E6E73] transition-all duration-300 hover:text-[#1D1D1F] hover:border-[#AEAEB2] hover:bg-white/60"
               >
                 Read the thesis
                 <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
@@ -230,9 +230,9 @@ export function HeroSection() {
               animate={{ opacity: [0.2, 0.5, 0.2] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/20">Scroll</span>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#AEAEB2]">Scroll</span>
               <motion.div
-                className="w-px h-8 bg-gradient-to-b from-white/20 to-transparent"
+                className="w-px h-8 bg-gradient-to-b from-[#AEAEB2] to-transparent"
                 animate={{ scaleY: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
@@ -265,7 +265,7 @@ export function HeroSection() {
           </a>
           <a
             href="#problem"
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] px-6 py-3 text-sm font-medium text-white/70 transition-all duration-300 hover:text-white hover:border-white/15 hover:bg-white/[0.04] backdrop-blur-md"
+            className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-3 text-sm font-medium text-[#6E6E73] transition-all duration-300 hover:text-[#1D1D1F] hover:border-[#AEAEB2] hover:bg-white/60 backdrop-blur-md"
           >
             Read the thesis
             <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
@@ -276,7 +276,7 @@ export function HeroSection() {
       </div>
 
       {/* Section transition line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#6366F1]/15 to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4F46E5]/15 to-transparent z-10" />
     </section>
   )
 }

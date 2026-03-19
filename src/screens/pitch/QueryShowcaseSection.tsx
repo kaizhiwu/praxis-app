@@ -51,14 +51,14 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 }
 
 const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string; glow: string }> = {
-  laptop:     { bg: 'rgba(99,102,241,0.06)',  border: 'rgba(99,102,241,0.15)',  text: '#A5B4FC', glow: 'rgba(99,102,241,0.3)' },
-  camera:     { bg: 'rgba(236,72,153,0.06)',   border: 'rgba(236,72,153,0.15)',  text: '#F9A8D4', glow: 'rgba(236,72,153,0.3)' },
-  heart:      { bg: 'rgba(244,63,94,0.06)',    border: 'rgba(244,63,94,0.15)',   text: '#FDA4AF', glow: 'rgba(244,63,94,0.3)' },
-  user:       { bg: 'rgba(139,92,246,0.06)',   border: 'rgba(139,92,246,0.15)',  text: '#C4B5FD', glow: 'rgba(139,92,246,0.3)' },
-  accessible: { bg: 'rgba(34,211,238,0.06)',   border: 'rgba(34,211,238,0.15)',  text: '#A5F3FC', glow: 'rgba(34,211,238,0.3)' },
-  sparkle:    { bg: 'rgba(251,191,36,0.06)',   border: 'rgba(251,191,36,0.15)',  text: '#FDE68A', glow: 'rgba(251,191,36,0.3)' },
-  utensils:   { bg: 'rgba(248,113,113,0.06)',  border: 'rgba(248,113,113,0.15)', text: '#FCA5A5', glow: 'rgba(248,113,113,0.3)' },
-  clock:      { bg: 'rgba(52,211,153,0.06)',   border: 'rgba(52,211,153,0.15)',  text: '#6EE7B7', glow: 'rgba(52,211,153,0.3)' },
+  laptop:     { bg: 'rgba(99,102,241,0.08)',  border: 'rgba(99,102,241,0.2)',   text: '#4F46E5', glow: 'rgba(99,102,241,0.15)' },
+  camera:     { bg: 'rgba(236,72,153,0.08)',   border: 'rgba(236,72,153,0.2)',   text: '#DB2777', glow: 'rgba(236,72,153,0.15)' },
+  heart:      { bg: 'rgba(244,63,94,0.08)',    border: 'rgba(244,63,94,0.2)',    text: '#E11D48', glow: 'rgba(244,63,94,0.15)' },
+  user:       { bg: 'rgba(139,92,246,0.08)',   border: 'rgba(139,92,246,0.2)',   text: '#7C3AED', glow: 'rgba(139,92,246,0.15)' },
+  accessible: { bg: 'rgba(6,182,212,0.08)',    border: 'rgba(6,182,212,0.2)',    text: '#0891B2', glow: 'rgba(6,182,212,0.15)' },
+  sparkle:    { bg: 'rgba(217,119,6,0.08)',    border: 'rgba(217,119,6,0.2)',    text: '#D97706', glow: 'rgba(217,119,6,0.15)' },
+  utensils:   { bg: 'rgba(239,68,68,0.08)',    border: 'rgba(239,68,68,0.2)',    text: '#DC2626', glow: 'rgba(239,68,68,0.15)' },
+  clock:      { bg: 'rgba(16,185,129,0.08)',   border: 'rgba(16,185,129,0.2)',   text: '#059669', glow: 'rgba(16,185,129,0.15)' },
 }
 
 export function QueryShowcaseSection() {
@@ -68,10 +68,10 @@ export function QueryShowcaseSection() {
   const colors = CATEGORY_COLORS[active.icon] || CATEGORY_COLORS.laptop
 
   return (
-    <section className="bg-[#09090B] py-24 md:py-40 px-6 relative overflow-hidden">
+    <section className="bg-[#F5F5F7] py-24 md:py-40 px-6 relative overflow-hidden">
       {/* Subtle ambient glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-[120px] opacity-[0.03] transition-colors duration-700"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-[120px] opacity-[0.04] transition-colors duration-700"
         style={{ background: colors.glow }}
       />
 
@@ -83,10 +83,10 @@ export function QueryShowcaseSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F]">
             {PITCH.queryShowcase.title}
           </h2>
-          <p className="text-[#9CA3AF] mt-4 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-[#6E6E73] mt-4 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             {PITCH.queryShowcase.sub}
           </p>
         </motion.div>
@@ -102,12 +102,12 @@ export function QueryShowcaseSection() {
                 onClick={() => setActiveCategory(i)}
                 className="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer"
                 style={{
-                  background: isActive ? catColors.bg : 'transparent',
-                  border: `1px solid ${isActive ? catColors.border : 'rgba(255,255,255,0.06)'}`,
-                  color: isActive ? catColors.text : '#6B7280',
+                  background: isActive ? catColors.bg : 'white',
+                  border: `1px solid ${isActive ? catColors.border : '#E5E5EA'}`,
+                  color: isActive ? catColors.text : '#86868B',
                 }}
               >
-                <span style={{ color: isActive ? catColors.text : '#6B7280' }}>
+                <span style={{ color: isActive ? catColors.text : '#86868B' }}>
                   {CATEGORY_ICONS[cat.icon]}
                 </span>
                 {cat.name}
@@ -133,10 +133,9 @@ export function QueryShowcaseSection() {
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06, duration: 0.3 }}
-                  className="group flex items-center gap-3 px-5 py-3.5 rounded-xl transition-all duration-200"
+                  className="group flex items-center gap-3 px-5 py-3.5 rounded-xl transition-all duration-200 bg-white border border-[#E5E5EA]"
                   style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(255,255,255,0.04)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
                   }}
                 >
                   {/* Search icon */}
@@ -148,11 +147,11 @@ export function QueryShowcaseSection() {
                     <circle cx="11" cy="11" r="8" />
                     <path d="M21 21l-4.35-4.35" />
                   </svg>
-                  <span className="text-sm text-white/70 group-hover:text-white/90 transition-colors">
+                  <span className="text-sm text-[#1D1D1F]/70 group-hover:text-[#1D1D1F] transition-colors">
                     {query}
                   </span>
                   {/* "no results on Maps" indicator */}
-                  <span className="ml-auto text-[10px] text-white/15 group-hover:text-white/30 transition-colors shrink-0 hidden sm:block">
+                  <span className="ml-auto text-[10px] text-[#AEAEB2] group-hover:text-[#86868B] transition-colors shrink-0 hidden sm:block">
                     0 results on Maps
                   </span>
                 </motion.div>
@@ -160,7 +159,7 @@ export function QueryShowcaseSection() {
             </div>
 
             {/* Bottom note */}
-            <p className="text-center mt-8 text-xs text-white/20">
+            <p className="text-center mt-8 text-xs text-[#86868B]">
               {categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.queries.length, 0)} example queries &middot; all unanswerable by current maps
             </p>
           </motion.div>

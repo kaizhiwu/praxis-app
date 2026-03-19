@@ -26,21 +26,21 @@ const icons: Record<string, (color: string) => React.ReactNode> = {
 }
 
 const cardColors = [
-  { accent: '#4F46E5', glow: 'rgba(79,70,229,0.15)', border: 'rgba(79,70,229,0.2)' },
-  { accent: '#E2614B', glow: 'rgba(226,97,75,0.12)', border: 'rgba(226,97,75,0.2)' },
-  { accent: '#D97706', glow: 'rgba(217,119,6,0.12)', border: 'rgba(217,119,6,0.2)' },
+  { accent: '#4F46E5', bg: 'rgba(79,70,229,0.06)', border: 'rgba(79,70,229,0.15)' },
+  { accent: '#E2614B', bg: 'rgba(226,97,75,0.05)', border: 'rgba(226,97,75,0.15)' },
+  { accent: '#D97706', bg: 'rgba(217,119,6,0.05)', border: 'rgba(217,119,6,0.15)' },
 ]
 
 export function MoatSection() {
   const layers = PITCH.moat.layers
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden">
-      {/* Grid dot texture */}
+    <section className="py-32 px-6 relative overflow-hidden bg-[#FAFAFA]">
+      {/* Dot grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.025]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)',
           backgroundSize: '24px 24px',
         }}
       />
@@ -53,7 +53,7 @@ export function MoatSection() {
           transition={{ duration: 0.5 }}
           className="text-4xl font-bold mb-4"
           style={{
-            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -66,47 +66,40 @@ export function MoatSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#6B7280] text-sm mb-12 max-w-lg"
+          className="text-[#6E6E73] text-sm mb-12 max-w-lg"
         >
           The incumbent&apos;s rational response is to do nothing.
         </motion.p>
 
-        {/* Bento grid: large card + 2 smaller */}
+        {/* Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Large featured card — Structural Conflict */}
+          {/* Large featured card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:row-span-2 relative group rounded-2xl p-8 md:p-10 overflow-hidden"
+            className="md:row-span-2 relative group rounded-2xl p-8 md:p-10 overflow-hidden bg-white"
             style={{
-              background: '#141416',
               border: `1px solid ${cardColors[0].border}`,
-              boxShadow: `0 0 60px -12px ${cardColors[0].glow}, inset 0 1px 0 rgba(255,255,255,0.04)`,
+              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
             }}
           >
-            {/* Animated gradient top border */}
-            <motion.div
+            {/* Top accent */}
+            <div
               className="absolute top-0 left-0 right-0 h-[2px]"
-              style={{
-                background: `linear-gradient(90deg, transparent, ${cardColors[0].accent}, transparent)`,
-              }}
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              style={{ background: `linear-gradient(90deg, transparent, ${cardColors[0].accent}, transparent)` }}
             />
-            {/* Inner glow */}
+            {/* Hover glow */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: `radial-gradient(ellipse at 30% 20%, ${cardColors[0].glow} 0%, transparent 60%)`,
-              }}
+              style={{ background: `radial-gradient(ellipse at 30% 20%, ${cardColors[0].bg} 0%, transparent 60%)` }}
             />
 
             <div className="relative z-10">
               {icons[layers[0].icon]?.(cardColors[0].accent)}
-              <h3 className="text-2xl font-bold text-white mt-6 mb-4">{layers[0].name}</h3>
-              <p className="text-[#9CA3AF] leading-relaxed">{layers[0].description}</p>
+              <h3 className="text-2xl font-bold text-[#1D1D1F] mt-6 mb-4">{layers[0].name}</h3>
+              <p className="text-[#6E6E73] leading-relaxed">{layers[0].description}</p>
             </div>
           </motion.div>
 
@@ -121,32 +114,25 @@ export function MoatSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-                className="relative group rounded-2xl p-8 overflow-hidden"
+                className="relative group rounded-2xl p-8 overflow-hidden bg-white"
                 style={{
-                  background: '#141416',
                   border: `1px solid ${colors.border}`,
-                  boxShadow: `inset 0 -20px 80px -20px ${colors.glow}, inset 0 1px 0 rgba(255,255,255,0.04)`,
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
                 }}
               >
-                {/* Top accent line */}
                 <div
                   className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${colors.accent}, transparent)`,
-                  }}
+                  style={{ background: `linear-gradient(90deg, transparent, ${colors.accent}, transparent)` }}
                 />
-                {/* Hover glow */}
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `radial-gradient(ellipse at 50% 0%, ${colors.glow} 0%, transparent 60%)`,
-                  }}
+                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${colors.bg} 0%, transparent 60%)` }}
                 />
 
                 <div className="relative z-10">
                   {renderIcon?.(colors.accent)}
-                  <h3 className="text-xl font-semibold text-white mt-4 mb-3">{layer.name}</h3>
-                  <p className="text-sm text-[#9CA3AF] leading-relaxed">{layer.description}</p>
+                  <h3 className="text-xl font-semibold text-[#1D1D1F] mt-4 mb-3">{layer.name}</h3>
+                  <p className="text-sm text-[#6E6E73] leading-relaxed">{layer.description}</p>
                 </div>
               </motion.div>
             )

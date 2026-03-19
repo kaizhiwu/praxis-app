@@ -36,7 +36,7 @@ export function DemoSection() {
   return (
     <section
       ref={containerRef}
-      className="bg-[#09090B] py-24 md:py-40 px-6 relative overflow-hidden"
+      className="bg-[#FAFAFA] py-24 md:py-40 px-6 relative overflow-hidden"
     >
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#4F46E5]/[0.02] via-transparent to-transparent" />
@@ -49,8 +49,8 @@ export function DemoSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white">{PITCH.demo.title}</h2>
-          <p className="text-[#9CA3AF] mt-4 max-w-xl mx-auto">{PITCH.demo.sub}</p>
+          <h2 className="text-4xl font-bold text-[#1D1D1F]">{PITCH.demo.title}</h2>
+          <p className="text-[#6E6E73] mt-4 max-w-xl mx-auto">{PITCH.demo.sub}</p>
         </motion.div>
 
         {/* 3D Container Scroll — phone rotates from tilted to flat */}
@@ -66,20 +66,20 @@ export function DemoSection() {
           >
             {/* Phone frame */}
             <div className="relative">
-              {/* Glow behind phone */}
+              {/* Glow behind phone — softer on light */}
               <div
-                className="absolute -inset-8 rounded-[3rem] blur-[60px] opacity-20"
+                className="absolute -inset-8 rounded-[3rem] blur-[60px] opacity-10"
                 style={{
                   background: 'linear-gradient(135deg, #4F46E5, #E2614B, #D97706)',
                 }}
               />
 
-              {/* Phone body */}
+              {/* Phone body — stays dark */}
               <div
-                className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-white/[0.08] bg-[#141416] overflow-hidden"
+                className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-[#1D1D1F]/10 bg-[#1D1D1F] overflow-hidden"
                 style={{
                   boxShadow:
-                    '0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003',
+                    '0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)',
                 }}
               >
                 {/* Status bar */}
@@ -108,7 +108,7 @@ export function DemoSection() {
               </div>
 
               {/* Reflection/shine */}
-              <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none bg-gradient-to-br from-white/[0.06] via-transparent to-transparent" />
+              <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none bg-gradient-to-br from-white/[0.08] via-transparent to-transparent" />
             </div>
           </motion.div>
         </div>
@@ -121,8 +121,8 @@ export function DemoSection() {
               onClick={() => setActiveQuery(i)}
               className={`px-4 py-2 rounded-full text-sm transition-all duration-300 cursor-pointer ${
                 i === activeQuery
-                  ? 'bg-[#4F46E5]/15 border border-[#4F46E5]/30 text-white'
-                  : 'bg-[#141416] border border-white/[0.06] text-[#6B7280] hover:text-[#9CA3AF]'
+                  ? 'bg-[#4F46E5]/10 border border-[#4F46E5]/25 text-[#4F46E5]'
+                  : 'bg-white border border-[#E5E5EA] text-[#86868B] hover:text-[#6E6E73]'
               }`}
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}

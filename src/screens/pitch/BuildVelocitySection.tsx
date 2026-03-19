@@ -38,13 +38,13 @@ function AnimatedValue({ value }: { value: string }) {
 
 export function BuildVelocitySection() {
   return (
-    <section className="py-32 px-6 relative overflow-hidden">
+    <section className="py-32 px-6 relative overflow-hidden bg-[#F5F5F7]">
       {/* Grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.025]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
+            'linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
           maskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 100%)',
@@ -59,7 +59,7 @@ export function BuildVelocitySection() {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-16"
           style={{
-            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -76,11 +76,10 @@ export function BuildVelocitySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative group rounded-2xl p-6 overflow-hidden"
+              className="relative group rounded-2xl p-6 overflow-hidden bg-white"
               style={{
-                background: '#141416',
-                border: `1px solid ${colors[i]}20`,
-                boxShadow: `inset 0 -20px 60px -20px ${colors[i]}08, inset 0 1px 0 rgba(255,255,255,0.04)`,
+                border: `1px solid ${colors[i]}18`,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}
             >
               {/* Top accent line */}
@@ -88,10 +87,9 @@ export function BuildVelocitySection() {
                 className="absolute top-0 left-0 right-0 h-[2px]"
                 style={{ background: `linear-gradient(90deg, transparent, ${colors[i]}, transparent)` }}
               />
-              {/* Hover glow */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `radial-gradient(ellipse at 50% 0%, ${colors[i]}15, transparent 60%)` }}
+                style={{ background: `radial-gradient(ellipse at 50% 0%, ${colors[i]}08, transparent 60%)` }}
               />
 
               <div className="relative z-10">
@@ -102,11 +100,11 @@ export function BuildVelocitySection() {
                   <AnimatedValue value={metric.value} />
                 </p>
 
-                <p className="text-white font-medium mt-3 text-sm">
+                <p className="text-[#1D1D1F] font-medium mt-3 text-sm">
                   {metric.label}
                 </p>
 
-                <p className="text-[#6B7280] text-xs mt-1.5 leading-relaxed">
+                <p className="text-[#86868B] text-xs mt-1.5 leading-relaxed">
                   {metric.description}
                 </p>
               </div>

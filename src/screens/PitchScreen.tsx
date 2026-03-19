@@ -70,7 +70,7 @@ export function PitchScreen() {
   }, [])
 
   return (
-    <div className="bg-[#09090B] text-white min-h-screen">
+    <div className="bg-[#FAFAFA] text-[#1D1D1F] min-h-screen">
       {/* Grain overlay */}
       <div className="grain" />
 
@@ -81,10 +81,10 @@ export function PitchScreen() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between backdrop-blur-xl transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(9,9,11,0.85)' : 'rgba(9,9,11,0.4)',
+          background: scrolled ? 'rgba(250,250,250,0.85)' : 'rgba(250,250,250,0.4)',
           borderBottom: scrolled
-            ? '1px solid rgba(79,70,229,0.1)'
-            : '1px solid rgba(255,255,255,0.02)',
+            ? '1px solid rgba(0,0,0,0.06)'
+            : '1px solid rgba(0,0,0,0.02)',
         }}
       >
         <div className="flex items-center gap-2">
@@ -99,9 +99,9 @@ export function PitchScreen() {
               <path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5M2 10l8 5 8-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="text-white font-semibold tracking-tight">Praxis</span>
+          <span className="text-[#1D1D1F] font-semibold tracking-tight">Praxis</span>
         </div>
-        <a href="/" className="text-xs text-[#9CA3AF] hover:text-white transition-colors inline-flex items-center gap-1">
+        <a href="/" className="text-xs text-[#86868B] hover:text-[#1D1D1F] transition-colors inline-flex items-center gap-1">
           Try the product
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
@@ -130,10 +130,10 @@ export function PitchScreen() {
       <CTASection />
 
       {/* Footer */}
-      <footer className="py-12 px-6 text-center border-t border-white/[0.04]">
-        <p className="text-[#6B7280] text-xs">
+      <footer className="py-12 px-6 text-center border-t border-[#E5E5EA]">
+        <p className="text-[#86868B] text-xs">
           &copy; 2026 Praxis &middot; Built by{' '}
-          <a href="https://kaizhiwu.com" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+          <a href="https://kaizhiwu.com" className="hover:text-[#1D1D1F] transition-colors" target="_blank" rel="noopener noreferrer">
             Kai Wu
           </a>
         </p>

@@ -35,13 +35,11 @@ const icons: Record<string, React.ReactNode> = {
 
 const nodeColors = ['#4F46E5', '#E2614B', '#D97706', '#4F46E5']
 
-// Node positions for circular layout (top, right, bottom, left)
-// Positions are based on a unit circle, scaled per viewport
 const nodeAngles = [
-  { angle: -90, labelX: 0, labelY: -42 },   // top
-  { angle: 0, labelX: 42, labelY: 0 },       // right
-  { angle: 90, labelX: 0, labelY: 42 },      // bottom
-  { angle: 180, labelX: -42, labelY: 0 },    // left
+  { angle: -90, labelX: 0, labelY: -42 },
+  { angle: 0, labelX: 42, labelY: 0 },
+  { angle: 90, labelX: 0, labelY: 42 },
+  { angle: 180, labelX: -42, labelY: 0 },
 ]
 
 function getNodePos(index: number, radius: number, cx: number, cy: number) {
@@ -52,22 +50,14 @@ function getNodePos(index: number, radius: number, cx: number, cy: number) {
   }
 }
 
-function buildArcPath(
-  fromIdx: number,
-  toIdx: number,
-  radius: number,
-  cx: number,
-  cy: number,
-) {
+function buildArcPath(fromIdx: number, toIdx: number, radius: number, cx: number, cy: number) {
   const from = getNodePos(fromIdx, radius, cx, cy)
   const to = getNodePos(toIdx, radius, cx, cy)
-  // Use the circle radius for the arc
   return `M ${from.x} ${from.y} A ${radius} ${radius} 0 0 1 ${to.x} ${to.y}`
 }
 
 export function FlywheelSection() {
   const nodes = PITCH.flywheel.nodes
-  // SVG viewBox has padding for labels outside the orbit
   const pad = 100
   const inner = 400
   const size = inner + pad * 2
@@ -83,7 +73,7 @@ export function FlywheelSection() {
   }))
 
   return (
-    <section id="flywheel" className="bg-[#09090B] py-32 px-6">
+    <section id="flywheel" className="bg-[#F5F5F7] py-32 px-6">
       <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -92,7 +82,7 @@ export function FlywheelSection() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-4xl font-bold text-center mb-16"
           style={{
-            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -108,22 +98,17 @@ export function FlywheelSection() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative mx-auto w-[360px] h-[360px] md:w-[540px] md:h-[540px]"
         >
-          {/* Animated radial glow */}
+          {/* Subtle radial glow */}
           <motion.div
             className="absolute inset-0 rounded-full"
-            animate={{ opacity: [0.05, 0.1, 0.05] }}
+            animate={{ opacity: [0.03, 0.06, 0.03] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background: 'radial-gradient(circle, #4F46E5 0%, transparent 70%)',
             }}
           />
 
-          <svg
-            viewBox={`0 0 ${size} ${size}`}
-            className="w-full h-full"
-            fill="none"
-            overflow="visible"
-          >
+          <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" fill="none" overflow="visible">
             <defs>
               {arcs.map((arc) => (
                 <linearGradient
@@ -139,19 +124,11 @@ export function FlywheelSection() {
                   <stop offset="100%" stopColor={arc.nextColor} />
                 </linearGradient>
               ))}
-              <marker
-                id="arrowhead"
-                markerWidth="8"
-                markerHeight="6"
-                refX="7"
-                refY="3"
-                orient="auto"
-              >
-                <path d="M0 0L8 3L0 6" fill="#9CA3AF" fillOpacity="0.6" />
+              <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0 0L8 3L0 6" fill="#86868B" fillOpacity="0.6" />
               </marker>
             </defs>
 
-            {/* Arc paths with draw-in animation */}
             {arcs.map((arc) => (
               <motion.path
                 key={`arc-${arc.idx}`}
@@ -166,20 +143,12 @@ export function FlywheelSection() {
                 whileInView={{ pathLength: 1, opacity: 0.5 + arc.idx * 0.12 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{
-                  pathLength: {
-                    delay: 0.3 + arc.idx * 0.25,
-                    duration: 0.8,
-                    ease: 'easeOut',
-                  },
-                  opacity: {
-                    delay: 0.3 + arc.idx * 0.25,
-                    duration: 0.3,
-                  },
+                  pathLength: { delay: 0.3 + arc.idx * 0.25, duration: 0.8, ease: 'easeOut' },
+                  opacity: { delay: 0.3 + arc.idx * 0.25, duration: 0.3 },
                 }}
               />
             ))}
 
-            {/* Nodes */}
             {nodes.map((node, i) => {
               const pos = getNodePos(i, orbitRadius, cx, cy)
               const color = nodeColors[i]
@@ -191,40 +160,16 @@ export function FlywheelSection() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{
-                    delay: 0.5 + i * 0.25,
-                    duration: 0.5,
-                    ease: 'easeOut',
-                  }}
+                  transition={{ delay: 0.5 + i * 0.25, duration: 0.5, ease: 'easeOut' }}
                   style={{ transformOrigin: `${pos.x}px ${pos.y}px` }}
                 >
-                  {/* Node glow pulse */}
                   <motion.circle
-                    cx={pos.x}
-                    cy={pos.y}
-                    r="32"
-                    fill={color}
-                    opacity={0}
-                    animate={{ opacity: [0, 0.12, 0] }}
+                    cx={pos.x} cy={pos.y} r="32" fill={color} opacity={0}
+                    animate={{ opacity: [0, 0.06, 0] }}
                     transition={{ duration: 3, repeat: Infinity, delay: i * 0.75 }}
                   />
-                  {/* Node circle */}
-                  <circle
-                    cx={pos.x}
-                    cy={pos.y}
-                    r="24"
-                    fill="#141416"
-                    stroke={color}
-                    strokeWidth="1.5"
-                  />
-
-                  {/* Icon */}
-                  <foreignObject
-                    x={pos.x - 10}
-                    y={pos.y - 10}
-                    width="20"
-                    height="20"
-                  >
+                  <circle cx={pos.x} cy={pos.y} r="24" fill="white" stroke={color} strokeWidth="1.5" />
+                  <foreignObject x={pos.x - 10} y={pos.y - 10} width="20" height="20">
                     <div
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       {...({ xmlns: 'http://www.w3.org/1999/xhtml' } as any)}
@@ -235,7 +180,6 @@ export function FlywheelSection() {
                     </div>
                   </foreignObject>
 
-                  {/* Label */}
                   {node.label.split('\n').map((line, li) => {
                     const isTop = labelPos.labelY < 0
                     const isBottom = labelPos.labelY > 0
@@ -246,30 +190,13 @@ export function FlywheelSection() {
                     let ty = pos.y + labelPos.labelY + li * 16
                     let anchor: 'start' | 'middle' | 'end' = 'middle'
 
-                    if (isTop) {
-                      ty = pos.y - 36 + li * 16
-                    } else if (isBottom) {
-                      ty = pos.y + 42 + li * 16
-                    } else if (isLeft) {
-                      tx = pos.x - 36
-                      ty = pos.y - 6 + li * 16
-                      anchor = 'end'
-                    } else if (isRight) {
-                      tx = pos.x + 36
-                      ty = pos.y - 6 + li * 16
-                      anchor = 'start'
-                    }
+                    if (isTop) { ty = pos.y - 36 + li * 16 }
+                    else if (isBottom) { ty = pos.y + 42 + li * 16 }
+                    else if (isLeft) { tx = pos.x - 36; ty = pos.y - 6 + li * 16; anchor = 'end' }
+                    else if (isRight) { tx = pos.x + 36; ty = pos.y - 6 + li * 16; anchor = 'start' }
 
                     return (
-                      <text
-                        key={li}
-                        x={tx}
-                        y={ty}
-                        textAnchor={anchor}
-                        fill="#9CA3AF"
-                        fontSize="12"
-                        fontFamily="system-ui, sans-serif"
-                      >
+                      <text key={li} x={tx} y={ty} textAnchor={anchor} fill="#6E6E73" fontSize="12" fontFamily="system-ui, sans-serif">
                         {line}
                       </text>
                     )
@@ -285,7 +212,7 @@ export function FlywheelSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
-          className="text-[#9CA3AF] text-center max-w-lg mx-auto mt-8 leading-relaxed"
+          className="text-[#6E6E73] text-center max-w-lg mx-auto mt-8 leading-relaxed"
         >
           {PITCH.flywheel.sub}
         </motion.p>

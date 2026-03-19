@@ -58,17 +58,17 @@ function StoryCard({
       >
         {/* Text side */}
         <motion.div style={{ opacity, y: translateY }} className="flex-1 max-w-md">
-          <div className="text-[#6B7280] mb-4">{icons[story.icon]}</div>
+          <div className="text-[#86868B] mb-4">{icons[story.icon]}</div>
 
-          <p className="text-white text-xl md:text-2xl font-semibold">
+          <p className="text-[#1D1D1F] text-xl md:text-2xl font-semibold">
             &ldquo;{story.query.replace(/^"|"$/g, '')}&rdquo;
           </p>
 
           <div className="mt-6">
-            <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+            <p className="text-[#86868B] text-xs uppercase tracking-wide mb-1">
               What Maps says:
             </p>
-            <p className="text-[#9CA3AF] relative">
+            <p className="text-[#6E6E73] relative">
               <span className="relative">
                 {story.mapsResult}
                 <motion.span
@@ -83,10 +83,10 @@ function StoryCard({
             </p>
           </div>
 
-          <div className="h-px bg-white/[0.06] my-5" />
+          <div className="h-px bg-[#E5E5EA] my-5" />
 
           <div>
-            <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+            <p className="text-[#86868B] text-xs uppercase tracking-wide mb-1">
               What actually happened:
             </p>
             <p className="text-[#E2614B] font-medium">{story.reality}</p>
@@ -98,50 +98,50 @@ function StoryCard({
           style={{ clipPath }}
           className="flex-1 max-w-sm w-full"
         >
-          <div className="relative rounded-2xl overflow-hidden bg-[#141416] border border-white/[0.06] aspect-[4/3]">
+          <div className="relative rounded-2xl overflow-hidden bg-white border border-[#E5E5EA] aspect-[4/3]" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
             {/* Abstract visual per story type */}
             <div className="absolute inset-0 flex items-center justify-center">
               {story.icon === 'laptop' && (
                 <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
                   {/* Cafe scene — tables with X marks */}
-                  <rect x="20" y="60" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
-                  <line x1="30" y1="70" x2="60" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
-                  <line x1="60" y1="70" x2="30" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
-                  <rect x="80" y="40" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
-                  <circle cx="105" cy="57" r="8" stroke="#4F46E5" strokeWidth="1" opacity="0.2" />
-                  <path d="M101 57l3 3 5-6" stroke="#4F46E5" strokeWidth="1.5" opacity="0.5" />
-                  <rect x="140" y="70" width="45" height="30" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
-                  <line x1="148" y1="78" x2="177" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
-                  <line x1="177" y1="78" x2="148" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.6" />
-                  <text x="100" y="130" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">2 of 3 spots unusable</text>
+                  <rect x="20" y="60" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
+                  <line x1="30" y1="70" x2="60" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
+                  <line x1="60" y1="70" x2="30" y2="85" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
+                  <rect x="80" y="40" width="50" height="35" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
+                  <circle cx="105" cy="57" r="8" stroke="#4F46E5" strokeWidth="1" opacity="0.3" />
+                  <path d="M101 57l3 3 5-6" stroke="#4F46E5" strokeWidth="1.5" opacity="0.6" />
+                  <rect x="140" y="70" width="45" height="30" rx="4" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
+                  <line x1="148" y1="78" x2="177" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
+                  <line x1="177" y1="78" x2="148" y2="92" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
+                  <text x="100" y="130" textAnchor="middle" fill="#86868B" fontSize="9" fontFamily="system-ui">2 of 3 spots unusable</text>
                 </svg>
               )}
               {story.icon === 'droplet' && (
                 <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
                   {/* Locked doors */}
-                  <rect x="20" y="30" width="40" height="60" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.4" />
-                  <circle cx="50" cy="60" r="3" fill="#E2614B" opacity="0.5" />
+                  <rect x="20" y="30" width="40" height="60" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.5" />
+                  <circle cx="50" cy="60" r="3" fill="#E2614B" opacity="0.6" />
                   <text x="40" y="105" textAnchor="middle" fill="#E2614B" fontSize="7" fontFamily="system-ui">CLOSED</text>
-                  <rect x="80" y="30" width="40" height="60" rx="3" stroke="#D97706" strokeWidth="1" opacity="0.4" />
+                  <rect x="80" y="30" width="40" height="60" rx="3" stroke="#D97706" strokeWidth="1" opacity="0.5" />
                   <text x="100" y="65" textAnchor="middle" fill="#D97706" fontSize="7" fontFamily="system-ui">$$$</text>
                   <text x="100" y="105" textAnchor="middle" fill="#D97706" fontSize="7" fontFamily="system-ui">PURCHASE</text>
-                  <rect x="140" y="30" width="40" height="60" rx="3" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
-                  <path d="M155 55h10M160 50v10" stroke="#6B7280" strokeWidth="1" opacity="0.3" />
-                  <text x="160" y="105" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">LOCKED 6PM</text>
-                  <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">0 of 3 actually available</text>
+                  <rect x="140" y="30" width="40" height="60" rx="3" stroke="#4F46E5" strokeWidth="1" opacity="0.5" />
+                  <path d="M155 55h10M160 50v10" stroke="#86868B" strokeWidth="1" opacity="0.4" />
+                  <text x="160" y="105" textAnchor="middle" fill="#86868B" fontSize="7" fontFamily="system-ui">LOCKED 6PM</text>
+                  <text x="100" y="135" textAnchor="middle" fill="#86868B" fontSize="9" fontFamily="system-ui">0 of 3 actually available</text>
                 </svg>
               )}
               {story.icon === 'heart' && (
                 <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
                   {/* Date spot disappointment */}
-                  <circle cx="100" cy="50" r="25" stroke="#E2614B" strokeWidth="0.5" opacity="0.2" />
-                  <rect x="70" y="30" width="60" height="40" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.3" />
-                  <line x1="85" y1="42" x2="115" y2="42" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
-                  <line x1="85" y1="50" x2="115" y2="50" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
-                  <line x1="85" y1="58" x2="115" y2="58" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
+                  <circle cx="100" cy="50" r="25" stroke="#E2614B" strokeWidth="0.5" opacity="0.3" />
+                  <rect x="70" y="30" width="60" height="40" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.4" />
+                  <line x1="85" y1="42" x2="115" y2="42" stroke="#D97706" strokeWidth="3" opacity="0.5" />
+                  <line x1="85" y1="50" x2="115" y2="50" stroke="#D97706" strokeWidth="3" opacity="0.5" />
+                  <line x1="85" y1="58" x2="115" y2="58" stroke="#D97706" strokeWidth="3" opacity="0.5" />
                   <text x="100" y="95" textAnchor="middle" fill="#E2614B" fontSize="8" fontFamily="system-ui">blinding overhead lights</text>
-                  <text x="100" y="110" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">entrance through unmarked alley</text>
-                  <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">10 min standing outside</text>
+                  <text x="100" y="110" textAnchor="middle" fill="#86868B" fontSize="7" fontFamily="system-ui">entrance through unmarked alley</text>
+                  <text x="100" y="135" textAnchor="middle" fill="#86868B" fontSize="9" fontFamily="system-ui">10 min standing outside</text>
                 </svg>
               )}
             </div>
@@ -154,12 +154,12 @@ function StoryCard({
 
 export function ProblemSection() {
   return (
-    <section id="problem" className="bg-[#09090B] relative">
+    <section id="problem" className="bg-[#FAFAFA] relative">
       {/* Dot grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)',
           backgroundSize: '24px 24px',
         }}
       />
@@ -171,7 +171,7 @@ export function ProblemSection() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-4xl font-bold mb-4"
           style={{
-            backgroundImage: 'linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5))',
+            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -195,7 +195,7 @@ export function ProblemSection() {
           transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
           className="border-l-[3px] border-[#4F46E5] pl-6"
         >
-          <p className="text-lg text-[#9CA3AF] italic">{PITCH.problem.insight}</p>
+          <p className="text-lg text-[#6E6E73] italic">{PITCH.problem.insight}</p>
         </motion.blockquote>
       </div>
     </section>
