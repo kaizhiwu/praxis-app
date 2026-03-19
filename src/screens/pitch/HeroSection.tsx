@@ -55,7 +55,7 @@ export function HeroSection() {
   const textY = useTransform(scrollYProgress, [0, 0.15], [0, -30])
 
   // Video overlay darkens less as you scroll (city reveals)
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.3], [0.75, 0.3])
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.3], [0.45, 0.15])
 
   // Scroll CTA fades in mid-scroll
   const ctaOpacity = useTransform(scrollYProgress, [0.65, 0.85], [0, 1])
@@ -130,16 +130,15 @@ export function HeroSection() {
               transition={{ delay: 0.6, duration: 0.7 }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05]"
             >
-              <span className="text-white">Maps tell you where.</span>
+              <span className="text-white">The behavioral layer</span>
               <br />
-              <span className="text-white/90">We tell you </span>
               <span
                 className="bg-clip-text text-transparent"
                 style={{
                   backgroundImage: 'linear-gradient(135deg, #A5B4FC 0%, #818CF8 30%, #6366F1 60%, #4F46E5 100%)',
                 }}
               >
-                what you can actually do there.
+                maps can&apos;t build.
               </span>
             </motion.h1>
 

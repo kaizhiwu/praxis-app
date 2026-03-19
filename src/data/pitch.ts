@@ -1,8 +1,8 @@
 export const PITCH = {
   hero: {
     tagline: 'Behavioral Place Intelligence',
-    headline: 'Maps tell you where.\nWe tell you what you can actually do there.',
-    sub: 'Places are experience goods — you can\'t know if the outlets work or the restrooms are open until you\'re already there. Praxis converts that tacit knowledge into structured, queryable data.',
+    headline: 'The behavioral layer\nmaps can\'t build.',
+    sub: 'Structured ground truth about how places actually function. Confidence-scored. Recency-weighted. Created by users, not scraped from reviews.',
     founderNote: 'Designed, engineered, and shipped by a solo founder with AI.',
   },
   problem: {
