@@ -21,10 +21,10 @@ export const PITCH = {
         icon: 'droplet',
       },
       {
-        query: '"Cheap dinner East Village"',
-        mapsResult: '$$ · "Affordable options!" · Menu photos',
-        reality: 'The $6 dumpling deal ended last month. The late-night special is weekdays only.',
-        icon: 'dollar',
+        query: '"Good first date spot — dim lighting, easy to find"',
+        mapsResult: '4.5 ★ · "Romantic ambiance!" · $$$',
+        reality: 'Blinding overhead lights. Entrance is through an unmarked alley. You both stood outside for 10 minutes.',
+        icon: 'heart',
       },
     ],
     insight: 'Tacit knowledge about places exists — buried in millions of reviews, threads, and posts. Incumbents could structure it, but won\'t prioritize it: behavioral truth is operationally messy, fast-decaying, and not central to ad-driven product architecture. LLMs can parse that ocean, but parsing isn\'t creating. Nobody is generating new ground truth — fresh, structured, confidence-scored behavioral observations confirmed at point of visit. That data asset doesn\'t exist. Praxis creates it.',
@@ -36,7 +36,7 @@ export const PITCH = {
       {
         name: 'Behavioral Place Graph',
         description: 'Structured attributes describing what people can actually do in a place. Not reviews. Not LLM inference. Observed ground truth — every claim has provenance: who reported it, when, how many confirmations.',
-        detail: '22 attribute types across workability, relief, and savings clusters',
+        detail: '40+ attribute types across work, dating, photo, comfort, access, vibe, food, and seasonal clusters',
         color: 'indigo',
       },
       {
@@ -69,13 +69,109 @@ export const PITCH = {
     ],
     sub: 'The Waze model for places. Contributing isn\'t charity — it\'s self-interest. The more you confirm, the better your own results get. Passive signals (time spent, Wi-Fi detection) fill gaps without any taps at all. The graph compounds from usage, not altruism.',
   },
+  queryShowcase: {
+    title: 'Every question you\'ve had about a place',
+    sub: 'These are real queries. None of them return structured answers on Google Maps. All of them are answerable with behavioral ground truth.',
+    categories: [
+      {
+        name: 'Work & Productivity',
+        icon: 'laptop',
+        queries: [
+          'Outlets that actually work near Union Square',
+          'Laptop-friendly cafe that won\'t kick me out after an hour',
+          'Quiet enough for a phone call in Midtown',
+          'Reliable fast Wi-Fi, not "has Wi-Fi"',
+          'Standing-friendly counter space for working',
+        ],
+      },
+      {
+        name: 'Photo & Content',
+        icon: 'camera',
+        queries: [
+          'Good red wall to take pictures in front of',
+          'Colorful Instagrammable spot that feels quirky',
+          'Natural golden-hour light for portraits',
+          'Neon sign or moody lighting for reels',
+          'Rooftop with skyline backdrop, no ticket required',
+        ],
+      },
+      {
+        name: 'Dating & Social',
+        icon: 'heart',
+        queries: [
+          'Good first date lighting — dim, flattering',
+          'Easy to find entrance, not awkward',
+          'Can linger without pressure to order more',
+          'Impressive without trying too hard',
+          'Walk-friendly neighborhood after for "let\'s keep going"',
+        ],
+      },
+      {
+        name: 'Solo & Comfort',
+        icon: 'user',
+        queries: [
+          'Bathroom without purchase required',
+          'Safe to sit alone and read for hours',
+          'Comfortable solo dining — bar seating, not awkward 2-tops',
+          'Good people-watching spot',
+          'Won\'t judge me for staying 3 hours with one coffee',
+        ],
+      },
+      {
+        name: 'Parenting & Access',
+        icon: 'accessible',
+        queries: [
+          'Stroller accessible — actually, not just "ADA compliant"',
+          'Changing table that isn\'t disgusting',
+          'Kid noise tolerance — won\'t get glares',
+          'Enclosed outdoor area so toddler won\'t bolt',
+          'Sensory-calm — low stimulation, no loud music',
+        ],
+      },
+      {
+        name: 'Vibe & Mood',
+        icon: 'sparkle',
+        queries: [
+          'Feels expensive but isn\'t',
+          'Feels like a local spot, not a tourist trap',
+          'Cozy when raining',
+          '"Third place" energy — regulars, barista knows names',
+          'Late-night safe — well-lit, staffed, not sketchy',
+        ],
+      },
+      {
+        name: 'Food Truth',
+        icon: 'utensils',
+        queries: [
+          'Is the $6 dumpling deal still active?',
+          'Portion actually shareable for two people',
+          'Tastes like the photo, not a catfish menu',
+          'Happy hour that\'s actually worth it, not $2 off',
+          'Dietary accommodations that are real, not performative',
+        ],
+      },
+      {
+        name: 'Seasonal & Temporal',
+        icon: 'clock',
+        queries: [
+          'Heated outdoor seating that\'s actually warm',
+          'AC that works in August, not decorative',
+          'Outdoor area with real shade, not baking sun',
+          'Sunset view with exact timing window',
+          'Cherry blossom visible from seating',
+        ],
+      },
+    ],
+  },
   demo: {
     title: 'See it in action',
     sub: 'Intent-native place intelligence. Type what you need — get structured, trust-scored answers.',
     queries: [
       { text: 'quiet cafe to work from near NYU', delay: 0 },
-      { text: 'open restroom near Times Square', delay: 2000 },
-      { text: 'cheap late-night food East Village', delay: 4000 },
+      { text: 'Instagrammable red wall in SoHo', delay: 2000 },
+      { text: 'good first date spot — dim, easy entrance', delay: 4000 },
+      { text: 'open restroom near Times Square no purchase', delay: 6000 },
+      { text: 'feels expensive but isn\'t, Lower East Side', delay: 8000 },
     ],
   },
   moat: {
@@ -133,7 +229,7 @@ export const PITCH = {
   buildVelocity: {
     title: 'Where it stands',
     metrics: [
-      { value: '22', label: 'Behavioral attributes', description: 'Proprietary ontology — the language for how places function' },
+      { value: '40+', label: 'Behavioral attributes', description: 'Across work, dating, photo, comfort, access, vibe, food, and seasonal clusters' },
       { value: '14', label: 'Places mapped', description: 'NYC-dense behavioral data, ready for expansion' },
       { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
       { value: '1', label: 'Headcount', description: 'AI-native cost structure — default alive' },

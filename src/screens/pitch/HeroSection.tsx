@@ -7,12 +7,14 @@ const VIDEO_SRC = '/models/city-flyover.mp4'
 
 // Data labels that appear at specific scroll thresholds over the video
 const DATA_LABELS: { label: string; x: string; y: string; threshold: number }[] = [
-  { label: 'outlets ✓', x: '58%', y: '32%', threshold: 0.20 },
-  { label: 'quiet zone', x: '38%', y: '40%', threshold: 0.28 },
-  { label: 'open now', x: '68%', y: '48%', threshold: 0.36 },
-  { label: 'fast wifi', x: '50%', y: '26%', threshold: 0.44 },
-  { label: '$$ deals', x: '30%', y: '55%', threshold: 0.52 },
-  { label: 'pet friendly', x: '75%', y: '60%', threshold: 0.60 },
+  { label: 'outlets work ✓', x: '58%', y: '32%', threshold: 0.20 },
+  { label: 'good date lighting', x: '38%', y: '40%', threshold: 0.26 },
+  { label: 'photo wall', x: '68%', y: '48%', threshold: 0.32 },
+  { label: 'laptop tolerant 3hr+', x: '50%', y: '26%', threshold: 0.38 },
+  { label: 'restroom no purchase', x: '25%', y: '55%', threshold: 0.44 },
+  { label: 'feels local, not touristy', x: '72%', y: '35%', threshold: 0.50 },
+  { label: 'stroller accessible', x: '35%', y: '60%', threshold: 0.56 },
+  { label: 'quiet enough for calls', x: '60%', y: '58%', threshold: 0.62 },
 ]
 
 function DataLabel({ data, scrollYProgress }: { data: typeof DATA_LABELS[number]; scrollYProgress: MotionValue<number> }) {

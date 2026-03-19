@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { HeroSection } from './pitch/HeroSection'
 import { ProblemSection } from './pitch/ProblemSection'
+import { QueryShowcaseSection } from './pitch/QueryShowcaseSection'
 import { DemoSection } from './pitch/DemoSection'
 import { ProductSection } from './pitch/ProductSection'
 import { FlywheelSection } from './pitch/FlywheelSection'
@@ -110,6 +111,7 @@ export function PitchScreen() {
 
       <HeroSection />
       <ProblemSection />
+      <QueryShowcaseSection />
 
       <SectionDivider />
       <DemoSection />

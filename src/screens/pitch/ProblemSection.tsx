@@ -19,6 +19,11 @@ const icons: Record<string, React.ReactNode> = {
       <path d="M10 1v18M14 5H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" />
     </svg>
   ),
+  heart: (
+    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16.68 3.57a4.5 4.5 0 00-6.36 0L10 3.89l-.32-.32a4.5 4.5 0 00-6.36 6.36l.32.32L10 16.61l6.36-6.36.32-.32a4.5 4.5 0 000-6.36z" />
+    </svg>
+  ),
 }
 
 function StoryCard({
@@ -129,6 +134,19 @@ function StoryCard({
                   <path d="M155 55h10M160 50v10" stroke="#6B7280" strokeWidth="1" opacity="0.3" />
                   <text x="160" y="105" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">LOCKED 6PM</text>
                   <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">0 of 3 actually available</text>
+                </svg>
+              )}
+              {story.icon === 'heart' && (
+                <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
+                  {/* Date spot disappointment */}
+                  <circle cx="100" cy="50" r="25" stroke="#E2614B" strokeWidth="0.5" opacity="0.2" />
+                  <rect x="70" y="30" width="60" height="40" rx="3" stroke="#E2614B" strokeWidth="1" opacity="0.3" />
+                  <line x1="85" y1="42" x2="115" y2="42" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
+                  <line x1="85" y1="50" x2="115" y2="50" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
+                  <line x1="85" y1="58" x2="115" y2="58" stroke="#FBBF24" strokeWidth="3" opacity="0.6" />
+                  <text x="100" y="95" textAnchor="middle" fill="#E2614B" fontSize="8" fontFamily="system-ui">blinding overhead lights</text>
+                  <text x="100" y="110" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">entrance through unmarked alley</text>
+                  <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">10 min standing outside</text>
                 </svg>
               )}
               {story.icon === 'dollar' && (
