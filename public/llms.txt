@@ -1,6 +1,6 @@
 # Praxis — Behavioral Place Intelligence
 
-> The behavioral layer maps can't build.
+> The behavioral layer maps won't build.
 
 ## What is Praxis?
 
@@ -10,9 +10,9 @@ Places are experience goods — you can't know if the outlets work or the restro
 
 ## Why it exists
 
-Google Maps is a merchant-serving platform. Behavioral truth — "outlets don't work," "restrooms require purchase" — undermines the merchants who pay them. This is counter-positioning: the incumbent's rational response is to do nothing.
+Google could add behavioral tags — but won't prioritize them. High-resolution, fast-changing, provenance-heavy behavioral truth is operationally messy, category-specific, and not central to their ad-driven product architecture. A prioritization gap, not impossibility.
 
-LLMs can parse existing reviews, but parsing isn't creating. Fresh, structured, confidence-scored behavioral observations are a new data asset that doesn't exist in any training corpus.
+LLMs can parse existing reviews, but parsing stale data isn't creating new ground truth. Fresh, first-party, confidence-scored behavioral observations confirmed at point of visit are a data asset that doesn't exist in any training corpus.
 
 ## Key pages
 

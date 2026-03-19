@@ -1,6 +1,6 @@
 # Praxis — Full Content for AI Indexing
 
-## The Behavioral Layer Maps Can't Build
+## The Behavioral Layer Maps Won't Build
 
 Praxis is a behavioral place intelligence platform. Structured ground truth about how places actually function. Confidence-scored. Recency-weighted. Created by users, not scraped from reviews.
 
@@ -16,19 +16,19 @@ Example 2: You search "Open restroom nearby." Maps shows: 3 coffee shops, 2 rest
 
 Example 3: You search "Cheap dinner East Village." Maps shows: $$, "Affordable options!", menu photos. Reality: The $6 dumpling deal ended last month. The late-night special is weekdays only.
 
-Tacit knowledge about places exists — buried in millions of reviews, threads, and posts. But incumbents profit from keeping it unstructured: high search costs drive engagement, engagement drives ad revenue. LLMs can now parse that ocean, but parsing isn't creating. Nobody is generating new ground truth — fresh, structured, confidence-scored behavioral observations. That data asset doesn't exist anywhere. Praxis creates it.
+Tacit knowledge about places exists — buried in millions of reviews, threads, and posts. Incumbents could structure it, but won't prioritize it: behavioral truth is operationally messy, fast-decaying, and not central to ad-driven product architecture. LLMs can parse that ocean, but parsing isn't creating. Nobody is generating new ground truth — fresh, structured, confidence-scored behavioral observations confirmed at point of visit. That data asset doesn't exist. Praxis creates it.
 
 ---
 
 ## Product Architecture: Tacit Knowledge, Made Explicit
 
-LLMs approximate answers from stale reviews. Praxis provides decision-grade truth — the difference between a search engine and a knowledge graph.
+LLMs can parse reviews — but parsing stale data doesn't create new ground truth. Praxis provides decision-grade truth: fresh, first-party, confidence-scored behavioral observations confirmed at point of visit.
 
 ### Layer 1: Behavioral Place Graph
 Structured attributes describing what people can actually do in a place. Not reviews. Not LLM inference. Observed ground truth — every claim has provenance: who reported it, when, how many confirmations. 22 attribute types across workability, relief, and savings clusters.
 
 ### Layer 2: Truth Engine
-Confidence decay, contributor trust weighting, contradiction handling. An LLM treats a 2019 review and a 2025 report equally — Praxis doesn't. Truth is temporal. Stale knowledge is worse than no knowledge. Recency-weighted, trust-scored, deterministic — not stochastic.
+Confidence decay, contributor trust weighting, contradiction handling. An LLM treats a 2019 review and a 2025 report equally — Praxis doesn't. Truth is temporal. Stale knowledge is worse than no knowledge. Recency-weighted, trust-scored, provenance-chained.
 
 ### Layer 3: Intent Resolution
 "Where can I work quietly for 3 hours?" maps to outlet_usability + noise_level + laptop_tolerance. This is a structured database query with precision guarantees, not fuzzy LLM inference that might drop a constraint or hallucinate a match. Composable AND/OR/NOT queries across behavioral attributes.
@@ -38,34 +38,44 @@ Ranked results with confidence scores, recency indicators, and provenance chains
 
 ---
 
-## Growth: Commons-Based Peer Production
+## Growth: Contribute by Using It
 
-Same production model as Wikipedia and OpenStreetMap. Each contribution makes every future answer better. The graph compounds. This is knowledge infrastructure, not a feature.
+The Waze model for places. Contributing isn't charity — it's self-interest. The more you confirm, the better your own results get.
 
-Flywheel: Users contribute behavioral data → Denser, more accurate place graph → Better intent-matched answers → Higher trust and retention → More contributions.
+Flywheel: Search for a place that fits → Go there, Praxis detects arrival → One-tap confirm: "Still quiet? Outlets work?" → Your data improves your own future results.
+
+Passive signals (time spent at location, Wi-Fi detection) fill gaps without any taps. The graph compounds from usage, not altruism.
+
+---
+
+## Revenue Model
+
+Near-term: prosumer subscription ($5-8/mo) for freelancers and remote workers — live density estimates, workspace alerts, priority data freshness on saved spots. Default alive before outside capital.
+
+Later: data licensing to commercial real estate, coworking operators, and hospitality platforms. Truth-preserving monetization only — no merchant ads, no incentive corruption.
 
 ---
 
 ## Moat: Counter-Positioned by Design
 
-### Structural Conflict
-Google Maps monetizes merchants. Behavioral truth undermines merchant narratives. Structuring tacit knowledge would reduce time-on-platform and cannibalize ad-driven engagement. The rational incumbent response is to preserve the information ocean, not drain it.
+### Prioritization Gap
+Google could add behavioral tags — but won't prioritize them. High-resolution, fast-changing, provenance-heavy behavioral truth is operationally messy, category-specific, and not central to their product architecture or monetization model. The rational incumbent response is deprioritization, not inability.
 
-### Beyond LLM Reach
-LLMs parse existing data — they don't create new ground truth. No amount of RAG over stale reviews produces fresh, confidence-scored behavioral observations. Praxis creates a data asset that doesn't exist in any training corpus.
+### Fresh First-Party Data
+LLMs can parse reviews into structured data — but they can't create new observations. A sophisticated hybrid (extraction + temporal weighting + feedback loops) gets surprisingly close. The durable wedge is freshness and provenance from first-party observations confirmed at point of visit.
 
 ### Trust Compounds
 Learned contributor reliability and signal weighting — our PageRank for behavioral observations. The system knows which contributors are accurate, which are stale, and how to weight conflicting signals. Trust compounds; it can't be shortcut or scraped.
 
 ---
 
-## Risks
+## Risks (Honest Assessment)
 
-1. Cold start density — Mitigation: City-first, intent-first. Win one neighborhood before expanding.
-2. Data decay — Mitigation: Aggressive recency scoring. Stale data is visually marked. Contribution prompts at point of need.
-3. Contribution fatigue — Mitigation: Binary questions only. 2-tap confirmations. Zero friction.
-4. Google copies it — Mitigation: Counter-positioning. Adding behavioral truth would undermine their merchant ad revenue.
-5. LLMs make it irrelevant — Mitigation: LLMs parse, they don't create. Fresh ground truth with confidence scoring and recency decay is the input LLMs need, not competition.
+1. The bad equilibrium — Patchy density → low trust → low habit → low contribution → stale data → collapse. The entire bet is that density-first in one neighborhood breaks this cycle before it sets in.
+2. Perishable truth — Unlike Wikipedia, behavioral claims decay in days. The contribution treadmill is harsher. Passive signals and self-interested contribution reduce active burden, but freshness maintenance is the hardest operational problem.
+3. Google adds behavioral tags — Google could solve 70% of the use case with 10 structured tags. The bet: they won't prioritize it. A prioritization gap, not impossibility.
+4. Feature, not company — The data layer might be useful but too narrow to support an independent business. Prosumer subscription + data licensing are the paths to standalone viability. If not, the data layer has acquisition value.
+5. LLMs close the gap — A sophisticated hybrid system gets surprisingly close. The durable wedge is freshness and provenance from first-party observations, not query architecture.
 
 ---
 
@@ -73,7 +83,7 @@ Learned contributor reliability and signal weighting — our PageRank for behavi
 
 The traditional VC objection: map and data businesses require large teams and don't scale profitably. That objection assumed human-heavy operations.
 
-AI-native cost structure collapses the break-even point by 10-50x. A knowledge commons that once required 50 people to operate can now run with one. This product is default alive — profitable before needing outside capital.
+AI-native cost structure collapses the break-even point by 10-50x, but low build cost is not a business model. It buys time to prove the three hard things: that the graph stays fresh, that users pay for it, and that it escapes feature-hood. One person can now operate what used to require fifty — that's survival runway, not victory.
 
 ---
 
@@ -93,4 +103,4 @@ Kai Wu — solo founder
 - X: https://x.com/kaizhi_wu
 - Email: kaizhi.j.wu@gmail.com
 
-Looking for early users and design partners in NYC.
+Looking for early users and design partners in NYC — especially freelancers and remote workers.

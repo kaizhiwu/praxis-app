@@ -169,7 +169,7 @@ export function HeroSection() {
                   backgroundImage: 'linear-gradient(135deg, #A5B4FC 0%, #818CF8 30%, #6366F1 60%, #4F46E5 100%)',
                 }}
               >
-                maps can&apos;t build.
+                maps won&apos;t build.
               </span>
             </motion.h1>
 
