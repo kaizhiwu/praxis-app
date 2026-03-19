@@ -14,11 +14,6 @@ const icons: Record<string, React.ReactNode> = {
       <path d="M10 2C10 2 4 9 4 12.5a6 6 0 0 0 12 0C16 9 10 2 10 2z" />
     </svg>
   ),
-  dollar: (
-    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 1v18M14 5H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" />
-    </svg>
-  ),
   heart: (
     <svg width="32" height="32" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M16.68 3.57a4.5 4.5 0 00-6.36 0L10 3.89l-.32-.32a4.5 4.5 0 00-6.36 6.36l.32.32L10 16.61l6.36-6.36.32-.32a4.5 4.5 0 000-6.36z" />
@@ -147,17 +142,6 @@ function StoryCard({
                   <text x="100" y="95" textAnchor="middle" fill="#E2614B" fontSize="8" fontFamily="system-ui">blinding overhead lights</text>
                   <text x="100" y="110" textAnchor="middle" fill="#6B7280" fontSize="7" fontFamily="system-ui">entrance through unmarked alley</text>
                   <text x="100" y="135" textAnchor="middle" fill="#6B7280" fontSize="9" fontFamily="system-ui">10 min standing outside</text>
-                </svg>
-              )}
-              {story.icon === 'dollar' && (
-                <svg viewBox="0 0 200 150" className="w-full h-full p-6" fill="none">
-                  {/* Expired deals */}
-                  <rect x="30" y="30" width="140" height="28" rx="6" fill="#D97706" fillOpacity="0.08" stroke="#D97706" strokeWidth="0.5" strokeOpacity="0.2" />
-                  <text x="100" y="48" textAnchor="middle" fill="#D97706" fontSize="10" fontFamily="system-ui">$6 dumpling deal</text>
-                  <line x1="50" y1="44" x2="150" y2="44" stroke="#E2614B" strokeWidth="1.5" opacity="0.7" />
-                  <rect x="30" y="70" width="140" height="28" rx="6" fill="#D97706" fillOpacity="0.08" stroke="#D97706" strokeWidth="0.5" strokeOpacity="0.2" />
-                  <text x="100" y="88" textAnchor="middle" fill="#D97706" fontSize="10" fontFamily="system-ui">Late-night special</text>
-                  <text x="100" y="116" textAnchor="middle" fill="#E2614B" fontSize="8" fontFamily="system-ui">weekdays only — expired last month</text>
                 </svg>
               )}
             </div>
