@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
+import type { MotionValue } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
 
 const VIDEO_SRC = '/models/city-flyover.mp4'
@@ -13,6 +14,36 @@ const DATA_LABELS: { label: string; x: string; y: string; threshold: number }[] 
   { label: '$$ deals', x: '30%', y: '55%', threshold: 0.52 },
   { label: 'pet friendly', x: '75%', y: '60%', threshold: 0.60 },
 ]
+
+function DataLabel({ data, scrollYProgress }: { data: typeof DATA_LABELS[number]; scrollYProgress: MotionValue<number> }) {
+  const opacity = useTransform(scrollYProgress, [data.threshold, data.threshold + 0.05], [0, 1])
+  const scale = useTransform(scrollYProgress, [data.threshold, data.threshold + 0.05], [0.7, 1])
+
+  return (
+    <motion.div
+      className="absolute pointer-events-none z-10 hidden md:block"
+      style={{ left: data.x, top: data.y, opacity, scale }}
+    >
+      <div className="flex items-center gap-2">
+        <div className="relative">
+          <div className="w-2 h-2 rounded-full bg-[#818CF8]" />
+          <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#818CF8] animate-ping opacity-30" />
+        </div>
+        <div
+          className="px-2.5 py-1 rounded-md backdrop-blur-md text-[11px] font-mono tracking-wide"
+          style={{
+            background: 'rgba(99, 102, 241, 0.08)',
+            border: '1px solid rgba(99, 102, 241, 0.15)',
+            color: '#A5B4FC',
+            textShadow: '0 0 12px rgba(99,102,241,0.4)',
+          }}
+        >
+          {data.label}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -209,43 +240,7 @@ export function HeroSection() {
 
         {/* ── Phase 2: Data labels materialize over the city ── */}
         {DATA_LABELS.map((d, i) => (
-          <motion.div
-            key={i}
-            className="absolute pointer-events-none z-10 hidden md:block"
-            style={{
-              left: d.x,
-              top: d.y,
-              opacity: useTransform(
-                scrollYProgress,
-                [d.threshold, d.threshold + 0.05],
-                [0, 1],
-              ),
-              scale: useTransform(
-                scrollYProgress,
-                [d.threshold, d.threshold + 0.05],
-                [0.7, 1],
-              ),
-            }}
-          >
-            {/* Connector dot + glass label */}
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-[#818CF8]" />
-                <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#818CF8] animate-ping opacity-30" />
-              </div>
-              <div
-                className="px-2.5 py-1 rounded-md backdrop-blur-md text-[11px] font-mono tracking-wide"
-                style={{
-                  background: 'rgba(99, 102, 241, 0.08)',
-                  border: '1px solid rgba(99, 102, 241, 0.15)',
-                  color: '#A5B4FC',
-                  textShadow: '0 0 12px rgba(99,102,241,0.4)',
-                }}
-              >
-                {d.label}
-              </div>
-            </div>
-          </motion.div>
+          <DataLabel key={i} data={d} scrollYProgress={scrollYProgress} />
         ))}
 
         {/* ── Phase 2 bottom CTA ── */}
