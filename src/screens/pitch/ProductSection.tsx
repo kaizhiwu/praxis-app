@@ -138,9 +138,9 @@ export function ProductSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#6B7280] text-sm"
+          className="text-[#9CA3AF] text-sm sm:text-base max-w-xl"
         >
-          Scroll to explore each layer
+          {PITCH.product.sub}
         </motion.p>
       </div>
 

@@ -27,32 +27,33 @@ export const PITCH = {
         icon: 'dollar',
       },
     ],
-    insight: 'Google Maps is a merchant-serving platform. Their revenue comes from local ads and business listings. Behavioral truth — "outlets don\'t work," "restrooms require purchase" — undermines the merchants who pay them. This isn\'t a gap they haven\'t noticed. It\'s one they\'re structurally incentivized to maintain.',
+    insight: 'Tacit knowledge about places exists — buried in millions of reviews, threads, and posts. But incumbents profit from keeping it unstructured: high search costs drive engagement, engagement drives ad revenue. LLMs can now parse that ocean, but parsing isn\'t creating. Nobody is generating new ground truth — fresh, structured, confidence-scored behavioral observations. That data asset doesn\'t exist anywhere. Praxis creates it.',
   },
   product: {
     title: 'Tacit knowledge, made explicit',
+    sub: 'LLMs approximate answers from stale reviews. Praxis provides decision-grade truth — the difference between a search engine and a knowledge graph.',
     layers: [
       {
         name: 'Behavioral Place Graph',
-        description: 'Structured attributes describing what people can actually do in a place. Not reviews. Not ratings. Externalized tacit knowledge — the things you only learn after visiting.',
+        description: 'Structured attributes describing what people can actually do in a place. Not reviews. Not LLM inference. Observed ground truth — every claim has provenance: who reported it, when, how many confirmations.',
         detail: '22 attribute types across workability, relief, and savings clusters',
         color: 'indigo',
       },
       {
         name: 'Truth Engine',
-        description: 'Recency decay, contributor weighting, confidence scoring, contradiction handling. Data expires. Truth is temporal. Stale knowledge is worse than no knowledge.',
-        detail: 'Confidence scores that literally fade as data gets stale',
+        description: 'Confidence decay, contributor trust weighting, contradiction handling. An LLM treats a 2019 review and a 2025 report equally — Praxis doesn\'t. Truth is temporal. Stale knowledge is worse than no knowledge.',
+        detail: 'Recency-weighted, trust-scored, deterministic — not stochastic',
         color: 'coral',
       },
       {
-        name: 'Query Layer',
-        description: 'Natural language intent matching. Not keyword search — behavioral intent understanding. "Where can I work quietly for 3 hours?" maps to outlet_usability + noise_level + laptop_tolerance.',
-        detail: 'Intent-native, not keyword-native',
+        name: 'Intent Resolution',
+        description: '"Where can I work quietly for 3 hours?" maps to outlet_usability + noise_level + laptop_tolerance. This is a structured database query with precision guarantees, not fuzzy LLM inference that might drop a constraint or hallucinate a match.',
+        detail: 'Composable AND/OR/NOT queries across behavioral attributes',
         color: 'amber',
       },
       {
         name: 'Answer Layer',
-        description: 'Ranked options with tradeoff explanations, confidence indicators, and contribution prompts. Turns experience goods into search goods.',
+        description: 'Ranked results with confidence scores, recency indicators, and provenance chains. Same query always returns same results — deterministic, not temperature-dependent. Update latency in milliseconds, not hours.',
         detail: 'You know before you go, not after',
         color: 'indigo',
       },
@@ -82,17 +83,17 @@ export const PITCH = {
     layers: [
       {
         name: 'Structural Conflict',
-        description: 'Google Maps monetizes merchants. Behavioral truth often undermines merchant narratives. The incumbent\'s rational response is to do nothing — classic counter-positioning. This gap is permanent, not temporary.',
+        description: 'Google Maps monetizes merchants. Behavioral truth undermines merchant narratives. Structuring tacit knowledge would reduce time-on-platform and cannibalize ad-driven engagement. The rational incumbent response is to preserve the information ocean, not drain it.',
         icon: 'schema',
       },
       {
-        name: 'Knowledge Moat',
-        description: 'Structured behavioral data contributed by real users with real needs. Not scraped, not inferred — externalized from lived experience. Time-stamped, confidence-scored, geographically dense. This takes years to rebuild.',
+        name: 'Beyond LLM Reach',
+        description: 'LLMs parse existing data — they don\'t create new ground truth. No amount of RAG over stale reviews produces fresh, confidence-scored behavioral observations. Praxis creates a data asset that doesn\'t exist in any training corpus.',
         icon: 'database',
       },
       {
-        name: 'Trust Moat',
-        description: 'Learned contributor reliability and signal weighting. The system knows which contributors are accurate, which are stale, and how to weight conflicting signals. Trust compounds; it can\'t be shortcut.',
+        name: 'Trust Compounds',
+        description: 'Learned contributor reliability and signal weighting — our PageRank for behavioral observations. The system knows which contributors are accurate, which are stale, and how to weight conflicting signals. Trust compounds; it can\'t be shortcut or scraped.',
         icon: 'shield',
       },
     ],
@@ -104,6 +105,7 @@ export const PITCH = {
       { risk: 'Data decay', mitigation: 'Aggressive recency scoring. Stale data is visually marked. Contribution prompts at point of need.' },
       { risk: 'Contribution fatigue', mitigation: 'Binary questions only. 2-tap confirmations. Zero friction.' },
       { risk: 'Google copies it', mitigation: 'Counter-positioning: adding behavioral truth would undermine their merchant ad revenue. The rational incumbent response is inaction.' },
+      { risk: 'LLMs make it irrelevant', mitigation: 'LLMs parse — they don\'t create. Fresh ground truth with confidence scoring and recency decay is the input LLMs need, not competition.' },
     ],
   },
   notList: {
@@ -111,7 +113,7 @@ export const PITCH = {
     items: [
       'Not "Google Maps but cooler"',
       'Not a review product',
-      'Not a social network',
+      'Not another LLM wrapper',
       'Not a venture-scale land grab',
       'Not dependent on a large team to operate',
     ],
