@@ -1,0 +1,46 @@
+# Praxis — Behavioral Place Intelligence
+# https://praxis-app-seven.vercel.app
+
+# SEO crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# LLM crawlers
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# Default allow
+User-agent: *
+Allow: /
+
+Sitemap: https://praxis-app-seven.vercel.app/sitemap.xml

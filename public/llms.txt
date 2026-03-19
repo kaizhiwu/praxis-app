@@ -1,0 +1,31 @@
+# Praxis — Behavioral Place Intelligence
+
+> The behavioral layer maps can't build.
+
+## What is Praxis?
+
+Praxis is a behavioral place intelligence platform that converts tacit knowledge about physical places into structured, queryable data. It answers the question: "What can I actually do here?" — not just "Where is this place?"
+
+Places are experience goods — you can't know if the outlets work or the restrooms are open until you're already there. Praxis creates ground truth about how places function through commons-based peer production: users contribute binary behavioral observations that are confidence-scored, recency-weighted, and trust-ranked.
+
+## Why it exists
+
+Google Maps is a merchant-serving platform. Behavioral truth — "outlets don't work," "restrooms require purchase" — undermines the merchants who pay them. This is counter-positioning: the incumbent's rational response is to do nothing.
+
+LLMs can parse existing reviews, but parsing isn't creating. Fresh, structured, confidence-scored behavioral observations are a new data asset that doesn't exist in any training corpus.
+
+## Key pages
+
+- Product: https://praxis-app-seven.vercel.app/
+- Pitch / Thesis: https://praxis-app-seven.vercel.app/pitch
+
+## Builder
+
+Kai Wu — solo founder, designed and engineered with AI.
+- Website: https://kaizhiwu.com
+- X: https://x.com/kaizhi_wu
+- Email: kaizhi.j.wu@gmail.com
+
+## Full content
+
+- llms-full.txt: https://praxis-app-seven.vercel.app/llms-full.txt
