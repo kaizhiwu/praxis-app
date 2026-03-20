@@ -123,13 +123,7 @@ export function ProductSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold mb-4"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-4xl font-bold mb-4 text-[#1D1D1F]"
         >
           {PITCH.product.title}
         </motion.h2>
@@ -207,24 +201,10 @@ export function ProductSection() {
                 })}
               </div>
 
-              {/* Right: Sticky visual — glass morphism panel */}
+              {/* Right: Sticky visual */}
               <div className="w-full md:w-[340px] h-[300px] md:h-[340px] shrink-0 relative">
-                {/* Gradient glow behind panel */}
-                <motion.div
-                  className="absolute -inset-4 rounded-3xl blur-[40px] opacity-10"
-                  animate={{
-                    background: `radial-gradient(ellipse at 50% 50%, ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}30, transparent 70%)`,
-                  }}
-                  transition={{ duration: 0.8 }}
-                />
                 <div
-                  className="absolute inset-0 rounded-2xl overflow-hidden backdrop-blur-sm"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7))',
-                    border: `1px solid ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).border}`,
-                    boxShadow: `0 1px 3px rgba(0,0,0,0.08), 0 0 60px -12px ${(colorMap[layers[activeLayer].color] ?? colorMap.indigo).accent}15`,
-                    transition: 'border-color 0.5s, box-shadow 0.5s',
-                  }}
+                  className="absolute inset-0 rounded-2xl overflow-hidden bg-white border border-[#E5E5EA]"
                 >
                   {layers.map((layer, i) => (
                     <motion.div

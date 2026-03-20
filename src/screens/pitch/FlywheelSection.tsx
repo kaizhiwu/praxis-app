@@ -80,13 +80,7 @@ export function FlywheelSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-center mb-16"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-4xl font-bold text-center mb-16 text-[#1D1D1F]"
         >
           {PITCH.flywheel.title}
         </motion.h2>
@@ -98,16 +92,6 @@ export function FlywheelSection() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative mx-auto w-[360px] h-[360px] md:w-[540px] md:h-[540px]"
         >
-          {/* Subtle radial glow */}
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            animate={{ opacity: [0.03, 0.06, 0.03] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            style={{
-              background: 'radial-gradient(circle, #4F46E5 0%, transparent 70%)',
-            }}
-          />
-
           <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" fill="none" overflow="visible">
             <defs>
               {arcs.map((arc) => (
@@ -163,12 +147,7 @@ export function FlywheelSection() {
                   transition={{ delay: 0.5 + i * 0.25, duration: 0.5, ease: 'easeOut' }}
                   style={{ transformOrigin: `${pos.x}px ${pos.y}px` }}
                 >
-                  <motion.circle
-                    cx={pos.x} cy={pos.y} r="32" fill={color} opacity={0}
-                    animate={{ opacity: [0, 0.06, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.75 }}
-                  />
-                  <circle cx={pos.x} cy={pos.y} r="24" fill="white" stroke={color} strokeWidth="1.5" />
+                  <circle cx={pos.x} cy={pos.y} r="24" fill="white" stroke="#E5E5EA" strokeWidth="1" />
                   <foreignObject x={pos.x - 10} y={pos.y - 10} width="20" height="20">
                     <div
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any

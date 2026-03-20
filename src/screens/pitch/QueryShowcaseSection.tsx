@@ -68,14 +68,8 @@ export function QueryShowcaseSection() {
   const colors = CATEGORY_COLORS[active.icon] || CATEGORY_COLORS.laptop
 
   return (
-    <section className="bg-[#F5F5F7] py-24 md:py-40 px-6 relative overflow-hidden">
-      {/* Subtle ambient glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-[120px] opacity-[0.04] transition-colors duration-700"
-        style={{ background: colors.glow }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto">
+    <section className="bg-[#F5F5F7] py-24 md:py-40 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

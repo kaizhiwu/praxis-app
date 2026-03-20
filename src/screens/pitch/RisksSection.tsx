@@ -21,13 +21,7 @@ export function RisksSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold mb-8"
-            style={{
-              backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+            className="text-4xl font-bold mb-8 text-[#1D1D1F]"
           >
             {PITCH.risks.title}
           </motion.h2>
@@ -41,25 +35,15 @@ export function RisksSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="group p-4 rounded-xl overflow-hidden relative bg-white"
-                style={{
-                  border: '1px solid rgba(226,97,75,0.12)',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                }}
+                className="p-4 rounded-xl bg-white border border-[#E5E5EA]"
               >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: 'radial-gradient(ellipse at 0% 50%, rgba(226,97,75,0.04), transparent 60%)' }}
-                />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#E2614B] shrink-0" />
-                    <span className="text-[#1D1D1F] font-medium">{item.risk}</span>
-                  </div>
-                  <p className="text-[#6E6E73] text-sm mt-2 ml-4">
-                    {item.mitigation}
-                  </p>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#E2614B] shrink-0" />
+                  <span className="text-[#1D1D1F] font-medium">{item.risk}</span>
                 </div>
+                <p className="text-[#6E6E73] text-sm mt-2 ml-4">
+                  {item.mitigation}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -72,13 +56,7 @@ export function RisksSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold mb-8"
-            style={{
-              backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+            className="text-4xl font-bold mb-8 text-[#1D1D1F]"
           >
             {PITCH.notList.title}
           </motion.h2>
@@ -92,7 +70,7 @@ export function RisksSection() {
           >
             {PITCH.notList.items.map((item) => (
               <li key={item} className="text-[#6E6E73] flex items-start gap-3">
-                <span className="text-[#4F46E5]/40 select-none">—</span>
+                <span className="text-[#AEAEB2] select-none">—</span>
                 <span>{item}</span>
               </li>
             ))}

@@ -36,12 +36,9 @@ export function DemoSection() {
   return (
     <section
       ref={containerRef}
-      className="bg-[#FAFAFA] py-24 md:py-40 px-6 relative overflow-hidden"
+      className="bg-[#FAFAFA] py-24 md:py-40 px-6"
     >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#4F46E5]/[0.02] via-transparent to-transparent" />
-
-      <div className="relative z-10 max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,15 +63,6 @@ export function DemoSection() {
           >
             {/* Phone frame */}
             <div className="relative">
-              {/* Glow behind phone — softer on light */}
-              <div
-                className="absolute -inset-8 rounded-[3rem] blur-[60px] opacity-10"
-                style={{
-                  background: 'linear-gradient(135deg, #4F46E5, #E2614B, #D97706)',
-                }}
-              />
-
-              {/* Phone body — stays dark */}
               <div
                 className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-[#1D1D1F]/10 bg-[#1D1D1F] overflow-hidden"
                 style={{
@@ -107,8 +95,6 @@ export function DemoSection() {
                 />
               </div>
 
-              {/* Reflection/shine */}
-              <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none bg-gradient-to-br from-white/[0.08] via-transparent to-transparent" />
             </div>
           </motion.div>
         </div>

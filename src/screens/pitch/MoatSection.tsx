@@ -25,39 +25,18 @@ const icons: Record<string, (color: string) => React.ReactNode> = {
   ),
 }
 
-const cardColors = [
-  { accent: '#4F46E5', bg: 'rgba(79,70,229,0.06)', border: 'rgba(79,70,229,0.15)' },
-  { accent: '#E2614B', bg: 'rgba(226,97,75,0.05)', border: 'rgba(226,97,75,0.15)' },
-  { accent: '#D97706', bg: 'rgba(217,119,6,0.05)', border: 'rgba(217,119,6,0.15)' },
-]
-
 export function MoatSection() {
   const layers = PITCH.moat.layers
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-[#FAFAFA]">
-      {/* Dot grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto">
+    <section className="py-32 px-6 bg-[#FAFAFA]">
+      <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold mb-4"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-4xl font-bold mb-4 text-[#1D1D1F]"
         >
           {PITCH.moat.title}
         </motion.h2>
@@ -71,7 +50,6 @@ export function MoatSection() {
           The incumbent&apos;s rational response is to do nothing.
         </motion.p>
 
-        {/* Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Large featured card */}
           <motion.div
@@ -79,33 +57,15 @@ export function MoatSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:row-span-2 relative group rounded-2xl p-8 md:p-10 overflow-hidden bg-white"
-            style={{
-              border: `1px solid ${cardColors[0].border}`,
-              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-            }}
+            className="md:row-span-2 rounded-2xl p-8 md:p-10 bg-white border border-[#E5E5EA]"
           >
-            {/* Top accent */}
-            <div
-              className="absolute top-0 left-0 right-0 h-[2px]"
-              style={{ background: `linear-gradient(90deg, transparent, ${cardColors[0].accent}, transparent)` }}
-            />
-            {/* Hover glow */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: `radial-gradient(ellipse at 30% 20%, ${cardColors[0].bg} 0%, transparent 60%)` }}
-            />
-
-            <div className="relative z-10">
-              {icons[layers[0].icon]?.(cardColors[0].accent)}
-              <h3 className="text-2xl font-bold text-[#1D1D1F] mt-6 mb-4">{layers[0].name}</h3>
-              <p className="text-[#6E6E73] leading-relaxed">{layers[0].description}</p>
-            </div>
+            {icons[layers[0].icon]?.('#86868B')}
+            <h3 className="text-2xl font-bold text-[#1D1D1F] mt-6 mb-4">{layers[0].name}</h3>
+            <p className="text-[#6E6E73] leading-relaxed">{layers[0].description}</p>
           </motion.div>
 
           {/* Two smaller cards */}
           {layers.slice(1).map((layer, i) => {
-            const colors = cardColors[i + 1]
             const renderIcon = icons[layer.icon]
             return (
               <motion.div
@@ -114,26 +74,11 @@ export function MoatSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-                className="relative group rounded-2xl p-8 overflow-hidden bg-white"
-                style={{
-                  border: `1px solid ${colors.border}`,
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-                }}
+                className="rounded-2xl p-8 bg-white border border-[#E5E5EA]"
               >
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{ background: `linear-gradient(90deg, transparent, ${colors.accent}, transparent)` }}
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${colors.bg} 0%, transparent 60%)` }}
-                />
-
-                <div className="relative z-10">
-                  {renderIcon?.(colors.accent)}
-                  <h3 className="text-xl font-semibold text-[#1D1D1F] mt-4 mb-3">{layer.name}</h3>
-                  <p className="text-sm text-[#6E6E73] leading-relaxed">{layer.description}</p>
-                </div>
+                {renderIcon?.('#86868B')}
+                <h3 className="text-xl font-semibold text-[#1D1D1F] mt-4 mb-3">{layer.name}</h3>
+                <p className="text-sm text-[#6E6E73] leading-relaxed">{layer.description}</p>
               </motion.div>
             )
           })}

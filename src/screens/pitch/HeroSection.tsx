@@ -27,18 +27,9 @@ function DataLabel({ data, scrollYProgress }: { data: typeof DATA_LABELS[number]
       style={{ left: data.x, top: data.y, opacity, scale }}
     >
       <div className="flex items-center gap-2">
-        <div className="relative">
-          <div className="w-2 h-2 rounded-full bg-[#4F46E5]" />
-          <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#4F46E5] animate-ping opacity-30" />
-        </div>
+        <div className="w-1.5 h-1.5 rounded-full bg-[#4F46E5]" />
         <div
-          className="px-2.5 py-1 rounded-md backdrop-blur-md text-[11px] font-mono tracking-wide"
-          style={{
-            background: 'rgba(255, 255, 255, 0.7)',
-            border: '1px solid rgba(79, 70, 229, 0.2)',
-            color: '#4F46E5',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-          }}
+          className="px-2.5 py-1 rounded-md text-[11px] font-mono tracking-wide bg-white border border-[#E5E5EA] text-[#1D1D1F]"
         >
           {data.label}
         </div>
@@ -113,24 +104,10 @@ export function HeroSection() {
             style={{ filter: 'brightness(1.1) saturate(0.15) contrast(0.9)' }}
           />
 
-          {/* Light warm wash */}
-          <div
-            className="absolute inset-0 mix-blend-color"
-            style={{ background: 'rgba(79, 70, 229, 0.06)' }}
-          />
-
           {/* Dynamic overlay — lighter at start (text readable), more transparent on scroll (city reveals) */}
           <motion.div
             className="absolute inset-0"
             style={{ opacity: overlayOpacity, background: 'rgba(250,250,250,0.92)' }}
-          />
-
-          {/* Constant edge vignette for depth — light version */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse at 60% 50%, transparent 30%, rgba(245,245,247,0.5) 100%)',
-            }}
           />
 
           {/* Bottom fade to next section */}
@@ -150,7 +127,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="inline-flex mb-6 rounded-full border border-[#E5E5EA] px-4 py-1.5 backdrop-blur-md bg-white/60"
+              className="inline-flex mb-6 rounded-full border border-[#E5E5EA] px-4 py-1.5 bg-white"
             >
               <span className="text-[11px] uppercase tracking-[0.2em] text-[#86868B]">
                 {PITCH.hero.tagline}
@@ -161,18 +138,11 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.7 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] text-[#1D1D1F]"
             >
-              <span className="text-[#1D1D1F]">The behavioral layer</span>
+              The behavioral layer
               <br />
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 40%, #4338CA 80%, #3730A3 100%)',
-                }}
-              >
-                maps won&apos;t build.
-              </span>
+              maps won&apos;t build.
             </motion.h1>
 
             <motion.p
@@ -202,11 +172,7 @@ export function HeroSection() {
             >
               <a
                 href="/"
-                className="group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02]"
-                style={{
-                  background: 'linear-gradient(135deg, #4F46E5, #6366F1)',
-                  boxShadow: '0 0 30px -8px rgba(99,102,241,0.4)',
-                }}
+                className="group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
               >
                 Try the product
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none">
@@ -215,7 +181,7 @@ export function HeroSection() {
               </a>
               <a
                 href="#problem"
-                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-2.5 text-sm font-medium text-[#6E6E73] transition-all duration-300 hover:text-[#1D1D1F] hover:border-[#AEAEB2] hover:bg-white/60"
+                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-2.5 text-sm font-medium text-[#6E6E73] hover:text-[#1D1D1F] hover:border-[#AEAEB2] transition-colors duration-200"
               >
                 Read the thesis
                 <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
@@ -252,11 +218,7 @@ export function HeroSection() {
         >
           <a
             href="/"
-            className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02] backdrop-blur-md"
-            style={{
-              background: 'linear-gradient(135deg, #4F46E5, #6366F1)',
-              boxShadow: '0 0 30px -6px rgba(99,102,241,0.5)',
-            }}
+            className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
           >
             Try the product
             <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none">
@@ -265,7 +227,7 @@ export function HeroSection() {
           </a>
           <a
             href="#problem"
-            className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-3 text-sm font-medium text-[#6E6E73] transition-all duration-300 hover:text-[#1D1D1F] hover:border-[#AEAEB2] hover:bg-white/60 backdrop-blur-md"
+            className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-3 text-sm font-medium text-[#6E6E73] hover:text-[#1D1D1F] hover:border-[#AEAEB2] transition-colors duration-200"
           >
             Read the thesis
             <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
@@ -275,8 +237,8 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Section transition line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4F46E5]/15 to-transparent z-10" />
+      {/* Section transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#E5E5EA] z-10" />
     </section>
   )
 }

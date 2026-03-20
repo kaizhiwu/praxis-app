@@ -3,57 +3,14 @@ import { PITCH } from '../../data/pitch'
 
 export function CTASection() {
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-[#FAFAFA]">
-      {/* Subtle aurora gradient */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <motion.div
-          className="absolute inset-[-50%]"
-          style={{
-            background: `repeating-linear-gradient(100deg, #4F46E5 10%, #6366F1 15%, #E2614B 20%, #4F46E5 25%, #D97706 30%)`,
-            backgroundSize: '300% 100%',
-            filter: 'blur(120px)',
-            opacity: 0.03,
-          }}
-          animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(250,250,250,0.8) 70%)',
-          }}
-        />
-      </div>
-
-      {/* Dot texture */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(0,0,0,0.4) 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
-        {/* Decorative lines */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#4F46E5]/30" />
-          <div className="w-2 h-2 rounded-full bg-[#4F46E5]/30" />
-          <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#4F46E5]/30" />
-        </div>
-
+    <section className="py-32 px-6 bg-[#FAFAFA]">
+      <div className="max-w-5xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-5xl font-bold text-center max-w-3xl mx-auto leading-tight"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.4))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-3xl md:text-5xl font-bold text-center max-w-3xl mx-auto leading-tight text-[#1D1D1F]"
         >
           {PITCH.cta.headline}
         </motion.h2>
@@ -80,7 +37,6 @@ export function CTASection() {
             <span
               key={point}
               className="text-xs text-[#6E6E73] bg-white border border-[#E5E5EA] rounded-full px-4 py-1.5"
-              style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}
             >
               {point}
             </span>
@@ -96,32 +52,20 @@ export function CTASection() {
         >
           <a
             href={`mailto:${PITCH.cta.email}`}
-            className="group relative inline-flex items-center gap-2 rounded-full px-8 py-4 text-white font-medium transition-all hover:scale-[1.02]"
-            style={{
-              background: 'linear-gradient(135deg, #4F46E5, #6366F1)',
-              boxShadow: '0 4px 16px -4px rgba(79,70,229,0.4)',
-            }}
+            className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-white font-medium bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
           >
-            <div
-              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.15) 50%, transparent 75%)',
-                backgroundSize: '200% 100%',
-                animation: 'shimmer 2s infinite',
-              }}
-            />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="4" width="20" height="16" rx="2" />
               <path d="M22 4L12 13 2 4" />
             </svg>
-            <span className="relative z-10">{PITCH.cta.email}</span>
+            <span>{PITCH.cta.email}</span>
           </a>
 
           <a
             href="https://x.com/kaizhi_wu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-4 text-[#6E6E73] font-medium border border-[#E5E5EA] hover:bg-white hover:border-[#AEAEB2] hover:text-[#1D1D1F] transition-all"
+            className="inline-flex items-center gap-2 rounded-full px-6 py-4 text-[#6E6E73] font-medium border border-[#E5E5EA] hover:border-[#AEAEB2] hover:text-[#1D1D1F] transition-colors duration-200"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -129,16 +73,7 @@ export function CTASection() {
             DM on Twitter
           </a>
         </motion.div>
-
-        {/* Bottom decorative */}
-        <div className="flex items-center justify-center gap-4 mt-16">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#4F46E5]/30" />
-          <div className="w-2 h-2 rounded-full bg-[#4F46E5]/30" />
-          <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#4F46E5]/30" />
-        </div>
       </div>
-
-      <style>{`@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }`}</style>
     </section>
   )
 }

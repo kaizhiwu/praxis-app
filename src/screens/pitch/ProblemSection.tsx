@@ -155,27 +155,13 @@ function StoryCard({
 export function ProblemSection() {
   return (
     <section id="problem" className="bg-[#FAFAFA] relative">
-      {/* Dot grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-      <div className="max-w-5xl mx-auto px-6 pt-32 relative z-10">
+      <div className="max-w-5xl mx-auto px-6 pt-32">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold mb-4"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-4xl font-bold mb-4 text-[#1D1D1F]"
         >
           {PITCH.problem.title}
         </motion.h2>

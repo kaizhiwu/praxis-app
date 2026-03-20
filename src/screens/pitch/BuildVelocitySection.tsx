@@ -2,8 +2,6 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
 import { useEffect, useRef } from 'react'
 
-const colors = ['#4F46E5', '#E2614B', '#D97706', '#818CF8']
-
 function AnimatedValue({ value }: { value: string }) {
   const numMatch = value.match(/^([<>]?\s*)(\d+)(\+?)$/)
   if (!numMatch) {
@@ -38,32 +36,14 @@ function AnimatedValue({ value }: { value: string }) {
 
 export function BuildVelocitySection() {
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-[#F5F5F7]">
-      {/* Grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 100%)',
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto">
+    <section className="py-32 px-6 bg-[#F5F5F7]">
+      <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="text-4xl font-bold mb-16"
-          style={{
-            backgroundImage: 'linear-gradient(to bottom, #1D1D1F 30%, rgba(29,29,31,0.5))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
+          className="text-4xl font-bold mb-16 text-[#1D1D1F]"
         >
           {PITCH.buildVelocity.title}
         </motion.h2>
@@ -76,38 +56,17 @@ export function BuildVelocitySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative group rounded-2xl p-6 overflow-hidden bg-white"
-              style={{
-                border: `1px solid ${colors[i]}18`,
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-              }}
+              className="rounded-2xl p-6 bg-white border border-[#E5E5EA]"
             >
-              {/* Top accent line */}
-              <div
-                className="absolute top-0 left-0 right-0 h-[2px]"
-                style={{ background: `linear-gradient(90deg, transparent, ${colors[i]}, transparent)` }}
-              />
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `radial-gradient(ellipse at 50% 0%, ${colors[i]}08, transparent 60%)` }}
-              />
-
-              <div className="relative z-10">
-                <p
-                  className="text-4xl md:text-5xl font-bold tracking-tight"
-                  style={{ color: colors[i] }}
-                >
-                  <AnimatedValue value={metric.value} />
-                </p>
-
-                <p className="text-[#1D1D1F] font-medium mt-3 text-sm">
-                  {metric.label}
-                </p>
-
-                <p className="text-[#86868B] text-xs mt-1.5 leading-relaxed">
-                  {metric.description}
-                </p>
-              </div>
+              <p className="text-4xl md:text-5xl font-bold tracking-tight text-[#1D1D1F]">
+                <AnimatedValue value={metric.value} />
+              </p>
+              <p className="text-[#1D1D1F] font-medium mt-3 text-sm">
+                {metric.label}
+              </p>
+              <p className="text-[#86868B] text-xs mt-1.5 leading-relaxed">
+                {metric.description}
+              </p>
             </motion.div>
           ))}
         </div>
