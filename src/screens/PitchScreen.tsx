@@ -41,7 +41,7 @@ export function PitchScreen() {
           </div>
           <span className="text-[#1D1D1F] font-semibold tracking-tight">Praxis</span>
         </div>
-        <a href="/" className="text-xs text-[#86868B] hover:text-[#1D1D1F] transition-colors inline-flex items-center gap-1">
+        <a href="/app" className="text-xs text-[#86868B] hover:text-[#1D1D1F] transition-colors inline-flex items-center gap-1">
           Try the product
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />

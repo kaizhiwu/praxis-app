@@ -171,7 +171,7 @@ export function HeroSection() {
               className="mt-8 flex items-center justify-center gap-3"
             >
               <a
-                href="/"
+                href="/app"
                 className="group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
               >
                 Try the product
@@ -217,7 +217,7 @@ export function HeroSection() {
           style={{ opacity: ctaOpacity, y: ctaY }}
         >
           <a
-            href="/"
+            href="/app"
             className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
           >
             Try the product

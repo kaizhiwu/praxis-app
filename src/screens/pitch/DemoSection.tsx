@@ -88,7 +88,7 @@ export function DemoSection() {
 
                 {/* App content — iframe */}
                 <iframe
-                  src="/"
+                  src="/app"
                   className="w-full border-0"
                   style={{ height: 'calc(100% - 44px)' }}
                   title="Praxis App Demo"

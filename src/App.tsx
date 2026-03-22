@@ -11,10 +11,10 @@ function App() {
       <LiquidGlassFilter />
       <div className="grain">
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<PitchScreen />} />
+          <Route path="/app" element={<HomeScreen />} />
           <Route path="/results" element={<ResultsScreen />} />
           <Route path="/place/:id" element={<PlaceDetailScreen />} />
-          <Route path="/pitch" element={<PitchScreen />} />
         </Routes>
       </div>
     </BrowserRouter>
