@@ -35,8 +35,9 @@ export function DemoSection() {
 
   return (
     <section
+      id="demo"
       ref={containerRef}
-      className="bg-[#FAFAFA] py-24 md:py-40 px-6"
+      className="bg-[#FAFAFA] py-16 md:py-24 px-6"
     >
       <div className="max-w-5xl mx-auto">
         <motion.div
@@ -44,7 +45,7 @@ export function DemoSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="text-4xl font-bold text-[#1D1D1F]">{PITCH.demo.title}</h2>
           <p className="text-[#6E6E73] mt-4 max-w-xl mx-auto">{PITCH.demo.sub}</p>

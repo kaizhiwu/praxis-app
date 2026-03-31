@@ -38,7 +38,68 @@ function DataLabel({ data, scrollYProgress }: { data: typeof DATA_LABELS[number]
   )
 }
 
-export function HeroSection() {
+function HeroMockupCard() {
+  const { heroMockup: m } = PITCH
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, rotateY: -5 }}
+      animate={{ opacity: 1, y: 0, rotateY: 0 }}
+      transition={{ delay: 1.1, duration: 0.7, ease: 'easeOut' }}
+      className="rounded-2xl bg-white border border-[#E5E5EA] p-5 w-full max-w-sm"
+      style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)', perspective: '800px' }}
+    >
+      {/* Search bar */}
+      <div className="flex items-center gap-2 rounded-lg bg-[#F5F5F7] px-3 py-2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" strokeWidth="2" strokeLinecap="round">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <span className="text-xs font-mono text-[#86868B]">{m.query}</span>
+      </div>
+
+      {/* Result */}
+      <div className="mt-4">
+        <div className="flex items-start justify-between">
+          <div>
+            <h4 className="text-base font-semibold text-[#1D1D1F]">{m.place}</h4>
+            <p className="text-xs text-[#86868B] mt-0.5">{m.neighborhood} · {m.distance}</p>
+          </div>
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#EEF2FF] flex-shrink-0">
+            <span className="text-sm font-bold text-[#4F46E5]">{m.matchScore}</span>
+          </div>
+        </div>
+
+        {/* Attributes */}
+        <div className="mt-4 space-y-3">
+          {m.attributes.map((attr) => (
+            <div key={attr.label}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] uppercase tracking-wide text-[#86868B] font-medium">{attr.label}</span>
+                <span className="text-[11px] font-mono text-[#6E6E73]">{Math.round(attr.confidence * 100)}%</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-[#F5F5F7] overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-[#4F46E5]"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${attr.value * 100}%` }}
+                  transition={{ delay: 1.5, duration: 0.6, ease: 'easeOut' }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom tag */}
+      <div className="mt-4 flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+        <span className="text-[10px] text-[#86868B]">Verified today · 12 contributors</span>
+      </div>
+    </motion.div>
+  )
+}
+
+export function HeroSection({ onContact }: { onContact: () => void }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const scrollVal = useRef(0)
@@ -89,7 +150,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       className="relative bg-[#FAFAFA]"
-      style={{ height: '280vh' }}
+      style={{ height: '200vh' }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* ── Video background ── */}
@@ -117,92 +178,72 @@ export function HeroSection() {
           />
         </div>
 
-        {/* ── Phase 1: Centered text — the thesis ── */}
+        {/* ── Phase 1: Two-column layout — text left, mockup right ── */}
         <motion.div
           className="absolute inset-0 z-10 flex items-center justify-center"
           style={{ opacity: textOpacity, y: textY }}
         >
-          <div className="text-center px-6 max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="inline-flex mb-6 rounded-full border border-[#E5E5EA] px-4 py-1.5 bg-white"
-            >
-              <span className="text-[11px] uppercase tracking-[0.2em] text-[#86868B]">
-                {PITCH.hero.tagline}
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.7 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] text-[#1D1D1F]"
-            >
-              The behavioral layer
-              <br />
-              maps won&apos;t build.
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
-              className="mt-6 text-base sm:text-lg text-[#6E6E73] max-w-lg mx-auto leading-relaxed font-light"
-            >
-              {PITCH.hero.sub}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1, duration: 0.5 }}
-              className="mt-3 text-xs text-[#AEAEB2] tracking-wide"
-            >
-              {PITCH.hero.founderNote}
-            </motion.p>
-
-            {/* CTA buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.5 }}
-              className="mt-8 flex items-center justify-center gap-3"
-            >
-              <a
-                href="/app"
-                className="group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
+          <div className="max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            {/* Left — text */}
+            <div className="flex-1 text-center md:text-left max-w-xl">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7 }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] text-[#1D1D1F]"
               >
-                Try the product
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M10 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-              <a
-                href="#problem"
-                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-2.5 text-sm font-medium text-[#6E6E73] hover:text-[#1D1D1F] hover:border-[#AEAEB2] transition-colors duration-200"
-              >
-                Read the thesis
-                <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
-                  <path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            </motion.div>
+                The behavioral layer
+                <br />
+                maps won&apos;t build.
+              </motion.h1>
 
-            {/* Scroll indicator */}
-            <motion.div
-              className="mt-14 flex flex-col items-center gap-2"
-              animate={{ opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#AEAEB2]">Scroll</span>
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.5 }}
+                className="mt-6 text-base sm:text-lg text-[#3A3A3C] leading-relaxed"
+              >
+                {PITCH.hero.sub}
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.5 }}
+                className="mt-3 text-xs text-[#AEAEB2] tracking-wide"
+              >
+                {PITCH.hero.founderNote}
+              </motion.p>
+
+              {/* CTA buttons */}
               <motion.div
-                className="w-px h-8 bg-gradient-to-b from-[#AEAEB2] to-transparent"
-                animate={{ scaleY: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </motion.div>
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.0, duration: 0.5 }}
+                className="mt-8 flex items-center justify-center md:justify-start gap-3"
+              >
+                <a
+                  href="/app"
+                  className="group inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors duration-200"
+                >
+                  Try the product
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M10 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+                <button
+                  onClick={onContact}
+                  className="inline-flex items-center gap-2 rounded-full border border-[#E5E5EA] px-6 py-2.5 text-sm font-medium text-[#6E6E73] hover:text-[#1D1D1F] hover:border-[#AEAEB2] transition-colors duration-200 cursor-pointer"
+                >
+                  Explore with us
+                </button>
+              </motion.div>
+            </div>
+
+            {/* Right — product mockup (hidden on mobile) */}
+            <div className="hidden md:block flex-shrink-0">
+              <HeroMockupCard />
+            </div>
           </div>
         </motion.div>
 

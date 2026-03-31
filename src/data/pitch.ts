@@ -1,4 +1,61 @@
 export const PITCH = {
+  heroMockup: {
+    query: 'quiet cafe to work from',
+    place: 'Think Coffee',
+    neighborhood: 'NoHo, NYC',
+    distance: '0.3 mi',
+    matchScore: 92,
+    attributes: [
+      { label: 'Outlet usability', value: 0.88, confidence: 0.91 },
+      { label: 'Noise level (low)', value: 0.75, confidence: 0.84 },
+      { label: 'Laptop tolerance', value: 0.95, confidence: 0.89 },
+    ],
+  },
+  whoItsFor: {
+    eyebrow: 'Who it\'s for',
+    headline: 'Built for both sides of the graph.',
+    personas: [
+      {
+        title: 'Searchers',
+        description: 'People who need real answers about places — not star ratings, not review fragments. Structured, confidence-scored behavioral truth before you go.',
+        tags: ['Intent search', 'Confidence scores', 'Recency-weighted'],
+        accent: '#4F46E5',
+      },
+      {
+        title: 'Contributors',
+        description: 'People who visit places and confirm what\'s true. One-tap observations at point of visit that improve your own future results. Self-interest, not altruism.',
+        tags: ['Point-of-visit', 'Self-interest', 'Trust compounds'],
+        accent: '#E2614B',
+      },
+    ],
+  },
+  writing: {
+    eyebrow: 'Writing',
+    headline: 'The case for behavioral place intelligence.',
+    articles: [
+      {
+        title: 'Why Star Ratings Tell You Nothing About What You Can Do There',
+        date: 'March 2026',
+        readTime: '6 min',
+        pullQuote: 'A 4.5-star cafe and a 4.5-star library are functionally identical to every map product on earth.',
+        url: 'https://substack.com/@kaizhiwu',
+      },
+      {
+        title: 'The Tacit Knowledge Problem in Place Discovery',
+        date: 'March 2026',
+        readTime: '5 min',
+        pullQuote: 'The knowledge exists — in millions of heads, threads, and posts. Nobody has structured it.',
+        url: 'https://substack.com/@kaizhiwu',
+      },
+      {
+        title: 'Why Google Won\'t Build This (And Why That\'s the Opportunity)',
+        date: 'February 2026',
+        readTime: '7 min',
+        pullQuote: 'The rational incumbent response is deprioritization, not inability.',
+        url: 'https://substack.com/@kaizhiwu',
+      },
+    ],
+  },
   hero: {
     tagline: 'Behavioral Place Intelligence',
     headline: 'The behavioral layer\nmaps won\'t build.',
@@ -239,6 +296,8 @@ export const PITCH = {
     headline: 'The behavioral utility layer starts with one city.',
     sub: 'Looking for early users and design partners in NYC.',
     email: 'kaizhi.j.wu@gmail.com',
+    twitter: 'https://x.com/kaizhi_wu',
+    substack: 'https://substack.com/@kaizhiwu',
     points: [
       'NYC-first, density-first',
       'Looking for design partners — freelancers & remote workers',

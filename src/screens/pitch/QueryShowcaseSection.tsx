@@ -68,14 +68,14 @@ export function QueryShowcaseSection() {
   const colors = CATEGORY_COLORS[active.icon] || CATEGORY_COLORS.laptop
 
   return (
-    <section className="bg-[#F5F5F7] py-24 md:py-40 px-6">
+    <section className="bg-[#FAF8F5] py-16 md:py-24 px-6">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F]">
             {PITCH.queryShowcase.title}
@@ -86,7 +86,7 @@ export function QueryShowcaseSection() {
         </motion.div>
 
         {/* Category tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {categories.map((cat, i) => {
             const catColors = CATEGORY_COLORS[cat.icon] || CATEGORY_COLORS.laptop
             const isActive = i === activeCategory

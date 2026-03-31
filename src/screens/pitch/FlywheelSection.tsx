@@ -73,14 +73,14 @@ export function FlywheelSection() {
   }))
 
   return (
-    <section id="flywheel" className="bg-[#F5F5F7] py-32 px-6">
+    <section id="flywheel" className="bg-[#FAFAFA] py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl font-bold text-center mb-16 text-[#1D1D1F]"
+          className="text-4xl font-bold text-center mb-10 text-[#1D1D1F]"
         >
           {PITCH.flywheel.title}
         </motion.h2>

@@ -1,5 +1,38 @@
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
+import { useEffect, useRef } from 'react'
+
+function AnimatedValue({ value }: { value: string }) {
+  const numMatch = value.match(/^([<>]?\s*)(\d+)(\+?)$/)
+  if (!numMatch) {
+    return <span>{value}</span>
+  }
+
+  const prefix = numMatch[1]
+  const num = parseInt(numMatch[2])
+  const suffix = numMatch[3]
+  const motionVal = useMotionValue(0)
+  const rounded = useTransform(motionVal, (v) => Math.round(v))
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const controls = animate(motionVal, num, {
+      duration: 1.5,
+      type: 'spring',
+      stiffness: 50,
+      damping: 15,
+    })
+    const unsub = rounded.on('change', (v) => {
+      if (ref.current) ref.current.textContent = `${prefix}${v}${suffix}`
+    })
+    return () => {
+      controls.stop()
+      unsub()
+    }
+  }, [motionVal, rounded, num, prefix, suffix])
+
+  return <span ref={ref}>{prefix}0{suffix}</span>
+}
 
 const toolIcons: Record<string, React.ReactNode> = {
   brain: (
@@ -31,7 +64,7 @@ const toolIcons: Record<string, React.ReactNode> = {
 
 export function HowIBuildSection() {
   return (
-    <section className="py-32 px-6 bg-[#FAFAFA]">
+    <section className="py-20 px-6 bg-[#FAFAFA]">
       <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -47,7 +80,7 @@ export function HowIBuildSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#6E6E73] mb-16 max-w-xl"
+          className="text-[#6E6E73] mb-10 max-w-xl"
         >
           {PITCH.howIBuild.sub}
         </motion.p>
@@ -81,6 +114,42 @@ export function HowIBuildSection() {
               </div>
               <h3 className="text-[#1D1D1F] font-semibold text-sm">{tool.name}</h3>
               <p className="text-[#86868B] text-xs mt-2 leading-relaxed">{tool.role}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ── Metrics (merged from BuildVelocity) ── */}
+        <div className="h-px bg-[#E5E5EA] my-16" />
+
+        <motion.h3
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl font-bold text-[#1D1D1F] mb-8"
+        >
+          {PITCH.buildVelocity.title}
+        </motion.h3>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {PITCH.buildVelocity.metrics.map((metric, i) => (
+            <motion.div
+              key={metric.label}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="rounded-2xl p-6 bg-white border border-[#E5E5EA]"
+            >
+              <p className="text-4xl md:text-5xl font-bold tracking-tight text-[#1D1D1F]">
+                <AnimatedValue value={metric.value} />
+              </p>
+              <p className="text-[#1D1D1F] font-medium mt-3 text-sm">
+                {metric.label}
+              </p>
+              <p className="text-[#86868B] text-xs mt-1.5 leading-relaxed">
+                {metric.description}
+              </p>
             </motion.div>
           ))}
         </div>

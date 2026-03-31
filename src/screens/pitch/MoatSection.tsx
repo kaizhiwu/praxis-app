@@ -29,7 +29,7 @@ export function MoatSection() {
   const layers = PITCH.moat.layers
 
   return (
-    <section className="py-32 px-6 bg-[#FAFAFA]">
+    <section className="py-20 px-6 bg-[#FAF8F5]">
       <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -45,7 +45,7 @@ export function MoatSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#6E6E73] text-sm mb-12 max-w-lg"
+          className="text-[#6E6E73] text-sm mb-8 max-w-lg"
         >
           The incumbent&apos;s rational response is to do nothing.
         </motion.p>
@@ -83,6 +83,29 @@ export function MoatSection() {
             )
           })}
         </div>
+
+        {/* "What this is not" pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16"
+        >
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-[#86868B] mb-4">
+            {PITCH.notList.title}
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {PITCH.notList.items.map((item) => (
+              <span
+                key={item}
+                className="text-xs text-[#6E6E73] bg-white border border-[#E5E5EA] rounded-full px-4 py-1.5"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )
