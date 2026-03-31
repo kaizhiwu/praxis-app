@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: linear-gradient(145deg, #F8F7FF 0%, #FAFAFA 35%, #F7FAFE 65%, #FBF9F7 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle radial wash */
+  .glow {
+    position: absolute;
+    width: 800px; height: 800px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,70,229,0.05) 0%, transparent 60%);
+    top: 30%; left: 50%; transform: translate(-50%, -50%);
+  }
+
+  /* ── Top: logo + headline ── */
+  .top {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding-top: 48px;
+  }
+  .logo-row {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .logo-icon {
+    width: 40px; height: 40px; background: #4F46E5;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  }
+  .logo-text { font-size: 28px; font-weight: 700; color: #1D1D1F; letter-spacing: -0.01em; }
+  h1 {
+    font-size: 58px; font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1.05; margin-bottom: 8px;
+  }
+  h1 span {
+    background: linear-gradient(135deg, #1D1D1F 40%, #4F46E5 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .sub { font-size: 20px; color: #86868B; letter-spacing: -0.01em; }
+
+  /* ── Phones: bleed off bottom ── */
+  .phones {
+    position: absolute;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; justify-content: center; align-items: flex-start;
+    gap: 0;
+    z-index: 2;
+    perspective: 1400px;
+  }
+
+  .iphone {
+    position: relative;
+    width: 250px;
+    height: 520px;
+    background: #1C1C1E;
+    border-radius: 36px;
+    padding: 10px;
+    box-shadow:
+      0 24px 80px rgba(0,0,0,0.18),
+      0 6px 20px rgba(0,0,0,0.1),
+      inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  /* Side button */
+  .iphone::before {
+    content: '';
+    position: absolute;
+    right: -2px; top: 90px;
+    width: 3px; height: 32px;
+    background: #2C2C2E;
+    border-radius: 0 2px 2px 0;
+  }
+  /* Volume buttons */
+  .iphone::after {
+    content: '';
+    position: absolute;
+    left: -2px; top: 80px;
+    width: 3px; height: 24px;
+    background: #2C2C2E;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 36px 0 #2C2C2E;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 14px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 22px;
+    background: #000; border-radius: 14px;
+    z-index: 10;
+  }
+
+  .iphone-screen {
+    background: #FFFFFF;
+    border-radius: 28px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .screen-content {
+    padding: 44px 18px 18px;
+  }
+
+  /* Left phone — angled */
+  .iphone.left {
+    transform: rotateY(22deg) rotateX(3deg) translateX(24px) translateZ(-20px);
+    z-index: 1;
+  }
+  /* Center phone — front, raised */
+  .iphone.center {
+    width: 270px;
+    height: 560px;
+    transform: translateY(-20px) translateZ(40px);
+    z-index: 3;
+    margin: 0 -20px;
+  }
+  .iphone.center .screen-content { padding: 48px 20px 20px; }
+  .iphone.center .dynamic-island { width: 86px; height: 24px; top: 15px; }
+  /* Right phone — angled */
+  .iphone.right {
+    transform: rotateY(-22deg) rotateX(3deg) translateX(-24px) translateZ(-20px);
+    z-index: 1;
+  }
+
+  /* ── Screen content ── */
+  .search-bar {
+    display: flex; align-items: center; gap: 6px;
+    background: #F5F5F7; border-radius: 10px;
+    padding: 8px 10px; margin-bottom: 14px;
+  }
+  .search-text { font-size: 11px; color: #86868B; font-family: monospace; }
+
+  .place-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .place-name { font-size: 16px; font-weight: 600; color: #1D1D1F; }
+  .place-meta { font-size: 10px; color: #86868B; margin-top: 2px; }
+  .score {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #EEF2FF; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #4F46E5;
+  }
+
+  .attr { margin-bottom: 10px; }
+  .attr-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .attr-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: #86868B; font-weight: 500; }
+  .attr-val { font-size: 9px; color: #86868B; font-family: monospace; }
+  .bar-track { height: 6px; border-radius: 3px; background: #F0F0F2; }
+  .bar-fill { height: 100%; border-radius: 3px; background: #4F46E5; }
+
+  .verified { display: flex; align-items: center; gap: 4px; margin-top: 12px; }
+  .verified-dot { width: 5px; height: 5px; border-radius: 50%; background: #22C55E; }
+  .verified-text { font-size: 8px; color: #86868B; }
+
+  /* Results */
+  .results-title { font-size: 10px; color: #86868B; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; font-weight: 500; }
+  .result-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #F0F0F2; }
+  .result-item:last-child { border-bottom: none; }
+  .result-score {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid #4F46E5; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #4F46E5; flex-shrink: 0;
+  }
+  .result-score.mid { opacity: 0.6; }
+  .result-score.low { opacity: 0.35; }
+  .result-name { font-size: 14px; font-weight: 600; color: #1D1D1F; }
+  .result-meta { font-size: 10px; color: #86868B; }
+  .result-bars { display: flex; gap: 3px; margin-top: 4px; }
+  .mini-bar { height: 4px; border-radius: 2px; }
+
+  /* Chips */
+  .chips-title { font-size: 10px; color: #86868B; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; font-weight: 500; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    font-size: 11px; color: #6E6E73;
+    background: #F0F0F2; border: 1px solid #E5E5EA;
+    border-radius: 14px; padding: 6px 12px;
+  }
+  .chip.active { background: #EEF2FF; border-color: rgba(79,70,229,0.2); color: #4F46E5; }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <div class="top">
+    <div class="logo-row">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5M2 10l8 5 8-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Praxis</span>
+    </div>
+    <h1><span>The behavioral layer maps won't build.</span></h1>
+    <p class="sub">Behavioral place intelligence. Confidence-scored. Recency-weighted.</p>
+  </div>
+
+  <div class="phones">
+    <!-- Left: Place detail -->
+    <div class="iphone left">
+      <div class="dynamic-island"></div>
+      <div class="iphone-screen">
+        <div class="screen-content">
+          <div class="search-bar">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span class="search-text">quiet cafe to work from</span>
+          </div>
+          <div class="place-row">
+            <div><div class="place-name">Think Coffee</div><div class="place-meta">NoHo, NYC · 0.3 mi</div></div>
+            <div class="score">92</div>
+          </div>
+          <div class="attr"><div class="attr-row"><span class="attr-label">Outlet usability</span><span class="attr-val">91%</span></div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div></div>
+          <div class="attr"><div class="attr-row"><span class="attr-label">Noise level (low)</span><span class="attr-val">84%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+          <div class="attr"><div class="attr-row"><span class="attr-label">Laptop tolerance</span><span class="attr-val">89%</span></div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
+          <div class="verified"><div class="verified-dot"></div><span class="verified-text">Verified today · 12 contributors</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Results -->
+    <div class="iphone center">
+      <div class="dynamic-island"></div>
+      <div class="iphone-screen">
+        <div class="screen-content">
+          <div class="results-title">Intent-matched results</div>
+          <div class="result-item">
+            <div class="result-score">94</div>
+            <div>
+              <div class="result-name">Think Coffee</div>
+              <div class="result-meta">NoHo · 0.3 mi</div>
+              <div class="result-bars"><div class="mini-bar" style="width:44px;background:#4F46E5;opacity:0.8"></div><div class="mini-bar" style="width:30px;background:#E2614B;opacity:0.5"></div></div>
+            </div>
+          </div>
+          <div class="result-item">
+            <div class="result-score mid">87</div>
+            <div>
+              <div class="result-name">Housing Works</div>
+              <div class="result-meta">SoHo · 0.5 mi</div>
+              <div class="result-bars"><div class="mini-bar" style="width:34px;background:#4F46E5;opacity:0.6"></div><div class="mini-bar" style="width:24px;background:#E2614B;opacity:0.4"></div></div>
+            </div>
+          </div>
+          <div class="result-item">
+            <div class="result-score low">71</div>
+            <div>
+              <div class="result-name">Abraço</div>
+              <div class="result-meta">East Village · 0.7 mi</div>
+              <div class="result-bars"><div class="mini-bar" style="width:26px;background:#4F46E5;opacity:0.4"></div><div class="mini-bar" style="width:18px;background:#E2614B;opacity:0.3"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Intent chips -->
+    <div class="iphone right">
+      <div class="dynamic-island"></div>
+      <div class="iphone-screen">
+        <div class="screen-content">
+          <div class="chips-title">What people ask</div>
+          <div class="chips">
+            <div class="chip active">Quiet work spot</div>
+            <div class="chip">Open restroom</div>
+            <div class="chip">Good date lighting</div>
+            <div class="chip active">Laptop-friendly</div>
+            <div class="chip">Stroller access</div>
+            <div class="chip">Late-night safe</div>
+            <div class="chip active">Outlets that work</div>
+            <div class="chip">Photo wall</div>
+            <div class="chip">Not touristy</div>
+            <div class="chip">Kid-friendly</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
