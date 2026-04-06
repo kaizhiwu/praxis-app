@@ -19,21 +19,19 @@ export const PITCH = {
         title: 'Searchers',
         description: 'People who need real answers about places before they go. Not star ratings. Structured, confidence-scored behavioral attributes — does this cafe have working outlets? Is it actually quiet?',
         tags: ['Intent search', 'Confidence scores', 'Recency-weighted'],
-        accent: '#4F46E5',
       },
       {
         title: 'Contributors',
         description: 'People who visit places and confirm what\'s true. One-tap observations at point of visit. Your contributions improve your own future results — self-interest, not charity.',
         tags: ['Point-of-visit', 'Self-interest', 'Trust compounds'],
-        accent: '#E2614B',
       },
     ],
   },
   hero: {
     tagline: 'Behavioral Place Intelligence',
     headline: 'The behavioral layer\nmaps won\'t build.',
-    sub: 'Google Maps tells you what\'s at a location. Praxis tells you what you can do there. Structured behavioral attributes — confidence-scored, recency-weighted, confirmed by users at point of visit.',
-    founderNote: 'Designed, engineered, and shipped by a solo founder with AI.',
+    sub: 'Google Maps tells you what\'s there. Praxis tells you what you can do there.',
+    founderNote: 'Solo founder. AI-native.',
   },
   problem: {
     title: 'Maps answer "where." They don\'t answer "will it work."',

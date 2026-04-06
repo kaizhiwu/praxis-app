@@ -1,30 +1,17 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
+
+const fade = {
+  initial: { opacity: 0, y: 8 } as const,
+  whileInView: { opacity: 1, y: 0 } as const,
+  viewport: { once: true, margin: '-60px' } as const,
+  transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } as const,
+}
 
 export function DemoSection() {
   const [activeQuery, setActiveQuery] = useState(0)
   const queries = PITCH.demo.queries
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
-
-  // 3D perspective transforms — phone starts tilted, rotates flat as user scrolls
-  const rotateX = useTransform(scrollYProgress, [0, 0.4], [isMobile ? 12 : 20, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.4], [isMobile ? 0.85 : 0.9, 1])
-  const translateY = useTransform(scrollYProgress, [0, 0.4], [60, 0])
-  const opacity = useTransform(scrollYProgress, [0, 0.25], [0.3, 1])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,87 +21,52 @@ export function DemoSection() {
   }, [queries.length])
 
   return (
-    <section
-      id="demo"
-      ref={containerRef}
-      className="bg-[#FAFAFA] py-16 md:py-24 px-6"
-    >
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+    <section id="demo" className="bg-[var(--color-bone)] px-6 lg:px-10 py-20">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="section-rule mb-6" />
+        <motion.p {...fade} className="mono-label mb-10">The demo</motion.p>
+
+        <motion.h2
+          {...fade}
+          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
-          <h2 className="text-4xl font-bold text-[#1D1D1F]">{PITCH.demo.title}</h2>
-          <p className="text-[#6E6E73] mt-4 max-w-xl mx-auto text-sm sm:text-base">{PITCH.demo.sub}</p>
+          {PITCH.demo.title}
+        </motion.h2>
+
+        {/* Phone frame — simple, static */}
+        <motion.div {...fade} transition={{ ...fade.transition, delay: 0.1 }} className="flex justify-center">
+          <div
+            className="w-[300px] md:w-[340px] h-[600px] md:h-[680px] rounded-[2rem] border border-[var(--color-border)] bg-[var(--color-ink)] overflow-hidden"
+            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+          >
+            {/* Minimal status bar */}
+            <div className="h-10 bg-[var(--color-bone)] flex items-center justify-center">
+              <span className="text-[10px] text-[var(--color-ink-tertiary)] font-medium">9:41</span>
+            </div>
+            <iframe
+              src="/app"
+              className="w-full border-0"
+              style={{ height: 'calc(100% - 40px)' }}
+              title="Praxis App Demo"
+            />
+          </div>
         </motion.div>
 
-        {/* 3D Container Scroll — phone rotates from tilted to flat */}
-        <div style={{ perspective: '1200px' }}>
-          <motion.div
-            style={{
-              rotateX,
-              scale,
-              translateY,
-              opacity,
-            }}
-            className="flex justify-center"
-          >
-            {/* Phone frame */}
-            <div className="relative">
-              <div
-                className="relative w-[320px] md:w-[375px] h-[640px] md:h-[720px] rounded-[2.5rem] border-[3px] border-[#1D1D1F]/10 bg-[#1D1D1F] overflow-hidden"
-                style={{
-                  boxShadow:
-                    '0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)',
-                }}
-              >
-                {/* Status bar */}
-                <div className="h-11 bg-[#F8F7F4] flex items-center justify-between px-6">
-                  <span className="text-[10px] text-[#6B7280] font-medium">9:41</span>
-                  <div className="w-[80px] h-[24px] bg-black rounded-full mx-auto" />
-                  <div className="flex items-center gap-1">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280">
-                      <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
-                    </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#6B7280">
-                      <rect x="2" y="6" width="18" height="12" rx="2" stroke="#6B7280" strokeWidth="2" fill="none" />
-                      <rect x="4" y="8" width="12" height="8" rx="1" fill="#6B7280" />
-                      <path d="M22 10v4" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* App content — iframe */}
-                <iframe
-                  src="/app"
-                  className="w-full border-0"
-                  style={{ height: 'calc(100% - 44px)' }}
-                  title="Praxis App Demo"
-                />
-              </div>
-
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Query chips cycling below */}
+        {/* Query chips */}
         <div className="flex flex-wrap justify-center gap-3 mt-12">
           {queries.map((q, i) => (
             <motion.button
               key={q.text}
               onClick={() => setActiveQuery(i)}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-300 cursor-pointer ${
-                i === activeQuery
-                  ? 'bg-[#4F46E5]/10 border border-[#4F46E5]/25 text-[#4F46E5]'
-                  : 'bg-white border border-[#E5E5EA] text-[#86868B] hover:text-[#6E6E73]'
-              }`}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + i * 0.1 }}
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.2 + i * 0.04 }}
+              className="px-4 py-2 rounded-full text-sm transition-all duration-200 cursor-pointer"
+              style={{
+                background: i === activeQuery ? 'var(--color-bone-warm)' : 'transparent',
+                border: `1px solid ${i === activeQuery ? 'var(--color-ink-tertiary)' : 'var(--color-border)'}`,
+                color: i === activeQuery ? 'var(--color-ink)' : 'var(--color-ink-secondary)',
+              }}
             >
               &ldquo;{q.text}&rdquo;
             </motion.button>

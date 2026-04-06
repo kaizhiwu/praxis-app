@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "Praxis Dev Server",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["vite", "--port", "5173"],
-      "port": 5173,
+      "runtimeExecutable": "/opt/homebrew/bin/node",
+      "runtimeArgs": ["/Users/kaizhiwu/Praxis/node_modules/vite/bin/vite.js", "--port", "5199"],
+      "port": 5199,
       "autoPort": false
     }
   ]

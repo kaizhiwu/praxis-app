@@ -1,48 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  /* Liquid Glass palette — Apple system colors */
-  --color-bg-primary: #F5F5F7;
-  --color-bg-elevated: #FFFFFF;
-  --color-surface: rgba(255, 255, 255, 0.2);
-  --color-surface-hover: rgba(255, 255, 255, 0.35);
-  --color-surface-border: rgba(0, 0, 0, 0.06);
-  --color-surface-border-hover: rgba(0, 0, 0, 0.1);
-  --color-text-primary: #1D1D1F;
-  --color-text-secondary: #86868B;
-  --color-text-tertiary: #AEAEB2;
-  --color-confidence-high: #1D1D1F;
-  --color-confidence-mid: #86868B;
-  --color-confidence-fade: #D1D1D6;
-  --color-accent: #4F46E5;
-  --color-accent-hover: #4338CA;
-  --color-accent-dim: #EEF2FF;
-  --color-accent-glow: rgba(79, 70, 229, 0.1);
-  --color-negative: #DC2626;
-  --color-negative-dim: rgba(220, 38, 38, 0.08);
-  --color-cluster-work: #4F46E5;
-  --color-cluster-relief: #E2614B;
-  --color-cluster-savings: #D97706;
+  /* Warm monochromatic palette */
+  --color-bone:          #F7F6F3;
+  --color-bone-warm:     #EFEDE8;
+  --color-taupe:         #E8E4DD;
+  --color-taupe-cool:    #DAD6CE;
+  --color-ink:           #1A1C1E;
+  --color-ink-secondary: #6B6966;
+  --color-ink-tertiary:  #9C9891;
+  --color-ink-faint:     #C4BFB8;
+  --color-border:        #E2DDD5;
+  --color-border-subtle: #EDEBE6;
+  --color-dark-surface:  #1A1C1E;
+  --color-dark-text:     #E8E4DD;
+  --color-dark-muted:    #8A8680;
 
-  --color-bg-dark: #0F0F14;
-  --color-bg-warm: #FAF8F5;
-  --color-text-on-dark: #E8E8ED;
-  --color-text-secondary-on-dark: #8E8E93;
-  --color-surface-dark: rgba(255, 255, 255, 0.06);
-  --color-surface-dark-border: rgba(255, 255, 255, 0.1);
-
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Lora', Georgia, serif;
+  --font-display: 'General Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-wordmark: 'Instrument Serif', Georgia, serif;
   --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
 }
 
 html, body, #root {
   min-height: 100dvh;
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-family: var(--font-sans);
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mono label system — consistent kicker pattern */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-ink-tertiary);
+}
+
+/* Section divider */
+.section-rule {
+  height: 1px;
+  background: var(--color-border);
 }
 
 /* Grain texture overlay */
@@ -56,93 +57,6 @@ html, body, #root {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 512px 512px;
-}
-
-/* ── Liquid Glass surfaces ── */
-.glass {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  box-shadow:
-    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
-    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.04);
-}
-
-.glass-subtle {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(16px) saturate(1.3);
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  box-shadow:
-    inset 1px 1px 1px 0 rgba(255, 255, 255, 0.4),
-    inset -1px -1px 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.glass-elevated {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(24px) saturate(1.5);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  box-shadow:
-    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.55),
-    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.45),
-    0 8px 32px rgba(0, 0, 0, 0.06);
-}
-
-/* ── Dark glass surfaces (for dark background sections) ── */
-.glass-dark {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-dark-elevated {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-/* Liquid Glass with SVG distortion — use on premium surfaces */
-.liquid-glass {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px) saturate(1.5) url(#liquid-glass-filter);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  box-shadow:
-    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
-    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.4),
-    0 6px 24px rgba(0, 0, 0, 0.05);
-}
-
-/* ── Animations ── */
-@keyframes subtle-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.7; }
-}
-.pulse-stale {
-  animation: subtle-pulse 3.5s ease-in-out infinite;
-}
-
-@keyframes ambient-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.06); }
-  50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.12); }
-}
-
-@keyframes shimmer-sweep {
-  0% { transform: translateX(-100%) rotate(15deg); }
-  100% { transform: translateX(100%) rotate(15deg); }
-}
-.cta-shimmer {
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(0, 0, 0, 0.03) 45%,
-    rgba(0, 0, 0, 0.06) 50%,
-    rgba(0, 0, 0, 0.03) 55%,
-    transparent 70%
-  );
-  animation: shimmer-sweep 4s ease-in-out infinite;
-  animation-delay: 1s;
 }
 
 /* Hide scrollbar */
@@ -161,21 +75,17 @@ html, body, #root {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .pulse-stale {
-    animation: none;
-    opacity: 0.6;
-  }
 }
 
-/* Focus ring for keyboard nav */
+/* Focus ring */
 *:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* Selection */
 ::selection {
-  background: var(--color-accent-glow);
-  color: var(--color-text-primary);
+  background: var(--color-taupe);
+  color: var(--color-ink);
 }
