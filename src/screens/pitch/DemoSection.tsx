@@ -48,7 +48,7 @@ export function DemoSection() {
           className="text-center mb-10"
         >
           <h2 className="text-4xl font-bold text-[#1D1D1F]">{PITCH.demo.title}</h2>
-          <p className="text-[#6E6E73] mt-4 max-w-xl mx-auto">{PITCH.demo.sub}</p>
+          <p className="text-[#6E6E73] mt-4 max-w-xl mx-auto text-sm sm:text-base">{PITCH.demo.sub}</p>
         </motion.div>
 
         {/* 3D Container Scroll — phone rotates from tilted to flat */}

@@ -47,7 +47,7 @@ export function MoatSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-[#6E6E73] text-sm mb-8 max-w-lg"
         >
-          The incumbent&apos;s rational response is to do nothing.
+          Three structural advantages that get stronger with scale.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

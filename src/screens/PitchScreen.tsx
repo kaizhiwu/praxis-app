@@ -7,7 +7,6 @@ import { DemoSection } from './pitch/DemoSection'
 import { ProductSection } from './pitch/ProductSection'
 import { FlywheelSection } from './pitch/FlywheelSection'
 import { MoatSection } from './pitch/MoatSection'
-import { WritingSection } from './pitch/WritingSection'
 import { HowIBuildSection } from './pitch/HowIBuildSection'
 import { CTASection } from './pitch/CTASection'
 import { ContactModal } from '../components/ContactModal'
@@ -63,7 +62,7 @@ export function PitchScreen() {
         <div className="hidden md:flex items-center gap-6">
           <a href="#problem" className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors">How it works</a>
           <a href="#demo" className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors">Demo</a>
-          <a href="#writing" className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors">Writing</a>
+          <a href="#flywheel" className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors">Flywheel</a>
         </div>
 
         {/* Right: CTAs */}
@@ -92,7 +91,6 @@ export function PitchScreen() {
       <ProductSection />
       <FlywheelSection />
       <MoatSection />
-      <WritingSection />
       <HowIBuildSection />
       <CTASection onContact={openContact} />
 

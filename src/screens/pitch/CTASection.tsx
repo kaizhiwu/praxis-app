@@ -76,7 +76,7 @@ export function CTASection({ onContact }: { onContact: () => void }) {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-xs text-[#8E8E93] mt-6"
         >
-          We reply within 24 hours.
+          I reply within 24 hours.
         </motion.p>
       </div>
     </section>

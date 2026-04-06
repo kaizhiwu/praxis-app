@@ -23,7 +23,7 @@ export function WhoItsForSection({ onContact }: { onContact: () => void }) {
             {whoItsFor.headline}
           </h2>
           <p className="text-lg text-[#8E8E93] max-w-2xl">
-            Praxis is the shared intelligence layer. Both sides contribute once — everyone gets smarter.
+            Searchers get structured answers. Contributors improve their own results by confirming what&apos;s true.
           </p>
         </motion.div>
 

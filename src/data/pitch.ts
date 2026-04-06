@@ -13,57 +13,30 @@ export const PITCH = {
   },
   whoItsFor: {
     eyebrow: 'Who it\'s for',
-    headline: 'Built for both sides of the graph.',
+    headline: 'Two roles. One shared graph.',
     personas: [
       {
         title: 'Searchers',
-        description: 'People who need real answers about places — not star ratings, not review fragments. Structured, confidence-scored behavioral truth before you go.',
+        description: 'People who need real answers about places before they go. Not star ratings. Structured, confidence-scored behavioral attributes — does this cafe have working outlets? Is it actually quiet?',
         tags: ['Intent search', 'Confidence scores', 'Recency-weighted'],
         accent: '#4F46E5',
       },
       {
         title: 'Contributors',
-        description: 'People who visit places and confirm what\'s true. One-tap observations at point of visit that improve your own future results. Self-interest, not altruism.',
+        description: 'People who visit places and confirm what\'s true. One-tap observations at point of visit. Your contributions improve your own future results — self-interest, not charity.',
         tags: ['Point-of-visit', 'Self-interest', 'Trust compounds'],
         accent: '#E2614B',
-      },
-    ],
-  },
-  writing: {
-    eyebrow: 'Writing',
-    headline: 'The case for behavioral place intelligence.',
-    articles: [
-      {
-        title: 'Why Star Ratings Tell You Nothing About What You Can Do There',
-        date: 'March 2026',
-        readTime: '6 min',
-        pullQuote: 'A 4.5-star cafe and a 4.5-star library are functionally identical to every map product on earth.',
-        url: 'https://substack.com/@kaizhiwu',
-      },
-      {
-        title: 'The Tacit Knowledge Problem in Place Discovery',
-        date: 'March 2026',
-        readTime: '5 min',
-        pullQuote: 'The knowledge exists — in millions of heads, threads, and posts. Nobody has structured it.',
-        url: 'https://substack.com/@kaizhiwu',
-      },
-      {
-        title: 'Why Google Won\'t Build This (And Why That\'s the Opportunity)',
-        date: 'February 2026',
-        readTime: '7 min',
-        pullQuote: 'The rational incumbent response is deprioritization, not inability.',
-        url: 'https://substack.com/@kaizhiwu',
       },
     ],
   },
   hero: {
     tagline: 'Behavioral Place Intelligence',
     headline: 'The behavioral layer\nmaps won\'t build.',
-    sub: 'Structured ground truth about how places actually function. Confidence-scored. Recency-weighted. Created by users, not scraped from reviews.',
+    sub: 'Google Maps tells you what\'s at a location. Praxis tells you what you can do there. Structured behavioral attributes — confidence-scored, recency-weighted, confirmed by users at point of visit.',
     founderNote: 'Designed, engineered, and shipped by a solo founder with AI.',
   },
   problem: {
-    title: 'The information asymmetry nobody fixes',
+    title: 'Maps answer "where." They don\'t answer "will it work."',
     stories: [
       {
         query: '"Cafe to work from near me"',
@@ -84,33 +57,33 @@ export const PITCH = {
         icon: 'heart',
       },
     ],
-    insight: 'Tacit knowledge about places exists — buried in millions of reviews, threads, and posts. Incumbents could structure it, but won\'t prioritize it: behavioral truth is operationally messy, fast-decaying, and not central to ad-driven product architecture. LLMs can parse that ocean, but parsing isn\'t creating. Nobody is generating new ground truth — fresh, structured, confidence-scored behavioral observations confirmed at point of visit. That data asset doesn\'t exist. Praxis creates it.',
+    insight: 'This knowledge exists — scattered across reviews, Reddit threads, and local memory. But it\'s never been structured. Map products optimize for discovery and directions, not behavioral truth. LLMs can extract some of it from text, but extraction isn\'t observation. Praxis generates first-party data: fresh, structured, confirmed at point of visit.',
   },
   product: {
-    title: 'Tacit knowledge, made explicit',
-    sub: 'LLMs can parse reviews — but parsing stale data doesn\'t create new ground truth. Praxis provides decision-grade truth: fresh, first-party, confidence-scored behavioral observations confirmed at point of visit.',
+    title: 'Structured behavioral data, not review summaries',
+    sub: 'The difference between "4.5 stars, great vibes" and "outlets work, noise is low, laptop-friendly for 3+ hours, confirmed Tuesday." One is a sentiment. The other is a decision.',
     layers: [
       {
         name: 'Behavioral Place Graph',
-        description: 'Structured attributes describing what people can actually do in a place. Not reviews. Not LLM inference. Observed ground truth — every claim has provenance: who reported it, when, how many confirmations.',
+        description: 'Structured attributes describing what people can actually do in a place. Every claim has provenance: who reported it, when, and how many confirmations.',
         detail: '40+ attribute types across work, dating, photo, comfort, access, vibe, food, and seasonal clusters',
         color: 'indigo',
       },
       {
         name: 'Truth Engine',
-        description: 'Confidence decay, contributor trust weighting, contradiction handling. An LLM treats a 2019 review and a 2025 report equally — Praxis doesn\'t. Truth is temporal. Stale knowledge is worse than no knowledge.',
+        description: 'Behavioral facts decay. A cafe\'s outlet situation changes. Praxis applies confidence decay, contributor trust weighting, and contradiction handling — so stale data gets flagged, not served as current.',
         detail: 'Recency-weighted, trust-scored, provenance-chained',
         color: 'coral',
       },
       {
         name: 'Intent Resolution',
-        description: '"Where can I work quietly for 3 hours?" maps to outlet_usability + noise_level + laptop_tolerance. This is a structured database query with precision guarantees, not fuzzy LLM inference that might drop a constraint or hallucinate a match.',
+        description: '"Where can I work quietly for 3 hours?" maps to outlet_usability + noise_level + laptop_tolerance. A structured query with precision, not a keyword match that might miss a constraint.',
         detail: 'Composable AND/OR/NOT queries across behavioral attributes',
         color: 'amber',
       },
       {
         name: 'Answer Layer',
-        description: 'Ranked results with confidence scores, recency indicators, and provenance chains. Same query always returns same results — deterministic, not temperature-dependent. Update latency in milliseconds, not hours.',
+        description: 'Ranked results with confidence scores, recency indicators, and provenance chains. You see how fresh the data is and who confirmed it — not just a number.',
         detail: 'You know before you go, not after',
         color: 'indigo',
       },
@@ -124,11 +97,11 @@ export const PITCH = {
       { label: 'One-tap confirm:\n"Still quiet? Outlets work?"', icon: 'target' },
       { label: 'Your data improves\nyour own future results', icon: 'shield' },
     ],
-    sub: 'The Waze model for places. Contributing isn\'t charity — it\'s self-interest. The more you confirm, the better your own results get. Passive signals (time spent, Wi-Fi detection) fill gaps without any taps at all. The graph compounds from usage, not altruism.',
+    sub: 'The Waze model applied to places. Contributing isn\'t charity — it\'s self-interest. The more you confirm, the better your own results get. Passive signals (time spent, Wi-Fi detection) fill gaps without any taps.',
   },
   queryShowcase: {
-    title: 'Every question you\'ve had about a place',
-    sub: 'These are real queries. None of them return structured answers on Google Maps. All of them are answerable with behavioral ground truth.',
+    title: 'Questions maps can\'t answer today',
+    sub: 'Real queries. None return structured answers on Google Maps. All are answerable with behavioral observations.',
     categories: [
       {
         name: 'Work & Productivity',
@@ -222,7 +195,7 @@ export const PITCH = {
   },
   demo: {
     title: 'See it in action',
-    sub: 'Intent-native place intelligence. Type what you need — get structured, trust-scored answers.',
+    sub: 'Type what you need — get structured, confidence-scored answers about places.',
     queries: [
       { text: 'quiet cafe to work from near NYU', delay: 0 },
       { text: 'Instagrammable red wall in SoHo', delay: 2000 },
@@ -232,21 +205,21 @@ export const PITCH = {
     ],
   },
   moat: {
-    title: 'Counter-positioned by design',
+    title: 'Why this isn\'t easy to replicate',
     layers: [
       {
-        name: 'Prioritization Gap',
-        description: 'Google could add behavioral tags — but won\'t prioritize them. High-resolution, fast-changing, provenance-heavy behavioral truth is operationally messy, category-specific, and not central to their product architecture or monetization model. The rational incumbent response is deprioritization, not inability.',
+        name: 'The prioritization gap',
+        description: 'Google could add structured behavioral tags. But high-resolution, fast-decaying, provenance-heavy behavioral data is operationally expensive, category-specific, and peripheral to their ad-driven product architecture. The bet: this stays deprioritized — not because they can\'t, but because the ROI doesn\'t justify the operational cost for them.',
         icon: 'schema',
       },
       {
-        name: 'Fresh First-Party Data',
-        description: 'LLMs can parse reviews into structured data — but they can\'t create new observations. The moat isn\'t the query engine. It\'s the only live stream of first-party behavioral ground truth, confirmed by users at the point of visit, with provenance and recency that no training corpus contains.',
+        name: 'First-party observations',
+        description: 'LLMs can extract behavioral signals from reviews — and they\'re getting good at it. But extraction from stale text isn\'t the same as fresh observations confirmed at point of visit. The durable advantage is the live data stream: provenance-chained, recency-weighted, and not available in any training corpus.',
         icon: 'database',
       },
       {
-        name: 'Trust Compounds',
-        description: 'Learned contributor reliability and signal weighting — our PageRank for behavioral observations. The system knows which contributors are accurate, which are stale, and how to weight conflicting signals. Trust compounds; it can\'t be shortcut or scraped.',
+        name: 'Learned contributor trust',
+        description: 'Over time, the system learns which contributors are reliable, which are stale, and how to weight conflicting signals. This trust graph gets more accurate with scale — it\'s hard to bootstrap from scratch and not available to scrape.',
         icon: 'shield',
       },
     ],
@@ -254,46 +227,46 @@ export const PITCH = {
   risks: {
     title: 'What could kill this',
     items: [
-      { risk: 'The bad equilibrium', mitigation: 'Patchy density → low trust → low habit → low contribution → stale data → collapse. The entire bet is that density-first in one neighborhood breaks this cycle before it sets in.' },
-      { risk: 'Perishable truth', mitigation: 'Unlike Wikipedia, behavioral claims decay in days. The contribution treadmill is harsher. Passive signals (dwell time, Wi-Fi) and self-interested contribution (Waze model) reduce active burden. But freshness maintenance is the hardest operational problem.' },
-      { risk: 'Google adds behavioral tags', mitigation: 'Google could solve 70% of the use case with 10 structured tags. The bet: they won\'t prioritize it — operationally messy, fast-decaying, not central to their architecture. A prioritization gap, not impossibility.' },
-      { risk: 'Feature, not company', mitigation: 'The data layer might be useful but too narrow to support an independent business. Prosumer subscription + data licensing are the paths to standalone viability. If not, the data layer has acquisition value.' },
-      { risk: 'LLMs close the gap', mitigation: 'A sophisticated hybrid (extraction + temporal weighting + feedback loops) gets surprisingly close. The durable wedge is freshness and provenance from first-party observations, not query architecture.' },
+      { risk: 'Cold start / bad equilibrium', mitigation: 'Low density leads to low trust, low habit, and stale data. The entire bet is that going density-first in one neighborhood breaks this cycle before it compounds.' },
+      { risk: 'Perishable truth', mitigation: 'Unlike reference data, behavioral facts decay in days. The contribution treadmill is harsh. Passive signals (dwell time, Wi-Fi) and self-interested contribution reduce the active burden — but freshness maintenance is the hardest operational problem.' },
+      { risk: 'Google adds behavioral tags', mitigation: 'Google could solve 70% of the use case with 10 structured tags. The bet: they deprioritize it — operationally messy, fast-decaying, peripheral to their core product. A prioritization gap, not an impossibility.' },
+      { risk: 'Feature, not company', mitigation: 'The data layer might be useful but too narrow to support an independent business. Prosumer subscription + data licensing are the paths to standalone viability. If neither works, the data layer still has acquisition value.' },
+      { risk: 'LLMs close the gap', mitigation: 'A sophisticated hybrid — extraction + temporal weighting + feedback loops — gets surprisingly close. The durable wedge is freshness from first-party observations, not the query architecture.' },
     ],
   },
   notList: {
     title: 'What this is not',
     items: [
-      'Not "Google Maps but cooler"',
+      'Not a Google Maps competitor — a different data layer',
       'Not a review product',
-      'Not another LLM wrapper',
+      'Not an LLM wrapper',
       'Not a venture-scale land grab',
-      'Not dependent on a large team to operate',
+      'Not dependent on a large team',
     ],
   },
   howIBuild: {
     title: 'Why the economics work now',
-    sub: 'The traditional VC objection: map and data businesses require large teams and don\'t scale profitably. That objection assumed human-heavy operations.',
+    sub: 'The traditional objection: map and data businesses need large teams and don\'t scale profitably. That assumed human-heavy operations.',
     tools: [
       { name: 'Claude', role: 'Architecture, code generation, debugging, content', icon: 'brain' },
       { name: 'Cursor', role: 'AI-powered IDE for rapid iteration', icon: 'code' },
       { name: 'Vercel', role: 'Deploy on push, edge functions, analytics', icon: 'deploy' },
       { name: 'React + TypeScript', role: 'Type-safe frontend with Vite + Tailwind', icon: 'stack' },
     ],
-    philosophy: 'AI-native cost structure collapses the break-even point by 10-50x, but low build cost is not a business model. It buys time to prove the three hard things: that the graph stays fresh, that users pay for it, and that it escapes feature-hood. One person can now operate what used to require fifty — that\'s survival runway, not victory.',
-    revenue: 'Near-term: prosumer subscription ($5-8/mo) for freelancers and remote workers — live density estimates, workspace alerts, priority data freshness on saved spots. Later: data licensing to commercial real estate, coworking operators, and hospitality platforms.',
+    philosophy: 'AI collapses the break-even point by 10-50x, but low build cost isn\'t a business model. It buys time to prove three hard things: that the graph stays fresh, that users pay for it, and that it escapes feature-hood. One person can now operate what used to require a team — that\'s survival runway, not victory.',
+    revenue: 'Near-term: prosumer subscription ($5-8/mo) for freelancers and remote workers — live density estimates, workspace alerts, priority freshness on saved spots. Later: data licensing to commercial real estate, coworking operators, and hospitality platforms.',
   },
   buildVelocity: {
     title: 'Where it stands',
     metrics: [
       { value: '40+', label: 'Behavioral attributes', description: 'Across work, dating, photo, comfort, access, vibe, food, and seasonal clusters' },
-      { value: '14', label: 'Places mapped', description: 'NYC-dense behavioral data, ready for expansion' },
+      { value: '14', label: 'Places mapped', description: 'NYC-dense behavioral data, expanding neighborhood by neighborhood' },
       { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
-      { value: '1', label: 'Headcount', description: 'AI-native cost structure — default alive' },
+      { value: '1', label: 'Headcount', description: 'AI-native operations — solo founder' },
     ],
   },
   cta: {
-    headline: 'The behavioral utility layer starts with one city.',
+    headline: 'Starting with one neighborhood. Growing from there.',
     sub: 'Looking for early users and design partners in NYC.',
     email: 'kaizhi.j.wu@gmail.com',
     twitter: 'https://x.com/kaizhi_wu',
@@ -301,7 +274,7 @@ export const PITCH = {
     points: [
       'NYC-first, density-first',
       'Looking for design partners — freelancers & remote workers',
-      'Default alive — prosumer subscription, not ad revenue',
+      'Prosumer subscription, not ad revenue',
     ],
   },
 } as const
