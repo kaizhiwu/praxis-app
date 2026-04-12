@@ -30,7 +30,7 @@ export const PITCH = {
   hero: {
     tagline: 'Behavioral Place Intelligence',
     headline: 'The behavioral layer\nmaps won\'t build.',
-    sub: 'Google Maps tells you what\'s there. Praxis tells you what you can do there.',
+    sub: 'Google Maps tells you what\'s there. Its AI can summarize reviews. Praxis tells you what\'s actually true — from structured observation, not inference.',
     founderNote: 'Solo founder. AI-native.',
   },
   problem: {
@@ -63,7 +63,7 @@ export const PITCH = {
     layers: [
       {
         name: 'Behavioral Place Graph',
-        description: 'Structured attributes describing what people can actually do in a place. Every claim has provenance: who reported it, when, and how many confirmations.',
+        description: 'A structured knowledge graph of what people can actually do in a place — transparent, auditable, and queryable. Every claim has provenance: who reported it, when, and how many confirmations. Not an embedding. Not a training corpus. A graph you can inspect.',
         detail: '40+ attribute types across work, dating, photo, comfort, access, vibe, food, and seasonal clusters',
         color: 'indigo',
       },
@@ -81,7 +81,7 @@ export const PITCH = {
       },
       {
         name: 'Answer Layer',
-        description: 'Ranked results with confidence scores, recency indicators, and provenance chains. You see how fresh the data is and who confirmed it — not just a number.',
+        description: 'Transparent, auditable answers — not a black-box score. Every result shows its provenance chain: who confirmed it, when, how many times, and how confidence was calculated. You can inspect the evidence, not just trust the number.',
         detail: 'You know before you go, not after',
         color: 'indigo',
       },
@@ -99,7 +99,7 @@ export const PITCH = {
   },
   queryShowcase: {
     title: 'Questions maps can\'t answer today',
-    sub: 'Real queries. None return structured answers on Google Maps. All are answerable with behavioral observations.',
+    sub: 'Real queries. Google\'s AI will attempt answers — from review fragments, with no provenance and variable accuracy. Praxis answers from a structured observation graph, in under two seconds.',
     categories: [
       {
         name: 'Work & Productivity',
@@ -207,12 +207,12 @@ export const PITCH = {
     layers: [
       {
         name: 'The prioritization gap',
-        description: 'Google could add structured behavioral tags. But high-resolution, fast-decaying, provenance-heavy behavioral data is operationally expensive, category-specific, and peripheral to their ad-driven product architecture. The bet: this stays deprioritized — not because they can\'t, but because the ROI doesn\'t justify the operational cost for them.',
+        description: 'Google has already added AI to Maps — it runs retrieval-augmented generation over reviews and business listings. But RAG over scraped text is not a knowledge graph. It has no provenance chain, hallucinates under ambiguity, and can\'t confirm what\'s true today. The deeper bet: high-resolution behavioral data that decays in days and requires first-party observation stays deprioritized — not because Google can\'t build it, but because the operational cost doesn\'t justify the ROI within their ad architecture.',
         icon: 'schema',
       },
       {
         name: 'First-party observations',
-        description: 'LLMs can extract behavioral signals from reviews — and they\'re getting good at it. But extraction from stale text isn\'t the same as fresh observations confirmed at point of visit. The durable advantage is the live data stream: provenance-chained, recency-weighted, and not available in any training corpus.',
+        description: 'LLMs can extract behavioral signals from reviews — and they\'re getting good at it. But extraction from scraped text isn\'t observation. Praxis builds a proprietary dataset from real human contributions: confirmed at point of visit, provenance-chained, recency-weighted. This data doesn\'t exist in any training corpus and can\'t be replicated by crawling.',
         icon: 'database',
       },
       {
@@ -229,7 +229,7 @@ export const PITCH = {
       { risk: 'Perishable truth', mitigation: 'Unlike reference data, behavioral facts decay in days. The contribution treadmill is harsh. Passive signals (dwell time, Wi-Fi) and self-interested contribution reduce the active burden — but freshness maintenance is the hardest operational problem.' },
       { risk: 'Google adds behavioral tags', mitigation: 'Google could solve 70% of the use case with 10 structured tags. The bet: they deprioritize it — operationally messy, fast-decaying, peripheral to their core product. A prioritization gap, not an impossibility.' },
       { risk: 'Feature, not company', mitigation: 'The data layer might be useful but too narrow to support an independent business. Prosumer subscription + data licensing are the paths to standalone viability. If neither works, the data layer still has acquisition value.' },
-      { risk: 'LLMs close the gap', mitigation: 'A sophisticated hybrid — extraction + temporal weighting + feedback loops — gets surprisingly close. The durable wedge is freshness from first-party observations, not the query architecture.' },
+      { risk: 'LLMs close the gap', mitigation: 'A sophisticated hybrid — extraction + temporal weighting + feedback loops — gets surprisingly close on query quality. But it still lacks provenance, hallucinates under ambiguity, and can\'t confirm what\'s true today. The durable wedge is the proprietary observation graph, not the query architecture.' },
     ],
   },
   notList: {
@@ -259,7 +259,7 @@ export const PITCH = {
     metrics: [
       { value: '40+', label: 'Behavioral attributes', description: 'Across work, dating, photo, comfort, access, vibe, food, and seasonal clusters' },
       { value: '14', label: 'Places mapped', description: 'NYC-dense behavioral data, expanding neighborhood by neighborhood' },
-      { value: '< 2s', label: 'Query-to-answer', description: 'Intent-matched results with confidence scoring' },
+      { value: '< 2s', label: 'Query-to-answer', description: 'Structured graph retrieval with full provenance — not LLM inference' },
       { value: '1', label: 'Headcount', description: 'AI-native operations — solo founder' },
     ],
   },
