@@ -68,10 +68,10 @@ export function PitchScreen() {
 
       {/* Sections */}
       <HeroSection onContact={openContact} />
-      <WhoItsForSection onContact={openContact} />
       <ProblemSection />
-      <QueryShowcaseSection />
+      <WhoItsForSection onContact={openContact} />
       <DemoSection />
+      <QueryShowcaseSection />
       <ProductSection />
       <FlywheelSection />
       <MoatSection />

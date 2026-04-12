@@ -55,7 +55,7 @@ export const PITCH = {
         icon: 'heart',
       },
     ],
-    insight: 'This knowledge exists — scattered across reviews, Reddit threads, and local memory. But it\'s never been structured. Map products optimize for discovery and directions, not behavioral truth. LLMs can extract some of it from text, but extraction isn\'t observation. Praxis generates first-party data: fresh, structured, confirmed at point of visit.',
+    insight: 'This knowledge exists — scattered across reviews, Reddit threads, and local memory. But it\'s never been structured, and no map product is designed to capture it. Praxis does: fresh, structured, confirmed at point of visit.',
   },
   product: {
     title: 'Structured behavioral data, not review summaries',
@@ -95,11 +95,11 @@ export const PITCH = {
       { label: 'One-tap confirm:\n"Still quiet? Outlets work?"', icon: 'target' },
       { label: 'Your data improves\nyour own future results', icon: 'shield' },
     ],
-    sub: 'The Waze model applied to places. Contributing isn\'t charity — it\'s self-interest. The more you confirm, the better your own results get. Passive signals (time spent, Wi-Fi detection) fill gaps without any taps.',
+    sub: 'The Waze model applied to places. Passive signals — dwell time, Wi-Fi detection, visit frequency — fill gaps automatically. Active confirmations layer on top. The graph gets denser with every visit, not just every tap.',
   },
   queryShowcase: {
     title: 'Questions maps can\'t answer today',
-    sub: 'Real queries. Google\'s AI will attempt answers — from review fragments, with no provenance and variable accuracy. Praxis answers from a structured observation graph, in under two seconds.',
+    sub: 'Real queries that return real answers — with confidence scores, recency, and provenance. Not star ratings. Not review summaries.',
     categories: [
       {
         name: 'Work & Productivity',
