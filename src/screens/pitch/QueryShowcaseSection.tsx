@@ -89,7 +89,7 @@ export function QueryShowcaseSection() {
             </div>
 
             <p className="mono-label mt-8">
-              {categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.queries.length, 0)} queries &middot; unanswerable by current maps
+              {categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.queries.length, 0)} queries &middot; all answerable with structured observation
             </p>
           </motion.div>
         </AnimatePresence>

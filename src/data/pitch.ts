@@ -98,8 +98,8 @@ export const PITCH = {
     sub: 'The Waze model applied to places. Passive signals — dwell time, Wi-Fi detection, visit frequency — fill gaps automatically. Active confirmations layer on top. The graph gets denser with every visit, not just every tap.',
   },
   queryShowcase: {
-    title: 'Questions maps can\'t answer today',
-    sub: 'Real queries that return real answers — with confidence scores, recency, and provenance. Not star ratings. Not review summaries.',
+    title: 'What people actually want to know about a place',
+    sub: 'Every query below maps to structured behavioral attributes — outlet availability, noise level, lighting quality, stroller access — observed and confirmed by real visitors at point of visit. Google\'s AI will attempt these from review fragments. Praxis answers from direct observation.',
     categories: [
       {
         name: 'Work & Productivity',
