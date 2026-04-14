@@ -32,6 +32,18 @@ export const PITCH = {
     headline: 'The behavioral layer\nmaps won\'t build.',
     sub: 'Google Maps tells you what\'s there. Its AI can summarize reviews. Praxis tells you what\'s actually true — from structured observation, not inference.',
     founderNote: 'Solo founder. AI-native.',
+    personas: [
+      {
+        key: 'searchers',
+        label: 'For searchers',
+        sub: 'Real answers about places before you go. Outlets, noise, lighting — structured, confidence-scored, and confirmed at point of visit.',
+      },
+      {
+        key: 'contributors',
+        label: 'For contributors',
+        sub: 'One-tap observations that improve your own future results. Self-interest, not charity. The graph gets denser with every visit.',
+      },
+    ],
   },
   problem: {
     title: 'Maps answer "where." They don\'t answer "will it work."',

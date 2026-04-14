@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
@@ -39,6 +39,7 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const scrollVal = useRef(0)
+  const [activePersona, setActivePersona] = useState<number | null>(null)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -127,15 +128,67 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
               maps won&apos;t build.
             </h1>
 
-            <p className="mt-6 text-base text-[var(--color-ink-secondary)] max-w-lg leading-relaxed">
-              {PITCH.hero.sub}
-            </p>
+            {/* Stacked sub-copy: default + one per persona, swapped on pill hover */}
+            <div className="relative mt-6 max-w-lg" style={{ minHeight: '5.25rem' }}>
+              <p
+                className={`absolute inset-0 text-base text-[var(--color-ink-secondary)] leading-relaxed transition-opacity duration-300 ease-out ${
+                  activePersona === null ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                {PITCH.hero.sub}
+              </p>
+              {PITCH.hero.personas.map((persona, i) => (
+                <p
+                  key={persona.key}
+                  className={`absolute inset-0 text-base text-[var(--color-ink-secondary)] leading-relaxed transition-opacity duration-300 ease-out ${
+                    activePersona === i ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  {persona.sub}
+                </p>
+              ))}
+            </div>
 
             <p className="mt-3 text-xs text-[var(--color-ink-tertiary)]">
               {PITCH.hero.founderNote}
             </p>
 
-            <div className="mt-8 flex items-center gap-3">
+            {/* Persona pill row */}
+            <div
+              className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg"
+              onMouseLeave={() => setActivePersona(null)}
+            >
+              {PITCH.hero.personas.map((persona, i) => {
+                const active = activePersona === i
+                return (
+                  <button
+                    key={persona.key}
+                    onMouseEnter={() => setActivePersona(i)}
+                    onClick={() =>
+                      setActivePersona((prev) => (prev === i ? null : i))
+                    }
+                    className={`group pointer-events-auto flex items-center justify-between gap-3 rounded-2xl border px-5 py-3 text-left text-sm transition-colors duration-200 cursor-pointer ${
+                      active
+                        ? 'border-[var(--color-accent-indigo)] bg-[rgba(79,70,229,0.04)] text-[var(--color-ink)]'
+                        : 'border-[var(--color-border)] text-[var(--color-ink-secondary)] hover:border-[var(--color-ink-tertiary)] hover:text-[var(--color-ink)]'
+                    }`}
+                  >
+                    <span className="font-medium">{persona.label}</span>
+                    <span
+                      className={`transition-all duration-200 ${
+                        active
+                          ? 'text-[var(--color-accent-indigo)] translate-x-0.5'
+                          : 'text-[var(--color-ink-tertiary)] group-hover:translate-x-0.5'
+                      }`}
+                    >
+                      →
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="mt-6 flex items-center gap-3">
               <a
                 href="/app"
                 className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#4338CA] transition-colors duration-200"
