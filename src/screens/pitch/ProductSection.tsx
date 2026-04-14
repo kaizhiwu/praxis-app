@@ -1,8 +1,23 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
 import { GraphMockup, TruthMockup, IntentMockup, AnswerMockup } from '../../components/ProductGraphics'
+
+function useIsMdUp() {
+  const [isMdUp, setIsMdUp] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(min-width: 768px)').matches
+      : true
+  )
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const handler = (e: MediaQueryListEvent) => setIsMdUp(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isMdUp
+}
 
 const fade = {
   initial: { opacity: 0, y: 8 } as const,
@@ -84,6 +99,41 @@ function LayerPanel({
   )
 }
 
+function MobileLayerBlock({
+  label,
+  title,
+  description,
+  detail,
+  graphic,
+}: {
+  label: string
+  title: string
+  description: string
+  detail: string
+  graphic: React.ReactNode
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-15%' }}
+      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+      className="space-y-4"
+    >
+      <p className="mono-label !text-[var(--color-accent-indigo)]">{label}</p>
+      <h3
+        className="font-semibold text-2xl leading-[1.15] tracking-[-0.01em] text-[var(--color-ink)]"
+        style={{ fontFamily: 'var(--font-display)' }}
+      >
+        {title}
+      </h3>
+      <p className="text-[var(--color-ink-secondary)] leading-relaxed">{description}</p>
+      <p className="text-sm text-[var(--color-ink-tertiary)] italic">{detail}</p>
+      <div className="pt-3">{graphic}</div>
+    </motion.div>
+  )
+}
+
 function ProgressDot({
   index,
   total,
@@ -124,6 +174,7 @@ export function ProductSection() {
   const layers = PITCH.product.layers
   const total = layers.length
   const labels = layers.map((_, i) => `Layer ${String(i + 1).padStart(2, '0')}`)
+  const isMdUp = useIsMdUp()
 
   const pinRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -155,47 +206,62 @@ export function ProductSection() {
         </motion.p>
       </div>
 
-      {/* Pinned layer walkthrough */}
-      <div
-        ref={pinRef}
-        className="relative mt-20"
-        style={{ minHeight: `${(total + 1) * 100}vh` }}
-      >
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
-          <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-10">
-            <div className="flex items-center gap-8 md:gap-14">
-              {/* Progress rail */}
-              <div className="hidden md:flex flex-col gap-5 shrink-0 w-10">
-                {layers.map((_, i) => (
-                  <ProgressDot
-                    key={i}
-                    index={i}
-                    total={total}
-                    scrollYProgress={scrollYProgress}
-                  />
-                ))}
-              </div>
+      {/* Desktop: pinned layer walkthrough. Mobile: sequential stack. */}
+      {isMdUp ? (
+        <div
+          ref={pinRef}
+          className="relative mt-20"
+          style={{ minHeight: `${(total + 1) * 100}vh` }}
+        >
+          <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
+            <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-10">
+              <div className="flex items-center gap-8 md:gap-14">
+                {/* Progress rail */}
+                <div className="hidden md:flex flex-col gap-5 shrink-0 w-10">
+                  {layers.map((_, i) => (
+                    <ProgressDot
+                      key={i}
+                      index={i}
+                      total={total}
+                      scrollYProgress={scrollYProgress}
+                    />
+                  ))}
+                </div>
 
-              {/* Stacked layer panels */}
-              <div className="relative flex-1 min-h-[70vh]">
-                {layers.map((layer, i) => (
-                  <LayerPanel
-                    key={layer.name}
-                    index={i}
-                    total={total}
-                    scrollYProgress={scrollYProgress}
-                    label={labels[i]}
-                    title={layer.name}
-                    description={layer.description}
-                    detail={layer.detail}
-                    graphic={layerGraphics[i]}
-                  />
-                ))}
+                {/* Stacked layer panels */}
+                <div className="relative flex-1 min-h-[70vh]">
+                  {layers.map((layer, i) => (
+                    <LayerPanel
+                      key={layer.name}
+                      index={i}
+                      total={total}
+                      scrollYProgress={scrollYProgress}
+                      label={labels[i]}
+                      title={layer.name}
+                      description={layer.description}
+                      detail={layer.detail}
+                      graphic={layerGraphics[i]}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-14 px-6 max-w-[1200px] mx-auto space-y-16">
+          {layers.map((layer, i) => (
+            <MobileLayerBlock
+              key={layer.name}
+              label={labels[i]}
+              title={layer.name}
+              description={layer.description}
+              detail={layer.detail}
+              graphic={layerGraphics[i]}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Bottom callout (normal flow) */}
       <div className="px-6 lg:px-10 pb-20 max-w-[1200px] mx-auto">

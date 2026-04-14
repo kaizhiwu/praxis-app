@@ -128,8 +128,16 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
               maps won&apos;t build.
             </h1>
 
-            {/* Stacked sub-copy: default + one per persona, swapped on pill hover */}
-            <div className="relative mt-6 max-w-lg" style={{ minHeight: '5.25rem' }}>
+            {/* Stacked sub-copy: default + one per persona, swapped on pill hover.
+                The invisible ghost below reserves space for whichever variant
+                wraps tallest at the current width — no layout shift. */}
+            <div className="relative mt-6 max-w-lg">
+              <p aria-hidden className="text-base leading-relaxed invisible">
+                {[PITCH.hero.sub, ...PITCH.hero.personas.map((p) => p.sub)].reduce(
+                  (longest, s) => (s.length > longest.length ? s : longest),
+                  ''
+                )}
+              </p>
               <p
                 className={`absolute inset-0 text-base text-[var(--color-ink-secondary)] leading-relaxed transition-opacity duration-300 ease-out ${
                   activePersona === null ? 'opacity-100' : 'opacity-0'
