@@ -5,6 +5,7 @@ import { ResultsScreen } from './screens/ResultsScreen'
 import { PlaceDetailScreen } from './screens/PlaceDetailScreen'
 import { PitchScreen } from './screens/PitchScreen'
 import { LiquidGlassFilter } from './components/LiquidGlass'
+import { SmoothScroll } from './components/SmoothScroll'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -21,14 +22,16 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <LiquidGlassFilter />
-      <div className="grain">
-        <Routes>
-          <Route path="/" element={<PitchScreen />} />
-          <Route path="/app" element={<HomeScreen />} />
-          <Route path="/results" element={<ResultsScreen />} />
-          <Route path="/place/:id" element={<PlaceDetailScreen />} />
-        </Routes>
-      </div>
+      <SmoothScroll>
+        <div className="grain">
+          <Routes>
+            <Route path="/" element={<PitchScreen />} />
+            <Route path="/app" element={<HomeScreen />} />
+            <Route path="/results" element={<ResultsScreen />} />
+            <Route path="/place/:id" element={<PlaceDetailScreen />} />
+          </Routes>
+        </div>
+      </SmoothScroll>
     </BrowserRouter>
   )
 }
