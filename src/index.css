@@ -6,15 +6,20 @@
   --color-bone-warm:     #EFEDE8;
   --color-taupe:         #E8E4DD;
   --color-taupe-cool:    #DAD6CE;
-  --color-ink:           #1A1C1E;
-  --color-ink-secondary: #6B6966;
-  --color-ink-tertiary:  #9C9891;
-  --color-ink-faint:     #C4BFB8;
-  --color-border:        #E2DDD5;
+  --color-ink:           #141516;
+  --color-ink-secondary: #4A4845;
+  --color-ink-tertiary:  #7C7974;
+  --color-ink-faint:     #B0ACA6;
+  --color-border:        #DDD8CF;
   --color-border-subtle: #EDEBE6;
-  --color-dark-surface:  #1A1C1E;
-  --color-dark-text:     #E8E4DD;
-  --color-dark-muted:    #8A8680;
+  --color-dark-surface:  #141516;
+  --color-dark-text:     #F0EDE8;
+  --color-dark-muted:    #9B9790;
+
+  /* Accent palette */
+  --color-accent-indigo: #4F46E5;
+  --color-accent-coral:  #E2614B;
+  --color-accent-amber:  #D97706;
 
   --font-display: 'General Sans', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;

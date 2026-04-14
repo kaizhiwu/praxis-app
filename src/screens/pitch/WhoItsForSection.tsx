@@ -21,7 +21,7 @@ export function WhoItsForSection({ onContact }: { onContact: () => void }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-12">
           <motion.h2
             {...fade}
-            className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)]"
+            className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {whoItsFor.headline}
@@ -68,7 +68,7 @@ export function WhoItsForSection({ onContact }: { onContact: () => void }) {
         <motion.div {...fade} transition={{ ...fade.transition, delay: 0.24 }} className="mt-10">
           <button
             onClick={onContact}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-6 py-2.5 text-sm text-[var(--color-ink-secondary)] hover:border-[var(--color-ink-tertiary)] hover:text-[var(--color-ink)] transition-colors duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#4338CA] transition-colors duration-200 cursor-pointer"
           >
             Apply as design partner
           </button>

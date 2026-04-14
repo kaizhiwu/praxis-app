@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
-import { useState } from 'react'
+import { SectionWithMockup } from '../../components/SectionWithMockup'
+import { GraphMockup, TruthMockup, IntentMockup, AnswerMockup } from '../../components/ProductGraphics'
 
 const fade = {
   initial: { opacity: 0, y: 8 } as const,
@@ -9,9 +10,11 @@ const fade = {
   transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } as const,
 }
 
+const layerLabels = ['Layer 01', 'Layer 02', 'Layer 03', 'Layer 04']
+const layerGraphics = [<GraphMockup />, <TruthMockup />, <IntentMockup />, <AnswerMockup />]
+
 export function ProductSection() {
   const layers = PITCH.product.layers
-  const [activeLayer, setActiveLayer] = useState(0)
 
   return (
     <section id="product" className="bg-[var(--color-bone)] px-6 lg:px-10 py-20">
@@ -21,7 +24,7 @@ export function ProductSection() {
 
         <motion.h2
           {...fade}
-          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-4"
+          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-4"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {PITCH.product.title}
@@ -29,56 +32,23 @@ export function ProductSection() {
         <motion.p
           {...fade}
           transition={{ ...fade.transition, delay: 0.06 }}
-          className="text-base text-[var(--color-ink-secondary)] max-w-xl mb-12 leading-relaxed"
+          className="text-base text-[var(--color-ink-secondary)] max-w-xl mb-6 leading-relaxed"
         >
           {PITCH.product.sub}
         </motion.p>
 
-        {/* Layer tabs — underline style */}
-        <div className="flex gap-6 mb-10 border-b border-[var(--color-border)]">
+        {/* Layer blocks with alternating layout and graphics */}
+        <div className="divide-y divide-[var(--color-border)]">
           {layers.map((layer, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveLayer(i)}
-              className="pb-3 text-sm transition-colors duration-200 cursor-pointer"
-              style={{
-                color: i === activeLayer ? 'var(--color-ink)' : 'var(--color-ink-tertiary)',
-                borderBottom: i === activeLayer ? '2px solid var(--color-ink)' : '2px solid transparent',
-                marginBottom: '-1px',
-              }}
-            >
-              {layer.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Active layer content — text only */}
-        <div className="min-h-[200px] relative">
-          {layers.map((layer, i) => (
-            <motion.div
-              key={i}
-              initial={false}
-              animate={{
-                opacity: i === activeLayer ? 1 : 0,
-                y: i === activeLayer ? 0 : 8,
-              }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="absolute inset-0"
-              style={{ pointerEvents: i === activeLayer ? 'auto' : 'none' }}
-            >
-              <h3
-                className="font-medium text-2xl text-[var(--color-ink)]"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {layer.name}
-              </h3>
-              <p className="text-[var(--color-ink-secondary)] mt-4 leading-relaxed max-w-lg">
-                {layer.description}
-              </p>
-              <p className="text-sm text-[var(--color-ink-tertiary)] mt-4 italic">
-                {layer.detail}
-              </p>
-            </motion.div>
+            <SectionWithMockup
+              key={layer.name}
+              label={layerLabels[i]}
+              title={layer.name}
+              description={layer.description}
+              detail={layer.detail}
+              reversed={i % 2 === 1}
+              mockupContent={layerGraphics[i]}
+            />
           ))}
         </div>
 
@@ -86,7 +56,7 @@ export function ProductSection() {
         <motion.div
           {...fade}
           transition={{ ...fade.transition, delay: 0.2 }}
-          className="border-l-2 border-[var(--color-ink-faint)] pl-6 mt-16"
+          className="border-l-2 border-[var(--color-accent-indigo)] pl-6 mt-16"
         >
           <p className="text-[var(--color-ink)] font-medium">Answers, not listings.</p>
         </motion.div>

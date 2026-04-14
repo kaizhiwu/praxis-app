@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
+import { BeamsBackground } from '../../components/BeamsBackground'
 
 const fade = {
   initial: { opacity: 0, y: 8 } as const,
@@ -10,11 +11,11 @@ const fade = {
 
 export function CTASection({ onContact }: { onContact: () => void }) {
   return (
-    <section className="bg-[var(--color-dark-surface)] px-6 lg:px-10 py-20">
+    <BeamsBackground className="px-6 lg:px-10 py-20">
       <div className="max-w-[1200px] mx-auto text-center">
         <motion.h2
           {...fade}
-          className="text-3xl md:text-5xl text-center max-w-3xl mx-auto leading-tight text-[var(--color-dark-text)] italic"
+          className="text-3xl md:text-5xl font-medium text-center max-w-3xl mx-auto leading-tight text-[var(--color-dark-text)] italic"
           style={{ fontFamily: 'var(--font-wordmark)' }}
         >
           {PITCH.cta.headline}
@@ -50,7 +51,7 @@ export function CTASection({ onContact }: { onContact: () => void }) {
         >
           <button
             onClick={onContact}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-dark-text)] px-8 py-3.5 text-[var(--color-dark-text)] font-medium hover:bg-[var(--color-dark-text)] hover:text-[var(--color-dark-surface)] transition-colors duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#4338CA] transition-colors duration-200 cursor-pointer"
           >
             Apply as design partner
           </button>
@@ -74,6 +75,6 @@ export function CTASection({ onContact }: { onContact: () => void }) {
           I reply within 24 hours.
         </motion.p>
       </div>
-    </section>
+    </BeamsBackground>
   )
 }

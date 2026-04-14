@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { QueryBar } from '../components/QueryBar'
 import { IntentChips } from '../components/IntentChips'
+import { AuroraBackground } from '../components/AuroraBackground'
 import { getTimeContextChips } from '../data/mock'
 import { extractPlaceId, isGoogleEnabled } from '../lib/google-places'
 
@@ -186,99 +187,9 @@ function BrandMark() {
 }
 
 // ---------------------------------------------------------------------------
-// Aurora background orbs (light theme — softer, more colorful tints)
+// Aurora background — now uses the shared AuroraBackground component
+// (imported from ../components/AuroraBackground)
 // ---------------------------------------------------------------------------
-
-function AuroraBackground() {
-  return (
-    <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
-      {/* Subtle mesh gradient overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            'radial-gradient(at 20% 30%, rgba(79,70,229,0.8) 0%, transparent 50%), radial-gradient(at 80% 70%, rgba(226,97,75,0.8) 0%, transparent 50%), radial-gradient(at 50% 50%, rgba(124,58,237,0.6) 0%, transparent 60%)',
-        }}
-      />
-      {/* Indigo orb */}
-      <motion.div
-        className="absolute w-[720px] h-[720px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(79,70,229,0.07) 0%, transparent 70%)',
-          top: '-10%',
-          left: '-10%',
-          filter: 'blur(70px)',
-        }}
-        animate={{
-          x: [0, 80, 30, 0],
-          y: [0, 60, -30, 0],
-        }}
-        transition={{
-          duration: 32,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      {/* Coral orb */}
-      <motion.div
-        className="absolute w-[620px] h-[620px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(226,97,75,0.06) 0%, transparent 70%)',
-          bottom: '-5%',
-          right: '-15%',
-          filter: 'blur(70px)',
-        }}
-        animate={{
-          x: [0, -60, -20, 0],
-          y: [0, -50, 40, 0],
-        }}
-        transition={{
-          duration: 38,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      {/* Amber orb */}
-      <motion.div
-        className="absolute w-[550px] h-[550px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(217,119,6,0.06) 0%, transparent 70%)',
-          top: '40%',
-          left: '50%',
-          filter: 'blur(70px)',
-        }}
-        animate={{
-          x: [0, -40, 60, 0],
-          y: [0, 50, -20, 0],
-        }}
-        transition={{
-          duration: 28,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      {/* Rose / pink orb */}
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(236,72,153,0.05) 0%, transparent 70%)',
-          top: '10%',
-          right: '20%',
-          filter: 'blur(70px)',
-        }}
-        animate={{
-          x: [0, 50, -30, 0],
-          y: [0, -40, 60, 0],
-        }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-    </div>
-  )
-}
 
 // ---------------------------------------------------------------------------
 // Dot grid pattern behind brand area
@@ -431,9 +342,7 @@ export function HomeScreen() {
   }
 
   return (
-    <div className="relative min-h-dvh flex flex-col items-center px-6 pb-32 pt-[24vh]">
-      <AuroraBackground />
-
+    <AuroraBackground className="relative min-h-dvh flex flex-col items-center px-6 pb-32 pt-[24vh]">
       <div className="relative w-full max-w-md flex flex-col gap-10">
         {/* Brand + Title */}
         <div className="relative flex flex-col items-center gap-4">
@@ -589,6 +498,6 @@ export function HomeScreen() {
           <span className="h-px w-8 bg-gradient-to-l from-transparent to-surface-border" />
         </motion.div>
       </div>
-    </div>
+    </AuroraBackground>
   )
 }

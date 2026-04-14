@@ -36,7 +36,7 @@ export function ProblemSection() {
 
         <motion.h2
           {...fade}
-          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
+          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {PITCH.problem.title}
@@ -51,7 +51,7 @@ export function ProblemSection() {
               transition={{ ...fade.transition, delay: i * 0.06 }}
               className="rounded-xl bg-[var(--color-bone)] border border-[var(--color-border-subtle)] p-8"
             >
-              <div className="text-[var(--color-ink-tertiary)] mb-4">{icons[story.icon]}</div>
+              <div className="text-[var(--color-accent-coral)] mb-4">{icons[story.icon]}</div>
 
               <p className="text-xl font-medium text-[var(--color-ink)]" style={{ fontFamily: 'var(--font-display)' }}>
                 &ldquo;{story.query.replace(/^"|"$/g, '')}&rdquo;
@@ -78,7 +78,7 @@ export function ProblemSection() {
         <motion.blockquote
           {...fade}
           transition={{ ...fade.transition, delay: 0.24 }}
-          className="border-l-2 border-[var(--color-ink-faint)] pl-6 mt-16"
+          className="border-l-2 border-[var(--color-accent-indigo)] pl-6 mt-16"
         >
           <p className="text-lg text-[var(--color-ink-secondary)] italic leading-relaxed">{PITCH.problem.insight}</p>
         </motion.blockquote>

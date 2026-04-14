@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
+import { SpotlightBackground } from '../../components/SpotlightBackground'
 
 const fade = {
   initial: { opacity: 0, y: 8 } as const,
@@ -38,14 +39,14 @@ const toolIcons: Record<string, React.ReactNode> = {
 
 export function HowIBuildSection() {
   return (
-    <section className="bg-[var(--color-bone)] px-6 lg:px-10 py-20">
+    <SpotlightBackground className="bg-[var(--color-bone)] px-6 lg:px-10 py-20">
       <div className="max-w-[1200px] mx-auto">
         <div className="section-rule mb-6" />
         <motion.p {...fade} className="mono-label mb-10">How I build</motion.p>
 
         <motion.h2
           {...fade}
-          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-4"
+          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-4"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {PITCH.howIBuild.title}
@@ -63,22 +64,22 @@ export function HowIBuildSection() {
           <motion.div
             {...fade}
             transition={{ ...fade.transition, delay: 0.1 }}
-            className="col-span-2 rounded-xl p-8 bg-[var(--color-taupe)]"
+            className="col-span-2 rounded-xl p-8 bg-[var(--color-taupe)] backdrop-blur-sm"
           >
             <p className="text-[var(--color-ink-secondary)] leading-relaxed text-lg italic">
               &ldquo;{PITCH.howIBuild.philosophy}&rdquo;
             </p>
           </motion.div>
 
-          {/* Tool cards */}
+          {/* Tool cards with hover effects */}
           {PITCH.howIBuild.tools.map((tool, i) => (
             <motion.div
               key={tool.name}
               {...fade}
               transition={{ ...fade.transition, delay: 0.16 + i * 0.06 }}
-              className="rounded-xl p-6 bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)]"
+              className="group rounded-xl p-6 bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] transition-all duration-300 hover:border-[var(--color-ink-faint)] hover:shadow-sm"
             >
-              <div className="text-[var(--color-ink-tertiary)] mb-3">
+              <div className="text-[var(--color-ink-tertiary)] mb-3 transition-colors duration-300 group-hover:text-[var(--color-accent-indigo)]">
                 {toolIcons[tool.icon]}
               </div>
               <h3 className="text-[var(--color-ink)] font-medium text-sm">{tool.name}</h3>
@@ -104,20 +105,24 @@ export function HowIBuildSection() {
               key={metric.label}
               {...fade}
               transition={{ ...fade.transition, delay: i * 0.06 }}
-              className="rounded-xl p-6 bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)]"
+              className="group rounded-xl overflow-hidden bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] transition-all duration-300 hover:border-[var(--color-ink-faint)] hover:shadow-sm"
             >
-              <p
-                className="text-4xl md:text-5xl font-light tracking-tight text-[var(--color-ink)]"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {metric.value}
-              </p>
-              <p className="text-[var(--color-ink)] font-medium mt-3 text-sm">{metric.label}</p>
-              <p className="text-[var(--color-ink-tertiary)] text-xs mt-1.5 leading-relaxed">{metric.description}</p>
+              {/* Accent line */}
+              <div className="h-0.5 bg-gradient-to-r from-[#4F46E5]/30 via-[#D97706]/20 to-transparent" />
+              <div className="p-6">
+                <p
+                  className="text-4xl md:text-5xl font-medium tracking-tight text-[var(--color-ink)]"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {metric.value}
+                </p>
+                <p className="text-[var(--color-ink)] font-medium mt-3 text-sm">{metric.label}</p>
+                <p className="text-[var(--color-ink-tertiary)] text-xs mt-1.5 leading-relaxed">{metric.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </SpotlightBackground>
   )
 }

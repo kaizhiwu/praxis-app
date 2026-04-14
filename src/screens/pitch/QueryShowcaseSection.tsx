@@ -24,7 +24,7 @@ export function QueryShowcaseSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-12">
           <motion.h2
             {...fade}
-            className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)]"
+            className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {PITCH.queryShowcase.title}

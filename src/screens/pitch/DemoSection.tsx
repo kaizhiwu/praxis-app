@@ -28,7 +28,7 @@ export function DemoSection() {
 
         <motion.h2
           {...fade}
-          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
+          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {PITCH.demo.title}

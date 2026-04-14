@@ -119,7 +119,7 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
             <p className="mono-label mb-6">Behavioral Place Intelligence</p>
 
             <h1
-              className="font-light tracking-[-0.03em] leading-[1.08] text-[var(--color-ink)]"
+              className="font-semibold tracking-[-0.03em] leading-[1.08] text-[var(--color-ink)]"
               style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 5rem)' }}
             >
               The behavioral layer
@@ -138,7 +138,7 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
             <div className="mt-8 flex items-center gap-3">
               <a
                 href="/app"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-ink)] px-6 py-2.5 text-sm font-medium text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-[var(--color-bone)] transition-colors duration-200"
+                className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#4338CA] transition-colors duration-200"
               >
                 Try the product
               </a>

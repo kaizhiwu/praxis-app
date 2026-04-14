@@ -19,7 +19,7 @@ export function FlywheelSection() {
 
         <motion.h2
           {...fade}
-          className="font-light text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
+          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-16"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {PITCH.flywheel.title}
@@ -31,7 +31,7 @@ export function FlywheelSection() {
             <motion.div key={i} {...fade} transition={{ ...fade.transition, delay: i * 0.08 }}>
               <div className="flex items-baseline gap-6 py-6">
                 <span
-                  className="text-4xl font-light text-[var(--color-ink-faint)] shrink-0"
+                  className="text-4xl font-medium text-[var(--color-accent-indigo)]/30 shrink-0"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {String(i + 1).padStart(2, '0')}
