@@ -30,7 +30,7 @@ export function IntentChips({ chips, onSelect }: IntentChipsProps) {
             onClick={() => handleSelect(chip.query)}
             className={`shrink-0 px-4 py-2 rounded-full text-[13px] tracking-wide cursor-pointer transition-all duration-150 flex items-center gap-2 ${
               isActive
-                ? 'bg-[#14B8A6] text-white shadow-[0_2px_8px_-2px_rgba(20,184,166,0.4)]'
+                ? 'bg-[#2563EB] text-white shadow-[0_2px_8px_-2px_rgba(37,99,235,0.4)]'
                 : 'glass-subtle text-[#1D1D1F] hover:glass'
             }`}
             initial={{ opacity: 0, y: 8 }}

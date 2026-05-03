@@ -8,6 +8,17 @@ export type MapPin = {
   /** 0–100 viewport-relative position */
   x: number
   y: number
+  /** Pin color — matches the use-case category */
+  color?: 'cobalt' | 'orange' | 'amber' | 'violet' | 'magenta' | 'emerald'
+}
+
+const PIN_COLOR: Record<NonNullable<MapPin['color']>, { fg: string; bg: string }> = {
+  cobalt:  { fg: 'var(--color-accent-cobalt)',  bg: 'var(--chip-cobalt)' },
+  orange:  { fg: 'var(--color-accent-coral)',   bg: 'var(--chip-orange)' },
+  amber:   { fg: 'var(--color-accent-amber)',   bg: 'var(--chip-amber)' },
+  violet:  { fg: 'var(--color-accent-violet)',  bg: 'var(--chip-violet)' },
+  magenta: { fg: 'var(--color-accent-magenta)', bg: 'var(--chip-magenta)' },
+  emerald: { fg: 'var(--color-accent-emerald)', bg: 'var(--chip-emerald)' },
 }
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -158,8 +169,12 @@ export function NeighborhoodMap({ pins }: { pins: MapPin[] }) {
         <rect x="0" y="0" width="1200" height="280" fill="url(#map-fade)" />
       </svg>
 
-      {/* Pins — absolute-positioned over the SVG */}
-      {pins.map((pin, i) => (
+      {/* Pins — absolute-positioned over the SVG, colored per category */}
+      {pins.map((pin, i) => {
+        const tokens = pin.color
+          ? PIN_COLOR[pin.color]
+          : { fg: 'var(--color-ink-secondary)', bg: 'var(--color-bone)' }
+        return (
         <motion.div
           key={`${pin.label}-${i}`}
           className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5"
@@ -170,18 +185,20 @@ export function NeighborhoodMap({ pins }: { pins: MapPin[] }) {
           transition={{ duration: 0.35, delay: 0.1 + i * 0.05, ease: 'easeOut' }}
         >
           <span
-            className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[var(--color-bone)] border border-[var(--color-border)] text-[var(--color-ink-secondary)] shadow-[0_2px_6px_rgba(0,0,0,0.04)]"
+            className="inline-flex items-center justify-center w-7 h-7 rounded-full shadow-[0_2px_6px_rgba(0,0,0,0.06)]"
+            style={{ background: tokens.bg, color: tokens.fg, border: `1px solid ${tokens.fg}` }}
           >
             <PinIcon name={pin.icon} />
           </span>
           <span
-            className="hidden md:inline-block text-[9px] uppercase tracking-[0.14em] text-[var(--color-ink-tertiary)] bg-[var(--color-bone)]/80 px-1.5 py-0.5 rounded"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="hidden md:inline-block text-[9px] uppercase tracking-[0.14em] bg-[var(--color-bone)]/80 px-1.5 py-0.5 rounded"
+            style={{ fontFamily: 'var(--font-mono)', color: tokens.fg }}
           >
             {pin.label}
           </span>
         </motion.div>
-      ))}
+        )
+      })}
     </div>
   )
 }

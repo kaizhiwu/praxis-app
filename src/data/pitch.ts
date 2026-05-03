@@ -120,6 +120,7 @@ export const PITCH = {
       {
         name: 'Work & Productivity',
         icon: 'laptop',
+        color: 'cobalt',
         description: 'Where you can actually get work done.',
         queries: [
           'Outlets that actually work near Union Square',
@@ -132,6 +133,7 @@ export const PITCH = {
       {
         name: 'Photo & Content',
         icon: 'camera',
+        color: 'magenta',
         description: 'Spots worth a shot — by light, wall, or angle.',
         queries: [
           'Good red wall to take pictures in front of',
@@ -144,6 +146,7 @@ export const PITCH = {
       {
         name: 'Dating & Social',
         icon: 'heart',
+        color: 'orange',
         description: 'Lighting, lingering, easy entrances.',
         queries: [
           'Good first date lighting — dim, flattering',
@@ -156,6 +159,7 @@ export const PITCH = {
       {
         name: 'Solo & Comfort',
         icon: 'user',
+        color: 'violet',
         description: 'Places that don\'t make you feel awkward alone.',
         queries: [
           'Bathroom without purchase required',
@@ -168,6 +172,7 @@ export const PITCH = {
       {
         name: 'Parenting & Access',
         icon: 'accessible',
+        color: 'emerald',
         description: 'Stroller-true, sensory-calm, kid-tolerant.',
         queries: [
           'Stroller accessible — actually, not just "ADA compliant"',
@@ -180,6 +185,7 @@ export const PITCH = {
       {
         name: 'Vibe & Mood',
         icon: 'sparkle',
+        color: 'amber',
         description: 'Atmosphere you can\'t see in photos.',
         queries: [
           'Feels expensive but isn\'t',
@@ -192,6 +198,7 @@ export const PITCH = {
       {
         name: 'Food Truth',
         icon: 'utensils',
+        color: 'orange',
         description: 'What menus and reviews leave out.',
         queries: [
           'Is the $6 dumpling deal still active?',
@@ -204,6 +211,7 @@ export const PITCH = {
       {
         name: 'Seasonal & Temporal',
         icon: 'clock',
+        color: 'emerald',
         description: 'Heat, shade, sunsets, cherry blossoms.',
         queries: [
           'Heated outdoor seating that\'s actually warm',

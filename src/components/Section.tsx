@@ -1,18 +1,39 @@
 import { type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 
-type Tone = 'bone' | 'bone-warm' | 'taupe'
+type Tone =
+  | 'bone'
+  | 'bone-warm'
+  | 'taupe'
+  | 'tint-cobalt'
+  | 'tint-orange'
+  | 'tint-amber'
+  | 'tint-violet'
+  | 'tint-magenta'
+  | 'tint-emerald'
 
 const TONE_BG: Record<Tone, string> = {
   'bone': 'var(--color-bone)',
   'bone-warm': 'var(--color-bone-warm)',
   'taupe': 'var(--color-taupe)',
+  'tint-cobalt':  'var(--tint-cobalt)',
+  'tint-orange':  'var(--tint-orange)',
+  'tint-amber':   'var(--tint-amber)',
+  'tint-violet':  'var(--tint-violet)',
+  'tint-magenta': 'var(--tint-magenta)',
+  'tint-emerald': 'var(--tint-emerald)',
 }
 
 const TONE_RULE: Record<Tone, string> = {
   'bone': 'var(--color-border)',
   'bone-warm': 'var(--color-border)',
   'taupe': 'var(--color-taupe-cool)',
+  'tint-cobalt':  'var(--color-accent-cobalt)',
+  'tint-orange':  'var(--color-accent-coral)',
+  'tint-amber':   'var(--color-accent-amber)',
+  'tint-violet':  'var(--color-accent-violet)',
+  'tint-magenta': 'var(--color-accent-magenta)',
+  'tint-emerald': 'var(--color-accent-emerald)',
 }
 
 type SectionProps = {
@@ -83,6 +104,17 @@ type TextLockupProps = {
   maxProse?: string
   className?: string
   align?: 'left' | 'center'
+  /** Accent color for the headline. Pairs with section tint backgrounds. */
+  accent?: 'cobalt' | 'orange' | 'amber' | 'violet' | 'magenta' | 'emerald'
+}
+
+const HEADING_ACCENT: Record<NonNullable<TextLockupProps['accent']>, string> = {
+  cobalt:  'var(--deep-cobalt)',
+  orange:  'var(--deep-orange)',
+  amber:   'var(--deep-amber)',
+  violet:  'var(--deep-violet)',
+  magenta: 'var(--deep-magenta)',
+  emerald: 'var(--deep-emerald)',
 }
 
 /**
@@ -100,20 +132,27 @@ export function TextLockup({
   maxProse = 'max-w-xl',
   className = '',
   align = 'left',
+  accent,
 }: TextLockupProps) {
   const headingClass = size === 'lg' ? 'display-lg' : 'display-md'
   const alignClass = align === 'center' ? 'text-center mx-auto' : ''
+  const headingColor = accent ? HEADING_ACCENT[accent] : 'var(--color-ink)'
 
   return (
     <div className={`${alignClass} ${className}`}>
       {eyebrow && (
-        <motion.p {...fade} className={`mono-label mb-8 ${align === 'center' ? 'mx-auto' : ''}`}>
+        <motion.p
+          {...fade}
+          className={`mono-label mb-8 ${align === 'center' ? 'mx-auto' : ''}`}
+          style={accent ? { color: headingColor, opacity: 0.75 } : undefined}
+        >
           {eyebrow}
         </motion.p>
       )}
       <motion.h2
         {...fade}
-        className={`${headingClass} text-[var(--color-ink)] ${maxProse}`}
+        className={`${headingClass} ${maxProse}`}
+        style={{ color: headingColor }}
       >
         {title}
       </motion.h2>

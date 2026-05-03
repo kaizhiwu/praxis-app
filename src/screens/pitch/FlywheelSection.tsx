@@ -20,13 +20,14 @@ export function FlywheelSection() {
   }))
 
   return (
-    <Section id="flywheel" tone="bone-warm">
+    <Section id="flywheel" tone="tint-emerald">
       <TextLockup
         eyebrow="The flywheel"
         title={PITCH.flywheel.title}
         sub={PITCH.flywheel.sub}
         size="lg"
         maxProse="max-w-2xl"
+        accent="emerald"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mt-12 items-center">

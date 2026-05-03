@@ -1,28 +1,65 @@
 @import "tailwindcss";
 
 @theme {
-  /* Cool neutral palette — Clearstreet-aligned.
-     Variable names retain "bone/taupe/indigo" shape for backwards-compat
-     but the actual values are now cool grays + teal accent. */
-  --color-bone:          #FAFAFA;  /* near-white, cool */
-  --color-bone-warm:     #F1F3F4;  /* light cool surface */
-  --color-taupe:         #E5E7EB;  /* divider gray */
-  --color-taupe-cool:    #D1D5DB;
-  --color-ink:           #0A0A0F;  /* near black w/ cool tint */
-  --color-ink-secondary: #4B5563;
-  --color-ink-tertiary:  #6B7280;
-  --color-ink-faint:     #9CA3AF;
-  --color-border:        #E5E7EB;
-  --color-border-subtle: #F1F3F4;
-  --color-dark-surface:  #0A0A0F;
-  --color-dark-text:     #F1F3F4;
-  --color-dark-muted:    #9CA3AF;
+  /* Warm-neutral canvas + bold multi-accent palette.
+     Canvas stays calm so the accent colors pop. Each accent has a
+     paired tint (~10% bg) for use as a section wash or chip background. */
+  --color-bone:          #F8F7F4;  /* warm off-white canvas */
+  --color-bone-warm:     #EFEDE6;  /* warm raised surface */
+  --color-taupe:         #E5E0D5;  /* warm divider tone */
+  --color-taupe-cool:    #D4CEC0;
+  --color-ink:           #1A1816;  /* warm near-black */
+  --color-ink-secondary: #4A4540;
+  --color-ink-tertiary:  #7A746B;
+  --color-ink-faint:     #ADA59A;
+  --color-border:        #DDD8CB;
+  --color-border-subtle: #ECE8DD;
+  --color-dark-surface:  #1A1816;
+  --color-dark-text:     #EFEDE6;
+  --color-dark-muted:    #ADA59A;
 
-  /* Accent: single teal, Clearstreet-style. Coral/amber retained
-     only as functional confidence indicators inside data viz. */
-  --color-accent-indigo: #14B8A6;  /* teal — name kept for back-compat */
-  --color-accent-coral:  #DC2626;  /* low-confidence / risk */
-  --color-accent-amber:  #D97706;  /* medium-confidence / warning */
+  /* Multi-accent system — bold cobalt primary + 5 secondaries.
+     Use cases:
+       cobalt   = primary CTAs, brand accent, "workability" cluster
+       orange   = warm energy, "relief" cluster, callouts
+       gold     = "savings" cluster, warm highlights
+       violet   = secondary callouts, accent variety
+       magenta  = playful highlights, photo/dating categories
+       emerald  = grounded accents, parenting/nature categories
+     Variable name --color-accent-indigo retained for back-compat
+     but now resolves to the cobalt primary. */
+  --color-accent-indigo:  #2563EB;  /* cobalt — primary */
+  --color-accent-cobalt:  #2563EB;  /* alias for clarity */
+  --color-accent-coral:   #F97316;  /* bright orange */
+  --color-accent-amber:   #FBBF24;  /* golden yellow */
+  --color-accent-violet:  #8B5CF6;  /* fun purple */
+  --color-accent-magenta: #EC4899;  /* pink for playful highlights */
+  --color-accent-emerald: #10B981;  /* grounded green */
+
+  /* ~22% tints for section backgrounds — visible color, not subliminal. */
+  --tint-cobalt:   #DBEAFE;
+  --tint-orange:   #FED7AA;
+  --tint-amber:    #FDE68A;
+  --tint-violet:   #E9D5FF;
+  --tint-magenta:  #FBCFE8;
+  --tint-emerald:  #A7F3D0;
+
+  /* Deep paired accents — used for headlines on tinted backgrounds.
+     Each pairs with its tint above to create visual depth (light bg + dark heading). */
+  --deep-cobalt:   #1E3A8A;
+  --deep-orange:   #C2410C;
+  --deep-amber:    #92400E;
+  --deep-violet:   #6B21A8;
+  --deep-magenta:  #BE185D;
+  --deep-emerald:  #047857;
+
+  /* Subtle 8% chip fills — for use-case row icons (don't compete with section bg) */
+  --chip-cobalt:   #EBF1FE;
+  --chip-orange:   #FEF0E5;
+  --chip-amber:    #FEF6DC;
+  --chip-violet:   #F2EAFC;
+  --chip-magenta:  #FCE7F1;
+  --chip-emerald:  #E1F7EE;
 
   /* Single sans-serif family throughout. Mono only for code/labels. */
   --font-display: 'General Sans', 'Inter', system-ui, sans-serif;
@@ -45,6 +82,7 @@ html, body, #root {
   background-color: var(--color-bone);
   color: var(--color-ink);
   font-family: var(--font-body);
+  font-weight: 450; /* Slightly heavier than regular — Kai prefers substantial body text. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -59,7 +97,7 @@ html, body, #root {
 }
 
 /* Display headlines — medium weight, fluid scale, tight leading.
-   Hebbia rule: scale does the work, not weight. */
+   Size carries the presence; weight stays restrained (medium, not bold). */
 .display-xl { font-family: var(--font-display); font-size: var(--size-display-xl); font-weight: 500; line-height: 1.05; letter-spacing: -0.025em; }
 .display-lg { font-family: var(--font-display); font-size: var(--size-display-lg); font-weight: 500; line-height: 1.08; letter-spacing: -0.02em; }
 .display-md { font-family: var(--font-display); font-size: var(--size-display-md); font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; }

@@ -14,13 +14,14 @@ export function MoatSection() {
   const layers = PITCH.moat.layers
 
   return (
-    <Section id="moat" tone="bone-warm">
+    <Section id="moat" tone="tint-cobalt">
       <TextLockup
         eyebrow="Defensibility"
         title={PITCH.moat.title}
         sub="Three structural advantages that get stronger with scale."
         size="lg"
         maxProse="max-w-2xl"
+        accent="cobalt"
       />
 
       {/* Architectural diagram — contributions feed graph, graph answers query */}

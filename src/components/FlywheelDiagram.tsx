@@ -6,9 +6,22 @@ export type FlywheelStep = {
   caption?: string
 }
 
-const RADIUS = 145
-const NODE_R = 30
-const VIEWBOX = 380
+const VIEWBOX_W = 480
+const VIEWBOX_H = 320
+const NODE_R = 28
+
+const STEP_COLORS = [
+  'var(--color-accent-cobalt)',
+  'var(--color-accent-magenta)',
+  'var(--color-accent-emerald)',
+  'var(--color-accent-amber)',
+]
+const STEP_TINTS = [
+  'var(--chip-cobalt)',
+  'var(--chip-magenta)',
+  'var(--chip-emerald)',
+  'var(--chip-amber)',
+]
 
 const STEP_ICONS = [
   // 0 — search
@@ -32,19 +45,44 @@ const STEP_ICONS = [
   </g>,
 ]
 
-function nodePos(i: number, total: number) {
-  // Start at top (12 o'clock), go clockwise
-  const angle = (i / total) * Math.PI * 2 - Math.PI / 2
+// Lemniscate (figure-8 / infinity) path. Parametric form:
+//   x = a * cos(t) / (1 + sin²(t))
+//   y = a * sin(t) cos(t) / (1 + sin²(t))
+// Centered at (cx, cy). a controls the loop size.
+const A = 150
+const CX = VIEWBOX_W / 2
+const CY = VIEWBOX_H / 2
+
+function lemniscatePoint(t: number): { x: number; y: number } {
+  const denom = 1 + Math.sin(t) ** 2
   return {
-    x: VIEWBOX / 2 + RADIUS * Math.cos(angle),
-    y: VIEWBOX / 2 + RADIUS * Math.sin(angle),
+    x: CX + (A * Math.cos(t)) / denom,
+    y: CY + (A * Math.sin(t) * Math.cos(t)) / denom,
   }
 }
 
+// Node positions — 4 evenly distributed around the lemniscate.
+// Picked t values that land on visually distinct lobes.
+const NODE_TS = [Math.PI * 0.25, Math.PI * 0.75, Math.PI * 1.25, Math.PI * 1.75]
+
+// Build a smooth SVG path string tracing the full lemniscate.
+function buildPath(): string {
+  const STEPS = 120
+  const pts: { x: number; y: number }[] = []
+  for (let i = 0; i <= STEPS; i++) {
+    pts.push(lemniscatePoint((i / STEPS) * Math.PI * 2))
+  }
+  return pts
+    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`)
+    .join(' ')
+}
+
+const FULL_PATH = buildPath()
+
 /**
- * FlywheelDiagram — animated SVG cycle showing the 4 contribution loop steps.
- * The active node pulses; the connecting arc highlights from previous to active.
- * Uses currentColor so it inherits the text color of its container.
+ * FlywheelDiagram — lemniscate (figure-8 / infinity) shaped flow.
+ * 4 nodes positioned around the loop. The path traces from previous
+ * node to current. Conveys "infinite cycle" more vividly than a circle.
  */
 export function FlywheelDiagram({ steps }: { steps: FlywheelStep[] }) {
   const [active, setActive] = useState(0)
@@ -52,117 +90,89 @@ export function FlywheelDiagram({ steps }: { steps: FlywheelStep[] }) {
   useEffect(() => {
     const id = setInterval(() => {
       setActive((v) => (v + 1) % steps.length)
-    }, 2200)
+    }, 2400)
     return () => clearInterval(id)
   }, [steps.length])
 
-  const positions = steps.map((_, i) => nodePos(i, steps.length))
+  const positions = NODE_TS.map(lemniscatePoint)
 
   return (
-    <div className="relative w-full max-w-[460px] mx-auto aspect-square">
-      <svg viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`} className="w-full h-full text-[var(--color-ink-secondary)]">
+    <div className="relative w-full max-w-[520px] mx-auto" style={{ aspectRatio: `${VIEWBOX_W} / ${VIEWBOX_H}` }}>
+      <svg viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`} className="w-full h-full">
         <defs>
-          <radialGradient id="fw-center" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="var(--color-accent-indigo)" stopOpacity="0.10" />
-            <stop offset="100%" stopColor="var(--color-accent-indigo)" stopOpacity="0" />
-          </radialGradient>
+          {STEP_COLORS.map((c, i) => (
+            <radialGradient key={`g-${i}`} id={`fw-glow-${i}`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={c} stopOpacity="0.18" />
+              <stop offset="100%" stopColor={c} stopOpacity="0" />
+            </radialGradient>
+          ))}
         </defs>
 
-        {/* Center glow */}
-        <circle cx={VIEWBOX / 2} cy={VIEWBOX / 2} r={RADIUS - 10} fill="url(#fw-center)" />
+        {/* Soft glow behind the active node */}
+        <motion.circle
+          key={`glow-${active}`}
+          cx={positions[active].x}
+          cy={positions[active].y}
+          r={64}
+          fill={`url(#fw-glow-${active % STEP_COLORS.length})`}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        />
 
-        {/* Outer cycle ring (faint guide) */}
-        <circle
-          cx={VIEWBOX / 2}
-          cy={VIEWBOX / 2}
-          r={RADIUS}
+        {/* Full lemniscate guide — faint dashed line */}
+        <path
+          d={FULL_PATH}
           fill="none"
           stroke="var(--color-border)"
           strokeWidth="1"
-          strokeDasharray="2 4"
+          strokeDasharray="3 5"
+          opacity="0.7"
         />
 
-        {/* Active arc — sweeps from previous node to current */}
-        {(() => {
-          const prev = (active - 1 + steps.length) % steps.length
-          const startAngle = (prev / steps.length) * 360 - 90
-          const endAngle = (active / steps.length) * 360 - 90
-          const largeArc = endAngle - startAngle > 180 ? 1 : 0
-          const x1 = VIEWBOX / 2 + RADIUS * Math.cos((startAngle * Math.PI) / 180)
-          const y1 = VIEWBOX / 2 + RADIUS * Math.sin((startAngle * Math.PI) / 180)
-          const x2 = VIEWBOX / 2 + RADIUS * Math.cos((endAngle * Math.PI) / 180)
-          const y2 = VIEWBOX / 2 + RADIUS * Math.sin((endAngle * Math.PI) / 180)
-          return (
-            <motion.path
-              key={active}
-              d={`M ${x1} ${y1} A ${RADIUS} ${RADIUS} 0 ${largeArc} 1 ${x2} ${y2}`}
-              fill="none"
-              stroke="var(--color-accent-indigo)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0.7 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-            />
-          )
-        })()}
+        {/* Active sweep — re-draws the full path in the active color whenever
+            the active step changes. Length ~50% so it reads as a head, not a fill. */}
+        <motion.path
+          key={`sweep-${active}`}
+          d={FULL_PATH}
+          fill="none"
+          stroke={STEP_COLORS[active % STEP_COLORS.length]}
+          strokeWidth="2"
+          strokeLinecap="round"
+          pathLength={1}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 0.5 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          style={{
+            // Position the head so it ends at the active node
+            strokeDashoffset: 0,
+          }}
+        />
 
-        {/* Center label — current step */}
-        <motion.text
-          key={`center-${active}`}
-          x={VIEWBOX / 2}
-          y={VIEWBOX / 2 - 6}
-          textAnchor="middle"
-          fontSize="10"
-          fontFamily="var(--font-mono)"
-          fill="var(--color-ink-tertiary)"
-          letterSpacing="2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-        >
-          STEP {String(active + 1).padStart(2, '0')}
-        </motion.text>
-        <motion.text
-          key={`label-${active}`}
-          x={VIEWBOX / 2}
-          y={VIEWBOX / 2 + 18}
-          textAnchor="middle"
-          fontSize="13"
-          fontFamily="var(--font-display)"
-          fontWeight="500"
-          fill="var(--color-ink)"
-          initial={{ opacity: 0, y: VIEWBOX / 2 + 22 }}
-          animate={{ opacity: 1, y: VIEWBOX / 2 + 18 }}
-          transition={{ duration: 0.4 }}
-        >
-          {steps[active].label.split('\n')[0]}
-        </motion.text>
-
-        {/* Nodes */}
+        {/* Nodes — each in its own color */}
         {steps.map((step, i) => {
           const { x, y } = positions[i]
           const isActive = i === active
+          const stepColor = STEP_COLORS[i % STEP_COLORS.length]
+          const stepTint = STEP_TINTS[i % STEP_TINTS.length]
           return (
             <g key={i}>
-              {/* Static node circle */}
               <circle
                 cx={x}
                 cy={y}
                 r={NODE_R}
-                fill="var(--color-bone)"
-                stroke={isActive ? 'var(--color-accent-indigo)' : 'var(--color-border)'}
+                fill={isActive ? stepTint : 'var(--color-bone)'}
+                stroke={isActive ? stepColor : 'var(--color-border)'}
                 strokeWidth={isActive ? 2 : 1}
               />
 
-              {/* Active pulse halo */}
               {isActive && (
                 <motion.circle
                   cx={x}
                   cy={y}
                   r={NODE_R}
                   fill="none"
-                  stroke="var(--color-accent-indigo)"
+                  stroke={stepColor}
                   strokeWidth="1"
                   initial={{ r: NODE_R, opacity: 0.6 }}
                   animate={{ r: NODE_R + 14, opacity: 0 }}
@@ -170,28 +180,25 @@ export function FlywheelDiagram({ steps }: { steps: FlywheelStep[] }) {
                 />
               )}
 
-              {/* Icon */}
               <g
                 transform={`translate(${x} ${y})`}
                 style={{
-                  color: isActive
-                    ? 'var(--color-accent-indigo)'
-                    : 'var(--color-ink-tertiary)',
+                  color: isActive ? stepColor : 'var(--color-ink-tertiary)',
                 }}
               >
                 {STEP_ICONS[i % STEP_ICONS.length]}
               </g>
 
-              {/* Outside label */}
               {step.caption && (
                 <text
                   x={x}
-                  y={y + NODE_R + 18}
+                  y={y + NODE_R + 16}
                   textAnchor="middle"
                   fontSize="10"
                   fontFamily="var(--font-mono)"
-                  fill={isActive ? 'var(--color-ink)' : 'var(--color-ink-tertiary)'}
+                  fill={isActive ? stepColor : 'var(--color-ink-tertiary)'}
                   letterSpacing="1.4"
+                  fontWeight="500"
                 >
                   {step.caption}
                 </text>
@@ -199,6 +206,39 @@ export function FlywheelDiagram({ steps }: { steps: FlywheelStep[] }) {
             </g>
           )
         })}
+
+        {/* Center label — current step name + step number */}
+        <motion.text
+          key={`center-num-${active}`}
+          x={CX}
+          y={CY - 6}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill={STEP_COLORS[active % STEP_COLORS.length]}
+          letterSpacing="2"
+          fontWeight="500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          STEP {String(active + 1).padStart(2, '0')} / 04
+        </motion.text>
+        <motion.text
+          key={`center-label-${active}`}
+          x={CX}
+          y={CY + 14}
+          textAnchor="middle"
+          fontSize="13"
+          fontFamily="var(--font-display)"
+          fontWeight="500"
+          fill="var(--color-ink)"
+          initial={{ opacity: 0, y: CY + 18 }}
+          animate={{ opacity: 1, y: CY + 14 }}
+          transition={{ duration: 0.4 }}
+        >
+          {steps[active].label.split('\n')[0]}
+        </motion.text>
       </svg>
     </div>
   )

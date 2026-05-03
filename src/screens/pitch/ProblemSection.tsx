@@ -49,12 +49,13 @@ function Icon({ name }: { name: string }) {
 
 export function ProblemSection() {
   return (
-    <Section id="problem" tone="bone-warm">
+    <Section id="problem" tone="tint-orange">
       <TextLockup
         eyebrow="The problem"
         title={PITCH.problem.title}
         size="lg"
         maxProse="max-w-2xl"
+        accent="orange"
       />
 
       {/* Each row: left half = the broken story, right half = what Praxis would have answered.

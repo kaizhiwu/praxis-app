@@ -55,7 +55,7 @@ export function CTASection({ onContact }: { onContact: () => void }) {
         >
           <button
             onClick={onContact}
-            className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#0F766E] transition-colors duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#1D4ED8] transition-colors duration-200 cursor-pointer"
           >
             Apply as design partner
           </button>

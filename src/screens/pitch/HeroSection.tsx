@@ -2,6 +2,21 @@ import { useRef, useEffect, useCallback } from 'react'
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
+import { BoneResultCard } from '../../components/BoneResultCard'
+
+// Sample data shown floating beside the hero — same shape as a real
+// Praxis result card so the visitor sees the product immediately.
+const HERO_CARD = {
+  name: 'Cafe Luna',
+  neighborhood: 'NoHo, NYC',
+  distance: '0.3 mi',
+  matchScore: 0.92,
+  attributes: [
+    { label: 'Outlet usability', value: 0.95, confidence: 0.91, recency: '2d ago' },
+    { label: 'Noise level (low)', value: 0.82, confidence: 0.88, recency: '4d ago' },
+    { label: 'Laptop tolerance', value: 0.94, confidence: 0.86, recency: '1w ago' },
+  ],
+}
 
 const VIDEO_SRC = '/models/city-flyover.mp4'
 
@@ -100,41 +115,74 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
           />
         </div>
 
-        {/* Content lockup — eyebrow + h1 + sub + primary CTA + secondary link */}
+        {/* Content lockup — asymmetric: text left, floating live card right */}
         <motion.div
           className="absolute inset-0 z-10 flex items-center"
           style={{ opacity: textOpacity, y: textY }}
         >
-          <div className="max-w-[1200px] mx-auto w-full px-6 lg:px-10">
-            <p className="mono-label mb-6">Behavioral Place Intelligence</p>
+          <div className="max-w-[1200px] mx-auto w-full px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left — text column (7 of 12) */}
+            <div className="lg:col-span-7">
+              <p className="mono-label mb-6">Behavioral Place Intelligence</p>
 
-            <h1
-              className="display-xl text-[var(--color-ink)]"
-              style={{ fontWeight: 500 }}
-            >
-              The behavioral layer
-              <br />
-              maps won&apos;t build.
-            </h1>
+              <h1 className="display-xl text-[var(--color-ink)]">
+                The behavioral layer
+                <br />
+                maps won&apos;t build.
+              </h1>
 
-            <p className="mt-6 max-w-lg text-[var(--color-ink-secondary)] leading-relaxed" style={{ fontSize: 'var(--size-text-lg)' }}>
-              {PITCH.hero.sub}
-            </p>
-
-            <div className="mt-8 flex items-center gap-5">
-              <a
-                href="/app"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#0F766E] transition-colors duration-200"
+              <p
+                className="mt-6 max-w-lg text-[var(--color-ink-secondary)] leading-relaxed"
+                style={{ fontSize: 'var(--size-text-lg)' }}
               >
-                Try the product
-              </a>
-              <button
-                onClick={onContact}
-                className="text-sm text-[var(--color-ink-secondary)] hover:text-[var(--color-ink)] transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
+                {PITCH.hero.sub}
+              </p>
+
+              <div className="mt-8 flex items-center gap-5">
+                <a
+                  href="/app"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-[var(--color-accent-indigo)] hover:bg-[#1D4ED8] transition-colors duration-200"
+                >
+                  Try the product
+                </a>
+                <button
+                  onClick={onContact}
+                  className="text-sm text-[var(--color-ink-secondary)] hover:text-[var(--color-ink)] transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
+                >
+                  Get in touch
+                  <span aria-hidden>→</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right — floating live card (5 of 12, hidden on mobile) */}
+            <div className="hidden lg:block lg:col-span-5">
+              <motion.div
+                animate={{ y: [0, -8, 0], rotate: [-1.5, -2, -1.5] }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                style={{
+                  filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.10)) drop-shadow(0 4px 12px rgba(0,0,0,0.06))',
+                  transformOrigin: 'center center',
+                }}
               >
-                Get in touch
-                <span aria-hidden>→</span>
-              </button>
+                {/* Tiny status pill above the card */}
+                <div className="flex items-center justify-end mb-3 gap-2 pr-2">
+                  <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-[var(--color-accent-emerald)]">
+                    <span className="absolute inline-flex w-full h-full rounded-full bg-[var(--color-accent-emerald)] animate-ping opacity-60" />
+                  </span>
+                  <span
+                    className="text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink-tertiary)]"
+                    style={{ fontFamily: 'var(--font-mono)' }}
+                  >
+                    Live · NYC · 14 places
+                  </span>
+                </div>
+                <BoneResultCard data={HERO_CARD} />
+              </motion.div>
             </div>
           </div>
         </motion.div>

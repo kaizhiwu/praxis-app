@@ -23,7 +23,8 @@ export function ProofBandSection() {
   return (
     <section
       id="proof"
-      className="bg-[var(--color-bone)] px-6 lg:px-10 pt-8 lg:pt-10 pb-20 lg:pb-28"
+      className="px-6 lg:px-10 pt-8 lg:pt-10 pb-20 lg:pb-28"
+      style={{ background: 'var(--tint-amber)' }}
     >
       <div className="max-w-[1200px] mx-auto">
         <motion.p {...fade} className="mono-label mb-6">

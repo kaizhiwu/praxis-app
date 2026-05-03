@@ -9,9 +9,9 @@ interface ResultCardProps {
 }
 
 const CLUSTER_COLORS: Record<AttributeCluster, { hex: string; label: string }> = {
-  workability: { hex: '#14B8A6', label: 'Workability' },
-  relief: { hex: '#475569', label: 'Relief' },
-  savings: { hex: '#D97706', label: 'Savings' },
+  workability: { hex: '#2563EB', label: 'Workability' },
+  relief: { hex: '#F97316', label: 'Relief' },
+  savings: { hex: '#FBBF24', label: 'Savings' },
 }
 
 function getPrimaryCluster(attributes: { cluster: AttributeCluster }[]): AttributeCluster {
@@ -168,7 +168,7 @@ function MatchScoreRing({ score }: { score: number }) {
       style={{
         width: size,
         height: size,
-        filter: hasGlow ? 'drop-shadow(0 0 6px rgba(20,184,166,0.25))' : undefined,
+        filter: hasGlow ? 'drop-shadow(0 0 6px rgba(37,99,235,0.25))' : undefined,
       }}
     >
       <svg
@@ -179,8 +179,8 @@ function MatchScoreRing({ score }: { score: number }) {
       >
         <defs>
           <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#14B8A6" />
-            <stop offset="100%" stopColor="#0F766E" />
+            <stop offset="0%" stopColor="#2563EB" />
+            <stop offset="100%" stopColor="#1D4ED8" />
           </linearGradient>
         </defs>
         {/* Background track */}

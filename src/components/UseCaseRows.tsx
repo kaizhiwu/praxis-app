@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion'
 import { type ReactNode } from 'react'
 
+export type UseCaseColor =
+  | 'cobalt'
+  | 'orange'
+  | 'amber'
+  | 'violet'
+  | 'magenta'
+  | 'emerald'
+
 export type UseCaseRowItem = {
   /** Stable key */
   id: string
@@ -12,6 +20,17 @@ export type UseCaseRowItem = {
   description: string
   /** Up to 3 representative example items shown right-aligned. */
   examples: string[]
+  /** Per-category accent color */
+  color?: UseCaseColor
+}
+
+const COLOR_TOKEN: Record<UseCaseColor, { fg: string; bg: string }> = {
+  cobalt:  { fg: 'var(--color-accent-cobalt)',  bg: 'var(--chip-cobalt)' },
+  orange:  { fg: 'var(--color-accent-coral)',   bg: 'var(--chip-orange)' },
+  amber:   { fg: 'var(--color-accent-amber)',   bg: 'var(--chip-amber)' },
+  violet:  { fg: 'var(--color-accent-violet)',  bg: 'var(--chip-violet)' },
+  magenta: { fg: 'var(--color-accent-magenta)', bg: 'var(--chip-magenta)' },
+  emerald: { fg: 'var(--color-accent-emerald)', bg: 'var(--chip-emerald)' },
 }
 
 const ICONS: Record<string, ReactNode> = {
@@ -100,50 +119,61 @@ const fade = {
 export function UseCaseRows({ items }: { items: UseCaseRowItem[] }) {
   return (
     <ul className="mt-12 border-t border-[var(--color-border)]">
-      {items.map((item, i) => (
-        <motion.li
-          key={item.id}
-          {...fade}
-          transition={{
-            duration: 0.35,
-            delay: Math.min(i * 0.04, 0.32),
-            ease: [0.25, 0.1, 0.25, 1],
-          }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start py-6 lg:py-7 border-b border-[var(--color-border)]"
-        >
-          {/* Icon — col 1 */}
-          <div className="lg:col-span-1 flex items-start">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] text-[var(--color-ink-secondary)]">
-              <Icon name={item.icon} />
-            </span>
-          </div>
+      {items.map((item, i) => {
+        const tokens = item.color
+          ? COLOR_TOKEN[item.color]
+          : { fg: 'var(--color-ink-secondary)', bg: 'var(--color-bone-warm)' }
+        return (
+          <motion.li
+            key={item.id}
+            {...fade}
+            transition={{
+              duration: 0.35,
+              delay: Math.min(i * 0.04, 0.32),
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start py-6 lg:py-7 border-b border-[var(--color-border)]"
+          >
+            {/* Icon — col 1, colored chip */}
+            <div className="lg:col-span-1 flex items-start">
+              <span
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full"
+                style={{ background: tokens.bg, color: tokens.fg }}
+              >
+                <Icon name={item.icon} />
+              </span>
+            </div>
 
-          {/* Name + description — col 5 */}
-          <div className="lg:col-span-5">
-            <h3 className="text-lg font-medium text-[var(--color-ink)]" style={{ fontFamily: 'var(--font-display)' }}>
-              {item.name}
-            </h3>
-            <p className="mt-1 text-sm text-[var(--color-ink-tertiary)] leading-relaxed">
-              {item.description}
-            </p>
-          </div>
+            {/* Name + description — col 5 */}
+            <div className="lg:col-span-5">
+              <h3
+                className="text-lg font-medium"
+                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-ink)' }}
+              >
+                {item.name}
+              </h3>
+              <p className="mt-1 text-sm text-[var(--color-ink-tertiary)] leading-relaxed">
+                {item.description}
+              </p>
+            </div>
 
-          {/* Examples — col 6, right-aligned mono list */}
-          <div className="lg:col-span-6">
-            <ul className="space-y-1.5">
-              {item.examples.map((ex, j) => (
-                <li
-                  key={j}
-                  className="text-[13px] text-[var(--color-ink-secondary)] leading-snug font-mono"
-                >
-                  <span className="text-[var(--color-ink-faint)] mr-2">›</span>
-                  {ex}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.li>
-      ))}
+            {/* Examples — col 6, right-aligned mono list with colored bullet */}
+            <div className="lg:col-span-6">
+              <ul className="space-y-1.5">
+                {item.examples.map((ex, j) => (
+                  <li
+                    key={j}
+                    className="text-[13px] text-[var(--color-ink-secondary)] leading-snug font-mono"
+                  >
+                    <span className="mr-2" style={{ color: tokens.fg }}>›</span>
+                    {ex}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.li>
+        )
+      })}
     </ul>
   )
 }

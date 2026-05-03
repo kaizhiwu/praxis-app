@@ -1,6 +1,6 @@
 import { PITCH } from '../../data/pitch'
 import { Section, TextLockup } from '../../components/Section'
-import { UseCaseRows, type UseCaseRowItem } from '../../components/UseCaseRows'
+import { UseCaseRows, type UseCaseRowItem, type UseCaseColor } from '../../components/UseCaseRows'
 import { NeighborhoodMap, type MapPin } from '../../components/NeighborhoodMap'
 
 // Distribution of the 8 categories across an abstract NYC neighborhood map.
@@ -26,6 +26,7 @@ export function UseCaseSection() {
     name: c.name,
     description: c.description,
     examples: c.queries.slice(0, 2),
+    color: c.color as UseCaseColor,
   }))
 
   const pins: MapPin[] = categories.map((c, i) => ({
@@ -33,6 +34,7 @@ export function UseCaseSection() {
     label: PIN_POSITIONS[i]?.label ?? c.name.split(' ')[0],
     x: PIN_POSITIONS[i]?.x ?? 50,
     y: PIN_POSITIONS[i]?.y ?? 50,
+    color: c.color as MapPin['color'],
   }))
 
   const totalQueries = categories.reduce((sum, c) => sum + c.queries.length, 0)

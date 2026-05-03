@@ -15,9 +15,9 @@ const CLUSTER_LABELS: Record<AttributeCluster, string> = {
 const CLUSTER_ORDER: AttributeCluster[] = ['workability', 'relief', 'savings']
 
 const CLUSTER_COLORS: Record<AttributeCluster, { dot: string; tint: string; hex: string }> = {
-  workability: { dot: 'bg-[#14B8A6]', tint: 'text-[#14B8A6]/70', hex: '#14B8A6' },
-  relief: { dot: 'bg-[#475569]', tint: 'text-[#475569]/70', hex: '#475569' },
-  savings: { dot: 'bg-[#D97706]', tint: 'text-[#D97706]/70', hex: '#D97706' },
+  workability: { dot: 'bg-[#2563EB]', tint: 'text-[#2563EB]/70', hex: '#2563EB' },
+  relief: { dot: 'bg-[#F97316]', tint: 'text-[#F97316]/70', hex: '#F97316' },
+  savings: { dot: 'bg-[#FBBF24]', tint: 'text-[#FBBF24]/70', hex: '#FBBF24' },
 }
 
 function isRecentContribution(timestamp: string): boolean {
@@ -645,7 +645,7 @@ export function PlaceDetailScreen() {
                                           >
                                             <span
                                               className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0 text-white"
-                                              style={{ background: 'linear-gradient(135deg, #14B8A6, #0F766E)' }}
+                                              style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)' }}
                                             >
                                               {c.userName.charAt(0).toUpperCase()}
                                             </span>
@@ -710,7 +710,7 @@ export function PlaceDetailScreen() {
                         <div className="flex items-center gap-2.5 min-w-0">
                           <span
                             className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold shrink-0 text-white"
-                            style={{ background: 'linear-gradient(135deg, #14B8A6, #0F766E)' }}
+                            style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)' }}
                           >
                             {c.userName.charAt(0).toUpperCase()}
                           </span>
@@ -744,8 +744,8 @@ export function PlaceDetailScreen() {
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}
-            className="relative w-full py-3.5 rounded-xl font-medium text-sm text-white hover:opacity-95 transition-opacity cursor-pointer shadow-[0_0_24px_-4px_rgba(20,184,166,0.4)] overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #14B8A6, #2DD4BF)' }}
+            className="relative w-full py-3.5 rounded-xl font-medium text-sm text-white hover:opacity-95 transition-opacity cursor-pointer shadow-[0_0_24px_-4px_rgba(37,99,235,0.4)] overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #2563EB, #60A5FA)' }}
           >
             <span className="relative z-10 flex items-center justify-center gap-1.5">
               <svg width={14} height={14} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">

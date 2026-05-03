@@ -123,7 +123,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                     <motion.div
                       className="absolute w-24 h-24 rounded-full pointer-events-none"
                       style={{
-                        background: 'radial-gradient(circle, rgba(20,184,166,0.12) 0%, rgba(20,184,166,0.04) 50%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.04) 50%, transparent 70%)',
                       }}
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -185,8 +185,8 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   <button
                     onClick={handleSubmit}
                     disabled={!hasAnswers}
-                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-white shadow-[0_0_16px_-4px_rgba(20,184,166,0.25)]"
-                    style={{ background: hasAnswers ? 'linear-gradient(135deg, #14B8A6, #0F766E)' : '#14B8A6' }}
+                    className="w-full py-3.5 rounded-2xl font-medium text-sm transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-white shadow-[0_0_16px_-4px_rgba(37,99,235,0.25)]"
+                    style={{ background: hasAnswers ? 'linear-gradient(135deg, #2563EB, #1D4ED8)' : '#2563EB' }}
                   >
                     Submit
                   </button>

@@ -18,8 +18,8 @@ function SparkleIcon() {
       />
       <defs>
         <linearGradient id="sparkle-grad" x1="0" y1="0" x2="16" y2="16">
-          <stop stopColor="#14B8A6" />
-          <stop offset="1" stopColor="#5EEAD4" />
+          <stop stopColor="#2563EB" />
+          <stop offset="1" stopColor="#BFDBFE" />
         </linearGradient>
       </defs>
     </svg>
@@ -178,9 +178,9 @@ export function AttributeBar({ attribute, compact }: AttributeBarProps) {
           )}
           style={{
             background: isHighConfidence
-              ? 'linear-gradient(90deg, #14B8A6, #0F766E, #5EEAD4)'
+              ? 'linear-gradient(90deg, #2563EB, #1D4ED8, #BFDBFE)'
               : confidence >= 0.6
-                ? 'linear-gradient(90deg, #14B8A6, #5EEAD4)'
+                ? 'linear-gradient(90deg, #2563EB, #BFDBFE)'
                 : '#D1D1D6',
             opacity: confidence >= 0.8 ? 1 : confidence >= 0.5 ? 0.65 : 0.4,
           }}

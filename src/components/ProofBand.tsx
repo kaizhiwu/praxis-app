@@ -9,6 +9,13 @@ export type ProofMetric = {
   glyph?: React.ReactNode
 }
 
+const VALUE_ACCENTS = [
+  'var(--deep-cobalt)',
+  'var(--deep-magenta)',
+  'var(--deep-emerald)',
+  'var(--deep-amber)',
+]
+
 // 14 dots scattered across an abstract NYC silhouette — pairs with the
 // "Places mapped" stat to give it geographic grounding.
 const NYC_DOTS = [
@@ -78,8 +85,8 @@ export function ProofBand({ metrics }: { metrics: ProofMetric[] }) {
             </div>
           )}
           <p
-            className="display-md tabular-nums text-[var(--color-ink)]"
-            style={{ fontWeight: 500 }}
+            className="display-md tabular-nums"
+            style={{ fontWeight: 500, color: VALUE_ACCENTS[i % VALUE_ACCENTS.length] }}
           >
             {m.value}
           </p>
