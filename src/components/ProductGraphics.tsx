@@ -1,6 +1,31 @@
 import { motion } from 'framer-motion'
+import { BoneResultCard, type BoneResultData } from './BoneResultCard'
 
-const cardBase = 'rounded-2xl bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] overflow-hidden'
+const cardBase = 'rounded-2xl bg-[var(--color-bone)] border border-[var(--color-border)] overflow-hidden'
+
+/**
+ * Real-feeling place data for the Answer tab — a complete BoneResultCard
+ * showing a place, its top attributes, recency, confidence, and a
+ * provenance trail. This is what the actual /app result looks like.
+ */
+const SAMPLE_RESULT: BoneResultData = {
+  name: 'Cafe Luna',
+  neighborhood: 'NoHo, NYC',
+  distance: '0.3 mi',
+  matchScore: 0.92,
+  summary:
+    'Outlets confirmed working at every seat. Noise level low through afternoon. Laptop-friendly past 3 hours.',
+  attributes: [
+    { label: 'Outlet usability', value: 0.95, confidence: 0.91, recency: '2d ago' },
+    { label: 'Noise level (low)', value: 0.82, confidence: 0.88, recency: '4d ago' },
+    { label: 'Laptop tolerance', value: 0.94, confidence: 0.86, recency: '1w ago' },
+  ],
+  provenance: [
+    { who: 'user_47a', when: '2d ago', confirmations: 4 },
+    { who: 'user_12f', when: '1w ago', confirmations: 2 },
+    { who: 'user_93c', when: '3w ago', confirmations: 1 },
+  ],
+}
 
 // Layer 01 — Behavioral Place Graph: nodes and edges visualization
 export function GraphMockup() {
@@ -110,7 +135,7 @@ export function TruthMockup() {
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
               />
             </div>
-            <span className="text-[11px] font-mono font-medium text-[var(--color-ink)] w-8">{bar.confidence}%</span>
+            <span className="text-[11px] font-mono font-medium text-[var(--color-ink)] w-8 tabular-nums">{bar.confidence}%</span>
           </motion.div>
         ))}
       </div>
@@ -186,61 +211,8 @@ export function IntentMockup() {
   )
 }
 
-// Layer 04 — Answer Layer: provenance chain
+// Layer 04 — Answer Layer: real product result card with provenance.
+// Embeds BoneResultCard, the same surface used elsewhere in the product.
 export function AnswerMockup() {
-  const chain = [
-    { who: 'user_47a', when: '2 days ago', confirmations: 4, confidence: 96 },
-    { who: 'user_12f', when: '1 week ago', confirmations: 2, confidence: 88 },
-    { who: 'user_93c', when: '3 weeks ago', confirmations: 1, confidence: 71 },
-  ]
-
-  return (
-    <div className={`${cardBase} p-6 md:p-8 aspect-[4/3] flex flex-col`}>
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-2 h-2 rounded-full bg-[var(--color-accent-indigo)]" />
-        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-ink-tertiary)]">Provenance Chain</span>
-      </div>
-
-      <div className="flex-1 flex flex-col justify-center">
-        {/* Result card */}
-        <motion.div
-          className="rounded-lg bg-white/70 border border-[var(--color-border)] p-4 mb-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-[var(--color-ink)]">Cafe Luna</span>
-            <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-[var(--color-accent-indigo)]/10 text-[var(--color-accent-indigo)] font-medium">96% match</span>
-          </div>
-          <p className="text-[11px] text-[var(--color-ink-secondary)]">outlets: available, noise: low, laptop: 3hr+</p>
-        </motion.div>
-
-        {/* Evidence trail */}
-        <div className="space-y-1.5">
-          {chain.map((c, i) => (
-            <motion.div
-              key={c.who}
-              className="flex items-center gap-2 text-[10px] font-mono"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + i * 0.1 }}
-            >
-              <div className="w-4 h-px bg-[var(--color-border)]" />
-              <span className="text-[var(--color-ink-tertiary)]">{c.who}</span>
-              <span className="text-[var(--color-ink-faint)]">{c.when}</span>
-              <span className="text-[var(--color-ink-tertiary)]">{c.confirmations}x confirmed</span>
-              <span className="ml-auto font-medium" style={{
-                color: c.confidence > 90 ? 'var(--color-accent-indigo)' : c.confidence > 75 ? 'var(--color-accent-amber)' : 'var(--color-accent-coral)',
-              }}>{c.confidence}%</span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      <p className="text-[10px] text-[var(--color-ink-faint)] tracking-wider uppercase mt-3">Transparent, auditable evidence</p>
-    </div>
-  )
+  return <BoneResultCard data={SAMPLE_RESULT} />
 }

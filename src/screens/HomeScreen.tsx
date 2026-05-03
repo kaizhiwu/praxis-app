@@ -136,7 +136,7 @@ function BrandMark() {
   return (
     <div className="relative flex items-center justify-center">
       {/* Larger radial glow behind the mark */}
-      <div className="absolute w-24 h-24 rounded-full blur-2xl" style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(226,97,75,0.08) 50%, transparent 80%)' }} />
+      <div className="absolute w-24 h-24 rounded-full blur-2xl" style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.15) 0%, rgba(71,85,105,0.08) 50%, transparent 80%)' }} />
       <svg
         width="48"
         height="48"
@@ -146,13 +146,13 @@ function BrandMark() {
       >
         <defs>
           <linearGradient id="brand-ring-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#4F46E5" />
-            <stop offset="100%" stopColor="#E2614B" />
+            <stop offset="0%" stopColor="#14B8A6" />
+            <stop offset="100%" stopColor="#475569" />
           </linearGradient>
           <linearGradient id="brand-fill-grad" x1="16" y1="10" x2="32" y2="38" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#4F46E5" />
-            <stop offset="50%" stopColor="#7C3AED" />
-            <stop offset="100%" stopColor="#E2614B" />
+            <stop offset="0%" stopColor="#14B8A6" />
+            <stop offset="50%" stopColor="#0F766E" />
+            <stop offset="100%" stopColor="#475569" />
           </linearGradient>
         </defs>
         {/* Outer ring with gradient stroke */}
@@ -177,7 +177,7 @@ function BrandMark() {
           r="7"
           stroke="url(#brand-fill-grad)"
           strokeWidth="1.5"
-          fill="rgba(79,70,229,0.06)"
+          fill="rgba(20,184,166,0.06)"
         />
         {/* Center dot */}
         <circle cx="24" cy="24" r="2" fill="url(#brand-fill-grad)" />
@@ -208,7 +208,7 @@ function DotGrid() {
         result.push({
           x: offsetX + c * spacing,
           y: offsetY + r * spacing,
-          color: (r + c) % 3 === 0 ? '#E2614B' : '#4F46E5',
+          color: (r + c) % 3 === 0 ? '#475569' : '#14B8A6',
         })
       }
     }
@@ -240,7 +240,7 @@ function DiamondDivider() {
     <div className="flex items-center justify-center gap-3 py-1">
       <span className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-indigo-500/10" />
       <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden>
-        <rect x="4" y="0" width="5.66" height="5.66" rx="1" transform="rotate(45 4 0)" fill="#4F46E5" opacity="0.15" />
+        <rect x="4" y="0" width="5.66" height="5.66" rx="1" transform="rotate(45 4 0)" fill="#14B8A6" opacity="0.15" />
       </svg>
       <span className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-indigo-500/10" />
     </div>
@@ -434,7 +434,7 @@ export function HomeScreen() {
               <button
                 onClick={handlePasteLink}
                 className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #4F46E5, #6366F1)' }}
+                style={{ background: 'linear-gradient(135deg, #14B8A6, #2DD4BF)' }}
               >
                 Go
               </button>

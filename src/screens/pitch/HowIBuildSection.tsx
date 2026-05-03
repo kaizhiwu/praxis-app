@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion'
 import { PITCH } from '../../data/pitch'
-import { SpotlightBackground } from '../../components/SpotlightBackground'
+import { Section, TextLockup } from '../../components/Section'
+import { BuildTerminal } from '../../components/BuildTerminal'
 
 const fade = {
   initial: { opacity: 0, y: 8 } as const,
   whileInView: { opacity: 1, y: 0 } as const,
   viewport: { once: true, margin: '-60px' } as const,
-  transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } as const,
+  transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] } as const,
 }
 
 const toolIcons: Record<string, React.ReactNode> = {
@@ -39,90 +40,53 @@ const toolIcons: Record<string, React.ReactNode> = {
 
 export function HowIBuildSection() {
   return (
-    <SpotlightBackground className="bg-[var(--color-bone)] px-6 lg:px-10 py-20">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="section-rule mb-6" />
-        <motion.p {...fade} className="mono-label mb-10">How I build</motion.p>
+    <Section id="how-i-build" tone="bone-warm">
+      <TextLockup
+        eyebrow="How I build"
+        title={PITCH.howIBuild.title}
+        sub={PITCH.howIBuild.sub}
+        size="lg"
+        maxProse="max-w-2xl"
+      />
 
-        <motion.h2
-          {...fade}
-          className="font-semibold text-3xl md:text-5xl tracking-[-0.02em] leading-[1.1] text-[var(--color-ink)] max-w-2xl mb-4"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          {PITCH.howIBuild.title}
-        </motion.h2>
-        <motion.p
-          {...fade}
-          transition={{ ...fade.transition, delay: 0.06 }}
-          className="text-[var(--color-ink-secondary)] mb-10 max-w-xl leading-relaxed"
-        >
-          {PITCH.howIBuild.sub}
-        </motion.p>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Philosophy card */}
-          <motion.div
-            {...fade}
-            transition={{ ...fade.transition, delay: 0.1 }}
-            className="col-span-2 rounded-xl p-8 bg-[var(--color-taupe)] backdrop-blur-sm"
-          >
-            <p className="text-[var(--color-ink-secondary)] leading-relaxed text-lg italic">
-              &ldquo;{PITCH.howIBuild.philosophy}&rdquo;
-            </p>
-          </motion.div>
-
-          {/* Tool cards with hover effects */}
+      {/* Two-column: tools list left, live build terminal right */}
+      <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <ul className="lg:col-span-5 space-y-2">
           {PITCH.howIBuild.tools.map((tool, i) => (
-            <motion.div
+            <motion.li
               key={tool.name}
               {...fade}
-              transition={{ ...fade.transition, delay: 0.16 + i * 0.06 }}
-              className="group rounded-xl p-6 bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] transition-all duration-300 hover:border-[var(--color-ink-faint)] hover:shadow-sm"
-            >
-              <div className="text-[var(--color-ink-tertiary)] mb-3 transition-colors duration-300 group-hover:text-[var(--color-accent-indigo)]">
-                {toolIcons[tool.icon]}
-              </div>
-              <h3 className="text-[var(--color-ink)] font-medium text-sm">{tool.name}</h3>
-              <p className="text-[var(--color-ink-tertiary)] text-xs mt-2 leading-relaxed">{tool.role}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Metrics */}
-        <div className="section-rule my-16" />
-
-        <motion.h3
-          {...fade}
-          className="font-medium text-2xl text-[var(--color-ink)] mb-8"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          {PITCH.buildVelocity.title}
-        </motion.h3>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {PITCH.buildVelocity.metrics.map((metric, i) => (
-            <motion.div
-              key={metric.label}
-              {...fade}
               transition={{ ...fade.transition, delay: i * 0.06 }}
-              className="group rounded-xl overflow-hidden bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] transition-all duration-300 hover:border-[var(--color-ink-faint)] hover:shadow-sm"
+              className="flex items-start gap-4 rounded-xl p-4 bg-[var(--color-bone)] border border-[var(--color-border-subtle)]"
             >
-              {/* Accent line */}
-              <div className="h-0.5 bg-gradient-to-r from-[#4F46E5]/30 via-[#D97706]/20 to-transparent" />
-              <div className="p-6">
-                <p
-                  className="text-4xl md:text-5xl font-medium tracking-tight text-[var(--color-ink)]"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {metric.value}
+              <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[var(--color-bone-warm)] text-[var(--color-ink-tertiary)]">
+                {toolIcons[tool.icon]}
+              </span>
+              <div>
+                <p className="text-[var(--color-ink)] font-medium text-sm">{tool.name}</p>
+                <p className="text-[var(--color-ink-tertiary)] text-xs mt-1 leading-relaxed">
+                  {tool.role}
                 </p>
-                <p className="text-[var(--color-ink)] font-medium mt-3 text-sm">{metric.label}</p>
-                <p className="text-[var(--color-ink-tertiary)] text-xs mt-1.5 leading-relaxed">{metric.description}</p>
               </div>
-            </motion.div>
+            </motion.li>
           ))}
+        </ul>
+
+        <div className="lg:col-span-7">
+          <BuildTerminal />
         </div>
       </div>
-    </SpotlightBackground>
+
+      {/* Philosophy — single italic line */}
+      <motion.blockquote
+        {...fade}
+        transition={{ ...fade.transition, delay: 0.3 }}
+        className="border-l-2 border-[var(--color-accent-indigo)] pl-6 mt-12 max-w-3xl"
+      >
+        <p className="text-[var(--color-ink-secondary)] leading-relaxed text-lg italic">
+          {PITCH.howIBuild.philosophy}
+        </p>
+      </motion.blockquote>
+    </Section>
   )
 }

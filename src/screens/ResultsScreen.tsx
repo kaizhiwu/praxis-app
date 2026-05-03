@@ -58,7 +58,7 @@ export function ResultsScreen() {
         <div
           className="h-px w-full"
           style={{
-            background: 'linear-gradient(to right, rgba(79,70,229,0.12), rgba(79,70,229,0.04), rgba(79,70,229,0.12))',
+            background: 'linear-gradient(to right, rgba(20,184,166,0.12), rgba(20,184,166,0.04), rgba(20,184,166,0.12))',
           }}
         />
       </div>

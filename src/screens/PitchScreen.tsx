@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { HeroSection } from './pitch/HeroSection'
-import { WhoItsForSection } from './pitch/WhoItsForSection'
+import { ScrollStorySection } from './pitch/ScrollStorySection'
 import { ProblemSection } from './pitch/ProblemSection'
-import { QueryShowcaseSection } from './pitch/QueryShowcaseSection'
+import { UseCaseSection } from './pitch/UseCaseSection'
 import { DemoSection } from './pitch/DemoSection'
 import { ProductSection } from './pitch/ProductSection'
 import { FlywheelSection } from './pitch/FlywheelSection'
 import { MoatSection } from './pitch/MoatSection'
 import { HowIBuildSection } from './pitch/HowIBuildSection'
+import { ProofBandSection } from './pitch/ProofBandSection'
 import { CTASection } from './pitch/CTASection'
 import { ContactModal } from '../components/ContactModal'
 import { PITCH } from '../data/pitch'
@@ -42,7 +43,10 @@ export function PitchScreen() {
         }}
       >
         <div className="max-w-[1200px] mx-auto w-full px-6 lg:px-10 flex items-center justify-between">
-          <span className="text-[var(--color-ink)] text-lg italic" style={{ fontFamily: 'var(--font-wordmark)' }}>
+          <span
+            className="text-[var(--color-ink)] text-[17px] font-medium tracking-[-0.02em]"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
             Praxis
           </span>
 
@@ -66,15 +70,18 @@ export function PitchScreen() {
         </div>
       </nav>
 
-      {/* Sections */}
+      {/* Sections — Clearstreet narrative arc:
+          hero → industry context (scroll story) → problem → product →
+          why durable (flywheel + moat) → use cases → proof → close. */}
       <HeroSection onContact={openContact} />
+      <ScrollStorySection />
       <ProblemSection />
-      <WhoItsForSection onContact={openContact} />
-      <DemoSection />
-      <QueryShowcaseSection />
       <ProductSection />
+      <DemoSection />
       <FlywheelSection />
       <MoatSection />
+      <UseCaseSection />
+      <ProofBandSection />
       <HowIBuildSection />
       <CTASection onContact={openContact} />
 
@@ -84,7 +91,10 @@ export function PitchScreen() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
             {/* Brand */}
             <div className="col-span-2 md:col-span-1">
-              <span className="text-lg italic text-[var(--color-ink)]" style={{ fontFamily: 'var(--font-wordmark)' }}>
+              <span
+                className="text-[17px] font-medium tracking-[-0.02em] text-[var(--color-ink)]"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
                 Praxis
               </span>
               <p className="text-xs text-[var(--color-ink-tertiary)] leading-relaxed mt-3 max-w-[200px]">

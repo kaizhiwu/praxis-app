@@ -103,8 +103,8 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
         className="absolute -inset-[1px] rounded-2xl pointer-events-none"
         animate={{
           boxShadow: isFocused
-            ? '0 0 0 2px rgba(79,70,229,0.2), 0 0 20px rgba(79,70,229,0.08)'
-            : '0 0 0 0px rgba(79,70,229,0), 0 0 0px rgba(79,70,229,0)',
+            ? '0 0 0 2px rgba(20,184,166,0.2), 0 0 20px rgba(20,184,166,0.08)'
+            : '0 0 0 0px rgba(20,184,166,0), 0 0 0px rgba(20,184,166,0)',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       />
@@ -127,7 +127,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
             strokeLinejoin="round"
             className="shrink-0"
             animate={{
-              color: isFocused ? '#4F46E5' : '#AEAEB2',
+              color: isFocused ? '#14B8A6' : '#AEAEB2',
               y: isFocused ? [0, -2, 0] : 0,
             }}
             transition={{
@@ -156,7 +156,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                   {displayedPlaceholder}
                   <motion.span
                     className="inline-block w-[1px] h-[18px] align-middle ml-[1px]"
-                    style={{ backgroundColor: '#4F46E5' }}
+                    style={{ backgroundColor: '#14B8A6' }}
                     animate={{ opacity: [1, 0] }}
                     transition={{
                       duration: 0.55,
@@ -181,8 +181,8 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                 transition={{ type: 'spring', stiffness: 500, damping: 25 }}
                 className="shrink-0 h-8 px-3 rounded-full glass flex items-center justify-center cursor-pointer relative overflow-hidden"
                 style={{
-                  border: '1px solid rgba(79,70,229,0.25)',
-                  boxShadow: '0 0 8px rgba(79,70,229,0.1)',
+                  border: '1px solid rgba(20,184,166,0.25)',
+                  boxShadow: '0 0 8px rgba(20,184,166,0.1)',
                 }}
                 aria-label="Search"
               >
@@ -191,7 +191,7 @@ export function QueryBar({ onSearch, autoFocus }: QueryBarProps) {
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#4F46E5"
+                  stroke="#14B8A6"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"

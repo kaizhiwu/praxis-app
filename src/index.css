@@ -1,30 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warm monochromatic palette */
-  --color-bone:          #F7F6F3;
-  --color-bone-warm:     #EFEDE8;
-  --color-taupe:         #E8E4DD;
-  --color-taupe-cool:    #DAD6CE;
-  --color-ink:           #141516;
-  --color-ink-secondary: #4A4845;
-  --color-ink-tertiary:  #7C7974;
-  --color-ink-faint:     #B0ACA6;
-  --color-border:        #DDD8CF;
-  --color-border-subtle: #EDEBE6;
-  --color-dark-surface:  #141516;
-  --color-dark-text:     #F0EDE8;
-  --color-dark-muted:    #9B9790;
+  /* Cool neutral palette — Clearstreet-aligned.
+     Variable names retain "bone/taupe/indigo" shape for backwards-compat
+     but the actual values are now cool grays + teal accent. */
+  --color-bone:          #FAFAFA;  /* near-white, cool */
+  --color-bone-warm:     #F1F3F4;  /* light cool surface */
+  --color-taupe:         #E5E7EB;  /* divider gray */
+  --color-taupe-cool:    #D1D5DB;
+  --color-ink:           #0A0A0F;  /* near black w/ cool tint */
+  --color-ink-secondary: #4B5563;
+  --color-ink-tertiary:  #6B7280;
+  --color-ink-faint:     #9CA3AF;
+  --color-border:        #E5E7EB;
+  --color-border-subtle: #F1F3F4;
+  --color-dark-surface:  #0A0A0F;
+  --color-dark-text:     #F1F3F4;
+  --color-dark-muted:    #9CA3AF;
 
-  /* Accent palette */
-  --color-accent-indigo: #4F46E5;
-  --color-accent-coral:  #E2614B;
-  --color-accent-amber:  #D97706;
+  /* Accent: single teal, Clearstreet-style. Coral/amber retained
+     only as functional confidence indicators inside data viz. */
+  --color-accent-indigo: #14B8A6;  /* teal — name kept for back-compat */
+  --color-accent-coral:  #DC2626;  /* low-confidence / risk */
+  --color-accent-amber:  #D97706;  /* medium-confidence / warning */
 
-  --font-display: 'General Sans', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-wordmark: 'Instrument Serif', Georgia, serif;
-  --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  /* Single sans-serif family throughout. Mono only for code/labels. */
+  --font-display: 'General Sans', 'Inter', system-ui, sans-serif;
+  --font-body:    'General Sans', 'Inter', system-ui, sans-serif;
+  --font-wordmark:'General Sans', 'Inter', system-ui, sans-serif;
+  --font-mono:    'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+
+  /* Fluid type scale — clamp(min, fluid, max).
+     Hebbia-style viewport-responsive without breakpoints. */
+  --size-display-xl: clamp(2.5rem, 1.7rem + 4vw, 5rem);     /* hero h1 */
+  --size-display-lg: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);   /* section h2 */
+  --size-display-md: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);/* tab/card h3 */
+  --size-text-lg:    clamp(1rem, 0.96rem + 0.2vw, 1.125rem);/* body lead */
+  --size-text-md:    1rem;                                   /* body */
+  --size-text-sm:    0.875rem;                               /* small */
 }
 
 html, body, #root {
@@ -44,6 +57,15 @@ html, body, #root {
   text-transform: uppercase;
   color: var(--color-ink-tertiary);
 }
+
+/* Display headlines — medium weight, fluid scale, tight leading.
+   Hebbia rule: scale does the work, not weight. */
+.display-xl { font-family: var(--font-display); font-size: var(--size-display-xl); font-weight: 500; line-height: 1.05; letter-spacing: -0.025em; }
+.display-lg { font-family: var(--font-display); font-size: var(--size-display-lg); font-weight: 500; line-height: 1.08; letter-spacing: -0.02em; }
+.display-md { font-family: var(--font-display); font-size: var(--size-display-md); font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; }
+
+/* Tabular numerics — for stat bands and data tables */
+.tabular-nums { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 
 /* Section divider */
 .section-rule {

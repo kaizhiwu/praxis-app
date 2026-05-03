@@ -18,6 +18,10 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       touchMultiplier: 1.5,
     })
 
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __lenis?: Lenis }).__lenis = lenis
+    }
+
     let rafId = 0
     const raf = (time: number) => {
       lenis.raf(time)
