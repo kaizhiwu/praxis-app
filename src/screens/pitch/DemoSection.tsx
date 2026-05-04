@@ -37,19 +37,25 @@ export function DemoSection() {
         {/* Phone frame — simple, static */}
         <motion.div {...fade} transition={{ ...fade.transition, delay: 0.1 }} className="flex justify-center">
           <div
-            className="w-[300px] md:w-[340px] h-[600px] md:h-[680px] rounded-[2rem] border border-[var(--color-border)] bg-[var(--color-ink)] overflow-hidden"
-            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+            className="w-[320px] md:w-[360px] h-[680px] md:h-[760px] rounded-[2.25rem] border border-[var(--color-border)] bg-[var(--color-ink)] overflow-hidden p-2"
+            style={{ boxShadow: '0 16px 48px rgba(0,0,0,0.14)' }}
           >
-            {/* Minimal status bar */}
-            <div className="h-10 bg-[var(--color-bone)] flex items-center justify-center">
-              <span className="text-[10px] text-[var(--color-ink-tertiary)] font-medium">9:41</span>
+            <div className="w-full h-full rounded-[1.65rem] bg-[var(--color-bone)] overflow-hidden flex flex-col">
+              {/* Minimal status bar */}
+              <div className="h-9 shrink-0 flex items-center justify-center">
+                <span
+                  className="text-[10px] text-[var(--color-ink-tertiary)] tabular-nums"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  9:41
+                </span>
+              </div>
+              <iframe
+                src="/app"
+                className="w-full flex-1 border-0"
+                title="Praxis App Demo"
+              />
             </div>
-            <iframe
-              src="/app"
-              className="w-full border-0"
-              style={{ height: 'calc(100% - 40px)' }}
-              title="Praxis App Demo"
-            />
           </div>
         </motion.div>
 

@@ -259,7 +259,7 @@ export function HomeScreen() {
   }
 
   return (
-    <div className="relative min-h-dvh bg-[var(--color-bone)] flex flex-col items-center px-6 pb-32 pt-[18vh]">
+    <div className="relative min-h-dvh bg-[var(--color-bone)] flex flex-col items-center px-6 pb-16 pt-10">
       {/* Subtle warm radial wash behind brand area — replaces aurora */}
       <div
         className="absolute top-0 inset-x-0 h-[55vh] pointer-events-none"
@@ -271,7 +271,7 @@ export function HomeScreen() {
         }}
       />
 
-      <div className="relative w-full max-w-md flex flex-col gap-9">
+      <div className="relative w-full max-w-md flex flex-col gap-6">
         {/* Brand + greeting */}
         <div className="flex flex-col items-center gap-4">
           <motion.div

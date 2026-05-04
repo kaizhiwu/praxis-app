@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 
-const VBW = 600
-const VBH = 360
+const VBW = 640
+const VBH = 380
 
 const STREAM_COLORS = [
   'var(--color-accent-cobalt)',
@@ -12,20 +12,18 @@ const STREAM_COLORS = [
   'var(--color-accent-coral)',
 ]
 
-// Six contribution streams curving up from base into central trunk.
-// Each stream: starts at evenly-spaced x along bottom, curves into trunk top.
+// Layout — top to bottom: result-cards, branches, trunk, streams, base.
 const TRUNK_X = VBW / 2
-const TRUNK_TOP_Y = 130
-const TRUNK_BASE_Y = 230
-const STREAM_BASE_Y = 320
+const CARD_Y_CENTER = 70   // result-card row top center
+const TRUNK_TOP_Y = 160    // where branches converge into trunk
+const TRUNK_BASE_Y = 250   // where streams converge into trunk base
+const STREAM_BASE_Y = 340  // contribution dots
 
 const STREAMS = STREAM_COLORS.map((color, i) => {
   const total = STREAM_COLORS.length
-  // Evenly distribute base x positions across the bottom
-  const baseX = 60 + (i / (total - 1)) * (VBW - 120)
-  // Bezier control point — pulls curve toward center
+  const baseX = 70 + (i / (total - 1)) * (VBW - 140)
   const ctrlX = baseX + (TRUNK_X - baseX) * 0.7
-  const ctrlY = TRUNK_BASE_Y + 10
+  const ctrlY = TRUNK_BASE_Y + 12
   return {
     color,
     path: `M ${baseX} ${STREAM_BASE_Y} Q ${ctrlX} ${ctrlY} ${TRUNK_X} ${TRUNK_BASE_Y}`,
@@ -33,11 +31,12 @@ const STREAMS = STREAM_COLORS.map((color, i) => {
   }
 })
 
-// Three result-card branches off the top of the trunk.
+// 3 result cards — wider spacing, all at same y for clean alignment.
+const CARD_W = 156
 const BRANCHES = [
-  { x: 130, y: 60, label: 'Cafe Luna', meta: '92% · outlets · noise', color: 'var(--color-accent-cobalt)' },
-  { x: 300, y: 40, label: 'Sunken Diner', meta: '89% · restroom · open', color: 'var(--color-accent-magenta)' },
-  { x: 470, y: 60, label: 'Bar Bella', meta: '94% · dim light', color: 'var(--color-accent-emerald)' },
+  { x: 130, y: CARD_Y_CENTER, label: 'Cafe Luna',     meta: '92% · outlets · noise',  color: 'var(--color-accent-cobalt)' },
+  { x: 320, y: CARD_Y_CENTER, label: 'Sunken Diner',  meta: '89% · restroom · open',  color: 'var(--color-accent-magenta)' },
+  { x: 510, y: CARD_Y_CENTER, label: 'Bar Bella',     meta: '94% · dim light',        color: 'var(--color-accent-emerald)' },
 ]
 
 /**
@@ -85,7 +84,7 @@ export function MoatDiagram() {
 
         {/* Stream endpoints at base — colored dots */}
         {STREAMS.map((s, i) => {
-          const baseX = 60 + (i / (STREAMS.length - 1)) * (VBW - 120)
+          const baseX = 70 + (i / (STREAMS.length - 1)) * (VBW - 140)
           return (
             <motion.circle
               key={`base-${i}`}
@@ -117,7 +116,7 @@ export function MoatDiagram() {
           style={{ transformOrigin: `${TRUNK_X}px ${TRUNK_BASE_Y}px` }}
         />
 
-        {/* Trunk label */}
+        {/* Trunk label — sits ON the trunk column, vertically centered */}
         <motion.g
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -125,13 +124,14 @@ export function MoatDiagram() {
           transition={{ duration: 0.4, delay: 0.9 }}
         >
           <rect
-            x={TRUNK_X - 80}
-            y={(TRUNK_TOP_Y + TRUNK_BASE_Y) / 2 - 10}
-            width={160}
-            height={20}
-            rx={4}
+            x={TRUNK_X - 90}
+            y={(TRUNK_TOP_Y + TRUNK_BASE_Y) / 2 - 11}
+            width={180}
+            height={22}
+            rx={11}
             fill="var(--color-bone)"
-            stroke="var(--color-border)"
+            stroke="var(--color-accent-cobalt)"
+            strokeWidth="1"
           />
           <text
             x={TRUNK_X}
@@ -139,36 +139,37 @@ export function MoatDiagram() {
             textAnchor="middle"
             fontSize="10"
             fontFamily="var(--font-mono)"
-            fill="var(--color-ink)"
-            letterSpacing="1.5"
-            fontWeight="500"
+            fill="var(--color-accent-cobalt)"
+            letterSpacing="1.6"
+            fontWeight="600"
           >
             BEHAVIORAL GRAPH
           </text>
         </motion.g>
 
-        {/* Branches connecting trunk top to result cards */}
+        {/* Branches connecting trunk top to bottom of each card */}
         {BRANCHES.map((b, i) => {
           const ctrlX = TRUNK_X + (b.x - TRUNK_X) * 0.5
           const ctrlY = TRUNK_TOP_Y - 30
+          const cardBottomY = b.y + 48 // card height = 48
           return (
             <motion.path
               key={`branch-${i}`}
-              d={`M ${TRUNK_X} ${TRUNK_TOP_Y} Q ${ctrlX} ${ctrlY} ${b.x} ${b.y + 22}`}
+              d={`M ${TRUNK_X} ${TRUNK_TOP_Y} Q ${ctrlX} ${ctrlY} ${b.x} ${cardBottomY}`}
               fill="none"
               stroke={b.color}
-              strokeWidth="1.4"
+              strokeWidth="1.5"
               strokeLinecap="round"
-              opacity="0.7"
+              opacity="0.75"
               initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.7 }}
+              whileInView={{ pathLength: 1, opacity: 0.75 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.1 + i * 0.1, ease: 'easeOut' }}
             />
           )
         })}
 
-        {/* Result-card "leaves" at top */}
+        {/* Result-card "leaves" — wider, properly aligned text */}
         {BRANCHES.map((b, i) => (
           <motion.g
             key={`leaf-${i}`}
@@ -178,19 +179,20 @@ export function MoatDiagram() {
             transition={{ duration: 0.4, delay: 1.2 + i * 0.1 }}
           >
             <rect
-              x={b.x - 75}
+              x={b.x - CARD_W / 2}
               y={b.y}
-              width={150}
-              height={44}
-              rx={8}
+              width={CARD_W}
+              height={48}
+              rx={10}
               fill="var(--color-bone)"
               stroke={b.color}
-              strokeWidth="1.2"
+              strokeWidth="1.4"
             />
             <text
-              x={b.x - 64}
-              y={b.y + 18}
-              fontSize="11"
+              x={b.x}
+              y={b.y + 19}
+              textAnchor="middle"
+              fontSize="11.5"
               fontFamily="var(--font-display)"
               fontWeight="500"
               fill="var(--color-ink)"
@@ -198,8 +200,9 @@ export function MoatDiagram() {
               {b.label}
             </text>
             <text
-              x={b.x - 64}
-              y={b.y + 32}
+              x={b.x}
+              y={b.y + 35}
+              textAnchor="middle"
               fontSize="9"
               fontFamily="var(--font-mono)"
               fill="var(--color-ink-tertiary)"
@@ -212,13 +215,13 @@ export function MoatDiagram() {
 
         {/* Bottom layer label */}
         <text
-          x={20}
-          y={345}
+          x={24}
+          y={365}
           fontSize="9"
           fontFamily="var(--font-mono)"
           fill="var(--color-ink-tertiary)"
           letterSpacing="2"
-          fontWeight="500"
+          fontWeight="600"
         >
           CONTRIBUTIONS · POINT-OF-VISIT
         </text>
