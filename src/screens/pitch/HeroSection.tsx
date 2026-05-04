@@ -85,7 +85,9 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
   // Text fades as you scroll into the video reveal.
   const textOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0])
   const textY = useTransform(scrollYProgress, [0, 0.18], [0, -24])
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.35], [0.85, 0.25])
+  // Lighter overlay so the city's actual colors come through.
+  // Initial state still soft (0.55), scrolled-in is nearly clear (0.12).
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.35], [0.55, 0.12])
 
   return (
     <section
@@ -103,7 +105,9 @@ export function HeroSection({ onContact }: { onContact: () => void }) {
             playsInline
             preload="auto"
             className="w-full h-full object-cover"
-            style={{ filter: 'brightness(1.1) saturate(0.12) contrast(0.9) sepia(0.08)' }}
+            // Light desaturation only — keeps city color present, ties to
+            // the warm-cream canvas via gentle warmth bias.
+            style={{ filter: 'brightness(1.04) saturate(0.6) contrast(0.95) sepia(0.04)' }}
           />
           <motion.div
             className="absolute inset-0"
