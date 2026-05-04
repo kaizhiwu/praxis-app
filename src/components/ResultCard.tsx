@@ -222,84 +222,94 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
   return (
     <motion.button
       onClick={onClick}
-      className="group relative w-full text-left glass rounded-2xl border border-white/20 p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden transition-all duration-300 ease-out hover:bg-white/35 hover:backdrop-blur-[24px] hover:shadow-[inset_2px_2px_1px_0_rgba(255,255,255,0.55),inset_-1px_-1px_1px_1px_rgba(255,255,255,0.45),0_8px_32px_rgba(0,0,0,0.06)]"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.995 }}
-      transition={{
-        duration: 0.3,
-        delay: index * 0.08,
-        ease: 'easeOut',
-        scale: { type: 'spring', stiffness: 300, damping: 20 },
+      className="group relative w-full text-left rounded-2xl p-5 sm:p-6 space-y-4 cursor-pointer overflow-hidden transition-colors duration-200"
+      style={{
+        background: 'var(--color-bone)',
+        border: '1px solid var(--color-border)',
+        // Left accent stripe in the primary cluster's color
+        boxShadow: `inset 4px 0 0 0 ${clusterColor.hex}`,
       }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ duration: 0.3, delay: index * 0.06, ease: 'easeOut' }}
     >
-      {/* Rank watermark */}
-      <span className="absolute top-2 left-4 text-[48px] font-bold leading-none text-black/[0.04] select-none pointer-events-none">
-        {index + 1}
-      </span>
-
       {/* Match score ring */}
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-5 right-5 z-10">
         <MatchScoreRing score={result.matchScore} />
       </div>
 
       {/* Category pill */}
-      <div className="relative z-10 flex items-center gap-2">
-        <span className="inline-flex items-center glass-subtle rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-wide border border-white/20">
+      <div className="relative flex items-center gap-2">
+        <span
+          className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-wide"
+          style={{
+            background: `${clusterColor.hex}14`,
+            color: clusterColor.hex,
+          }}
+        >
           <span
             className="mr-1.5 inline-block w-1 h-1 rounded-full shrink-0"
             style={{ backgroundColor: clusterColor.hex }}
           />
-          <span style={{ color: clusterColor.hex }}>{clusterColor.label}</span>
+          {clusterColor.label}
         </span>
       </div>
 
       {/* Header */}
-      <div className="relative z-10">
+      <div className="relative">
         <div className="flex items-baseline justify-between gap-3 pr-12">
-          <h3 className="text-[#1D1D1F] font-semibold text-lg tracking-tight">
+          <h3
+            className="text-[var(--color-ink)] text-lg tracking-tight"
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 500 }}
+          >
             {result.place.name}
           </h3>
-          <span className="glass-subtle rounded-full px-2 py-0.5 text-[#86868B] text-[11px] shrink-0 border border-white/15">
+          <span
+            className="rounded-full px-2 py-0.5 text-[var(--color-ink-tertiary)] text-[11px] shrink-0 tabular-nums border border-[var(--color-border)]"
+            style={{ fontFamily: 'var(--font-mono)' }}
+          >
             {result.place.distance}
           </span>
         </div>
-        <p className="text-[#86868B] text-[11px] tracking-wide mt-0.5">
+        <p
+          className="text-[var(--color-ink-tertiary)] text-[11px] tracking-[0.04em] mt-0.5"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
           {result.place.neighborhood}
         </p>
       </div>
 
       {/* Summary */}
-      <div className="relative z-10">
-        <p className="text-[#86868B] text-[13px] leading-relaxed">
-          {result.summary}
-        </p>
-      </div>
+      <p className="relative text-[var(--color-ink-secondary)] text-[13px] leading-relaxed">
+        {result.summary}
+      </p>
 
-      {/* Attribute bars with glass pill treatment */}
-      <div className="relative z-10 space-y-3">
-        {result.topAttributes.slice(0, 3).map(attr => {
-          return (
-            <div key={attr.type} className="flex items-start gap-2">
-              <div className="mt-[3px] flex items-center gap-1.5">
-                <span
-                  className="inline-block w-1 h-1 rounded-full shrink-0"
-                  style={{ backgroundColor: CLUSTER_COLORS[attr.cluster].hex }}
-                />
-                {getAttributeIcon(attr.type)}
-              </div>
-              <div className="flex-1 min-w-0 glass-subtle rounded-lg px-2 py-1 -mx-1 -my-0.5 border border-white/10">
-                <AttributeBar attribute={attr} compact />
-              </div>
+      {/* Attribute bars */}
+      <div className="relative space-y-3">
+        {result.topAttributes.slice(0, 3).map((attr) => (
+          <div key={attr.type} className="flex items-start gap-2">
+            <div className="mt-[3px] flex items-center gap-1.5">
+              <span
+                className="inline-block w-1 h-1 rounded-full shrink-0"
+                style={{ backgroundColor: CLUSTER_COLORS[attr.cluster].hex }}
+              />
+              <span className="text-[var(--color-ink-tertiary)]">{getAttributeIcon(attr.type)}</span>
             </div>
-          )
-        })}
+            <div className="flex-1 min-w-0">
+              <AttributeBar attribute={attr} compact />
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Hover arrow */}
-      <span className="absolute bottom-4 right-4 text-[#86868B] text-sm pointer-events-none opacity-0 translate-x-[-6px] transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0">
-        &rarr;
+      <span
+        className="absolute bottom-4 right-5 text-sm pointer-events-none opacity-0 translate-x-[-6px] transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0"
+        style={{ color: clusterColor.hex }}
+      >
+        →
       </span>
     </motion.button>
   )

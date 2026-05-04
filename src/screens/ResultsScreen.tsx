@@ -37,34 +37,35 @@ export function ResultsScreen() {
   }
 
   return (
-    <div className="min-h-dvh pb-8">
-      {/* Sticky header — glass elevated */}
-      <div className="sticky top-0 z-30 glass-elevated rounded-none">
+    <div className="min-h-dvh pb-8 bg-[var(--color-bone)]">
+      {/* Sticky header — flat warm cream with hairline border */}
+      <div
+        className="sticky top-0 z-30"
+        style={{
+          background: 'rgba(248, 247, 244, 0.92)',
+          borderBottom: '1px solid var(--color-border)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
+      >
         <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <button
             onClick={() => navigate('/')}
-            className="cursor-pointer relative p-1.5 rounded-full text-text-secondary hover:text-text-primary transition-all"
+            className="cursor-pointer p-1.5 rounded-full text-[var(--color-ink-tertiary)] hover:text-[var(--color-ink)] hover:bg-[var(--color-bone-warm)] transition-all"
             aria-label="Back to home"
           >
-            <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <div className="flex-1 [&_.glass]:py-3 [&_.glass]:px-4 [&_input]:text-[15px] [&_.text-\[17px\]]:text-[15px]">
+          <div className="flex-1">
             <QueryBar onSearch={handleSearch} />
           </div>
         </div>
-        {/* Subtle gradient line */}
-        <div
-          className="h-px w-full"
-          style={{
-            background: 'linear-gradient(to right, rgba(37,99,235,0.12), rgba(37,99,235,0.04), rgba(37,99,235,0.12))',
-          }}
-        />
       </div>
 
       {/* Results */}
-      <div className="max-w-lg mx-auto px-4 sm:px-6 pt-4">
+      <div className="max-w-lg mx-auto px-4 sm:px-6 pt-5">
         {/* Result count badge */}
         {results.length > 0 && (
           <motion.div
@@ -73,57 +74,63 @@ export function ResultsScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-accent/[0.08] text-accent">
+            <span
+              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium tabular-nums"
+              style={{
+                background: 'var(--tint-cobalt)',
+                color: 'var(--deep-cobalt)',
+              }}
+            >
               {results.length} {results.length === 1 ? 'place' : 'places'} found
             </span>
           </motion.div>
         )}
 
         <div className="flex items-center justify-between mb-4">
-          <p className="text-text-tertiary text-xs">
+          <p className="text-[var(--color-ink-tertiary)] text-xs">
             {results.length} {results.length === 1 ? 'answer' : 'answers'} for &ldquo;{query}&rdquo;
           </p>
 
-          {/* Segmented control */}
-          <div className="relative flex glass-subtle rounded-lg p-0.5">
-            {/* Sliding indicator */}
+          {/* Segmented control — pill style with cobalt indicator */}
+          <div
+            className="relative flex rounded-full p-0.5"
+            style={{
+              background: 'var(--color-bone-warm)',
+              border: '1px solid var(--color-border)',
+            }}
+          >
             <motion.div
-              className="absolute top-0.5 bottom-0.5 rounded-md bg-accent shadow-sm"
+              className="absolute top-0.5 bottom-0.5 rounded-full"
               initial={false}
               animate={{
                 left: view === 'list' ? '2px' : '50%',
                 right: view === 'map' ? '2px' : '50%',
               }}
               transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 30 }}
+              style={{ background: 'var(--color-accent-cobalt)' }}
             />
             <button
               onClick={() => setView('list')}
               className={[
-                'cursor-pointer relative z-10 flex items-center gap-1 px-3 py-1 rounded-md text-xs font-medium transition-colors',
-                view === 'list'
-                  ? 'text-white'
-                  : 'text-text-tertiary hover:text-text-secondary',
+                'cursor-pointer relative z-10 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-colors',
+                view === 'list' ? 'text-white' : 'text-[var(--color-ink-tertiary)] hover:text-[var(--color-ink-secondary)]',
               ].join(' ')}
             >
-              {/* List icon */}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1.5 3h9M1.5 6h9M1.5 9h9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M1.5 3h9M1.5 6h9M1.5 9h9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
               List
             </button>
             <button
               onClick={() => setView('map')}
               className={[
-                'cursor-pointer relative z-10 flex items-center gap-1 px-3 py-1 rounded-md text-xs font-medium transition-colors',
-                view === 'map'
-                  ? 'text-white'
-                  : 'text-text-tertiary hover:text-text-secondary',
+                'cursor-pointer relative z-10 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-colors',
+                view === 'map' ? 'text-white' : 'text-[var(--color-ink-tertiary)] hover:text-[var(--color-ink-secondary)]',
               ].join(' ')}
             >
-              {/* Map icon */}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 2.5l3.5-1 3 1L11 1.5v8l-3.5 1-3-1L1 10.5z" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M4.5 1.5v8M7.5 3.5v8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+                <path d="M1 2.5l3.5-1 3 1L11 1.5v8l-3.5 1-3-1L1 10.5z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4.5 1.5v8M7.5 3.5v8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
               Map
             </button>

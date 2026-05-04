@@ -75,7 +75,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
     const base = 'min-h-[40px] px-4 rounded-full text-xs font-medium transition-colors cursor-pointer'
 
     if (!isSelected) {
-      return `${base} glass-subtle border border-surface-border text-text-secondary hover:text-text-primary hover:border-surface-border-hover`
+      return `${base} bg-[var(--color-bone-warm)] border border-[var(--color-border)] text-[var(--color-ink-secondary)] hover:text-[var(--color-ink)] hover:border-[var(--color-ink-faint)]`
     }
 
     switch (opt) {
@@ -84,7 +84,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
       case 'no':
         return `${base} bg-red-500/15 text-red-600 border border-red-400/30 backdrop-blur-sm`
       case 'unsure':
-        return `${base} bg-[rgba(0,0,0,0.06)] text-text-secondary border border-surface-border backdrop-blur-sm`
+        return `${base} bg-[rgba(0,0,0,0.06)] text-[var(--color-ink-secondary)] border border-[var(--color-border)] backdrop-blur-sm`
     }
   }
 
@@ -100,7 +100,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
             onClick={onClose}
           />
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-50 glass-elevated border-t border-surface-border rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom overflow-hidden"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bone)]/95 border-t border-[var(--color-border)] backdrop-blur-md rounded-t-[28px] p-6 max-w-lg mx-auto safe-bottom overflow-hidden"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
@@ -130,7 +130,7 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                       transition={{ duration: 0.5, ease: 'easeOut' }}
                     />
                     <motion.div
-                      className="glass w-16 h-16 rounded-full flex items-center justify-center relative border border-surface-border"
+                      className="glass w-16 h-16 rounded-full flex items-center justify-center relative border border-[var(--color-border)]"
                       initial={{ scale: 0.4 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', damping: 10, stiffness: 300 }}
@@ -151,22 +151,22 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                       <ConfettiDot delay={0.02} angle={345} colorIndex={7} />
                     </div>
                   </div>
-                  <p className="text-text-primary font-medium">Thanks for contributing</p>
-                  <p className="text-text-secondary text-sm">Your data makes Praxis better</p>
+                  <p className="text-[var(--color-ink)] font-medium">Thanks for contributing</p>
+                  <p className="text-[var(--color-ink-secondary)] text-sm">Your data makes Praxis better</p>
                 </motion.div>
               ) : (
                 <motion.div key="form" className="space-y-5 mt-2">
                   <div>
-                    <h3 className="text-text-primary font-semibold text-xl">
+                    <h3 className="text-[var(--color-ink)] font-semibold text-xl">
                       Been to {place.name}?
                     </h3>
-                    <p className="text-text-tertiary text-sm mt-1">Quick confirmations help everyone</p>
+                    <p className="text-[var(--color-ink-tertiary)] text-sm mt-1">Quick confirmations help everyone</p>
                   </div>
 
                   <div className="space-y-2.5">
                     {relevantQuestions.map(q => (
-                      <div key={q.type} className="flex items-center justify-between glass-subtle rounded-xl px-4 py-3 border border-surface-border">
-                        <span className="text-text-primary text-sm">{q.question}</span>
+                      <div key={q.type} className="flex items-center justify-between bg-[var(--color-bone-warm)] border border-[var(--color-border)] rounded-xl px-4 py-3">
+                        <span className="text-[var(--color-ink)] text-sm">{q.question}</span>
                         <div className="flex gap-1.5">
                           {(['yes', 'no', 'unsure'] as const).map(opt => (
                             <button

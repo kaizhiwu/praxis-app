@@ -90,7 +90,7 @@ function AttributeIcon({ type }: { type: AttributeType }) {
     strokeWidth: 1.5,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
-    className: 'shrink-0 text-text-secondary',
+    className: 'shrink-0 text-[var(--color-ink-secondary)]',
   }
 
   switch (type) {
@@ -321,7 +321,7 @@ export function PlaceDetailScreen() {
   if (!place) {
     return (
       <div className="min-h-dvh flex items-center justify-center">
-        <p className="text-text-secondary">Place not found</p>
+        <p className="text-[var(--color-ink-secondary)]">Place not found</p>
       </div>
     )
   }
@@ -338,17 +338,17 @@ export function PlaceDetailScreen() {
     <>
       <div className="min-h-dvh pb-28">
         {/* Sticky header */}
-        <div className="sticky top-0 z-30 glass-elevated border-b border-white/20">
+        <div className="sticky top-0 z-30 bg-[var(--color-bone)]/92 border-b border-[var(--color-border)] backdrop-blur-md">
           <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center -ml-2 text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center -ml-2 text-[var(--color-ink-secondary)] hover:text-[var(--color-ink)] transition-colors cursor-pointer"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h2 className="text-text-primary font-medium text-sm truncate">{place.name}</h2>
+            <h2 className="text-[var(--color-ink)] font-medium text-sm truncate">{place.name}</h2>
           </div>
         </div>
 
@@ -367,19 +367,19 @@ export function PlaceDetailScreen() {
               {/* Topographic decorative lines */}
               <div className="absolute -top-4 -left-6 w-[calc(100%+3rem)] h-[calc(100%+2rem)] pointer-events-none overflow-hidden">
                 <svg className="w-full h-full" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="10" width="360" height="100" rx="40" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
-                  <rect x="40" y="20" width="320" height="80" rx="32" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
-                  <rect x="60" y="30" width="280" height="60" rx="24" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.04]" />
-                  <rect x="80" y="40" width="240" height="40" rx="16" stroke="currentColor" strokeWidth="0.5" className="text-text-primary/[0.03]" />
+                  <rect x="20" y="10" width="360" height="100" rx="40" stroke="currentColor" strokeWidth="0.5" className="text-[var(--color-ink)]/[0.04]" />
+                  <rect x="40" y="20" width="320" height="80" rx="32" stroke="currentColor" strokeWidth="0.5" className="text-[var(--color-ink)]/[0.04]" />
+                  <rect x="60" y="30" width="280" height="60" rx="24" stroke="currentColor" strokeWidth="0.5" className="text-[var(--color-ink)]/[0.04]" />
+                  <rect x="80" y="40" width="240" height="40" rx="16" stroke="currentColor" strokeWidth="0.5" className="text-[var(--color-ink)]/[0.03]" />
                 </svg>
               </div>
 
-              <h1 className="text-3xl font-bold tracking-tight text-text-primary relative">
+              <h1 className="text-3xl font-bold tracking-tight text-[var(--color-ink)] relative">
                 {place.name}
               </h1>
-              <p className="text-text-secondary text-sm relative">{place.address}</p>
+              <p className="text-[var(--color-ink-secondary)] text-sm relative">{place.address}</p>
               <div className="flex items-center gap-3 relative">
-                <p className="text-text-tertiary text-xs tracking-wide">
+                <p className="text-[var(--color-ink-tertiary)] text-xs tracking-wide">
                   {place.neighborhood} &middot; {place.distance}
                 </p>
               </div>
@@ -417,13 +417,13 @@ export function PlaceDetailScreen() {
 
                   {/* Google rating */}
                   {place.google.rating && (
-                    <span className="inline-flex items-center gap-1 text-[11px] text-text-secondary">
+                    <span className="inline-flex items-center gap-1 text-[11px] text-[var(--color-ink-secondary)]">
                       <svg width={12} height={12} viewBox="0 0 24 24" fill="#FBBF24" stroke="none">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
                       {place.google.rating}
                       {place.google.userRatingCount && (
-                        <span className="text-text-tertiary">({place.google.userRatingCount})</span>
+                        <span className="text-[var(--color-ink-tertiary)]">({place.google.userRatingCount})</span>
                       )}
                     </span>
                   )}
@@ -448,7 +448,7 @@ export function PlaceDetailScreen() {
                   {/* Share button */}
                   <button
                     onClick={handleShare}
-                    className="glass-subtle inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer ml-auto rounded-full px-2.5 py-1"
+                    className="bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] inline-flex items-center gap-1 text-[11px] text-[var(--color-ink-tertiary)] hover:text-[var(--color-accent-cobalt)] transition-colors cursor-pointer ml-auto rounded-full px-2.5 py-1"
                   >
                     <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="18" cy="5" r="3" />
@@ -466,7 +466,7 @@ export function PlaceDetailScreen() {
                   <div>
                     <button
                       onClick={() => setShowHours(!showHours)}
-                      className="text-[11px] text-text-tertiary hover:text-text-secondary transition-colors cursor-pointer flex items-center gap-1"
+                      className="text-[11px] text-[var(--color-ink-tertiary)] hover:text-[var(--color-ink-secondary)] transition-colors cursor-pointer flex items-center gap-1"
                     >
                       <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="10" />
@@ -491,7 +491,7 @@ export function PlaceDetailScreen() {
                         >
                           <div className="mt-2 space-y-0.5">
                             {place.google.weekdayHours.map((h, i) => (
-                              <p key={i} className="text-[11px] text-text-tertiary">{h}</p>
+                              <p key={i} className="text-[11px] text-[var(--color-ink-tertiary)]">{h}</p>
                             ))}
                           </div>
                         </motion.div>
@@ -512,7 +512,7 @@ export function PlaceDetailScreen() {
               >
                 <button
                   onClick={handleShare}
-                  className="glass-subtle inline-flex items-center gap-1 text-[11px] text-text-tertiary hover:text-accent transition-colors cursor-pointer rounded-full px-2.5 py-1"
+                  className="bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] inline-flex items-center gap-1 text-[11px] text-[var(--color-ink-tertiary)] hover:text-[var(--color-accent-cobalt)] transition-colors cursor-pointer rounded-full px-2.5 py-1"
                 >
                   <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="18" cy="5" r="3" />
@@ -534,8 +534,8 @@ export function PlaceDetailScreen() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 }}
               >
-                <p className="text-sm text-text-secondary">No one has mapped this place yet.</p>
-                <p className="text-xs text-text-tertiary mt-1">Tap "Been here?" to be the first to contribute.</p>
+                <p className="text-sm text-[var(--color-ink-secondary)]">No one has mapped this place yet.</p>
+                <p className="text-xs text-[var(--color-ink-tertiary)] mt-1">Tap "Been here?" to be the first to contribute.</p>
               </motion.div>
             )}
 
@@ -649,7 +649,7 @@ export function PlaceDetailScreen() {
                                             >
                                               {c.userName.charAt(0).toUpperCase()}
                                             </span>
-                                            <span className="text-text-secondary truncate flex items-center gap-1">
+                                            <span className="text-[var(--color-ink-secondary)] truncate flex items-center gap-1">
                                               {c.userName}
                                               {isRecentContribution(c.timestamp) && <VerifiedBadge />}
                                             </span>
@@ -660,16 +660,16 @@ export function PlaceDetailScreen() {
                                             }`}>
                                               {c.value ? 'Yes' : 'No'}
                                             </span>
-                                            <span className="text-text-tertiary font-mono text-[10px] shrink-0 ml-auto">
+                                            <span className="text-[var(--color-ink-tertiary)] font-mono text-[10px] shrink-0 ml-auto">
                                               {formatTimestamp(c.timestamp)}
                                             </span>
                                           </div>
                                         )
                                       })}
                                       {contributions.length === 0 && (
-                                        <p className="text-xs text-text-tertiary">No recent contributions</p>
+                                        <p className="text-xs text-[var(--color-ink-tertiary)]">No recent contributions</p>
                                       )}
-                                      <p className="text-[10px] text-text-tertiary/60 pt-1">
+                                      <p className="text-[10px] text-[var(--color-ink-tertiary)]/60 pt-1">
                                         {attr.verificationCount} total verifications
                                       </p>
                                     </div>
@@ -695,7 +695,7 @@ export function PlaceDetailScreen() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <h3 className="text-xs uppercase tracking-widest text-text-tertiary font-medium whitespace-nowrap">
+                  <h3 className="text-xs uppercase tracking-widest text-[var(--color-ink-tertiary)] font-medium whitespace-nowrap">
                     What people confirm
                   </h3>
                   <hr className="flex-1 border-white/20" />
@@ -705,7 +705,7 @@ export function PlaceDetailScreen() {
                     return (
                       <div
                         key={c.id}
-                        className="glass-subtle rounded-xl p-3 flex items-center justify-between transition-colors duration-200 hover:ring-1 hover:ring-accent/15"
+                        className="bg-[var(--color-bone-warm)] border border-[var(--color-border-subtle)] rounded-xl p-3 flex items-center justify-between transition-colors duration-200 hover:ring-1 hover:ring-accent/15"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <span
@@ -714,11 +714,11 @@ export function PlaceDetailScreen() {
                           >
                             {c.userName.charAt(0).toUpperCase()}
                           </span>
-                          <span className="text-text-secondary text-xs truncate flex items-center gap-1">
+                          <span className="text-[var(--color-ink-secondary)] text-xs truncate flex items-center gap-1">
                             {c.userName}
                             {isRecentContribution(c.timestamp) && <VerifiedBadge />}
                           </span>
-                          <span className="text-text-tertiary font-mono text-[10px] shrink-0">
+                          <span className="text-[var(--color-ink-tertiary)] font-mono text-[10px] shrink-0">
                             {formatTimestamp(c.timestamp)}
                           </span>
                         </div>
@@ -740,7 +740,7 @@ export function PlaceDetailScreen() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 glass-elevated border-t border-white/20">
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-[var(--color-bone)]/92 border-t border-[var(--color-border)] backdrop-blur-md">
         <div className="max-w-lg mx-auto px-4 sm:px-6 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setShowContribute(true)}
