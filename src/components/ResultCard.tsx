@@ -240,8 +240,8 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
         <MatchScoreRing score={result.matchScore} />
       </div>
 
-      {/* Category pill */}
-      <div className="relative flex items-center gap-2">
+      {/* Category pill + quick-scan icon strip */}
+      <div className="relative flex items-center gap-2 flex-wrap">
         <span
           className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-wide"
           style={{
@@ -255,6 +255,23 @@ export function ResultCard({ result, index, onClick }: ResultCardProps) {
           />
           {clusterColor.label}
         </span>
+        {/* Attribute icon row — fast visual scan, one chip per top attribute */}
+        <div className="flex items-center gap-1">
+          {result.topAttributes.slice(0, 3).map((attr) => {
+            const c = CLUSTER_COLORS[attr.cluster].hex
+            return (
+              <motion.span
+                key={attr.type}
+                className="inline-flex items-center justify-center w-5 h-5 rounded-full"
+                style={{ background: `${c}14`, color: c }}
+                whileHover={{ scale: 1.15 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
+                {getAttributeIcon(attr.type)}
+              </motion.span>
+            )
+          })}
+        </div>
       </div>
 
       {/* Header */}

@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { QueryBar } from '../components/QueryBar'
@@ -58,17 +58,6 @@ const BuildingIcon = (
 )
 const ShieldIcon = (<Icon><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></Icon>)
 const MoonIcon = (<Icon><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></Icon>)
-
-const SearchIcon = (
-  <svg
-    width="14" height="14" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-    className="shrink-0"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="M21 21l-4.35-4.35" />
-  </svg>
-)
 
 const CHIP_ICONS: Record<string, ReactNode> = {
   'Quiet work spot': LaptopIcon,
@@ -142,6 +131,104 @@ const RECENT_SEARCHES = [
   'Quiet lunch spot near Union Square',
   'Late night food in East Village',
 ]
+
+// ---------------------------------------------------------------------------
+// Intent detection — pick a small icon + accent color per recent query
+// ---------------------------------------------------------------------------
+
+type IntentTag = { icon: ReactNode; fg: string; bg: string }
+
+function detectIntent(query: string): IntentTag {
+  const q = query.toLowerCase()
+  if (/(work|wifi|laptop|outlet|focus|call)/.test(q)) {
+    return { icon: LaptopIcon, fg: 'var(--color-accent-cobalt)', bg: 'var(--chip-cobalt)' }
+  }
+  if (/(coffee|cafe)/.test(q)) {
+    return { icon: BoltIcon, fg: 'var(--color-accent-amber)', bg: 'var(--chip-amber)' }
+  }
+  if (/(bathroom|restroom|toilet)/.test(q)) {
+    return { icon: DropletIcon, fg: 'var(--color-accent-emerald)', bg: 'var(--chip-emerald)' }
+  }
+  if (/(late|night|after|midnight)/.test(q)) {
+    return { icon: MoonIcon, fg: 'var(--color-accent-violet)', bg: 'var(--chip-violet)' }
+  }
+  if (/(food|lunch|dinner|eat|meal)/.test(q)) {
+    return { icon: UtensilsIcon, fg: 'var(--color-accent-coral)', bg: 'var(--chip-orange)' }
+  }
+  if (/(quiet|library|study)/.test(q)) {
+    return { icon: BuildingIcon, fg: 'var(--color-accent-cobalt)', bg: 'var(--chip-cobalt)' }
+  }
+  if (/(safe|wait)/.test(q)) {
+    return { icon: ShieldIcon, fg: 'var(--color-accent-emerald)', bg: 'var(--chip-emerald)' }
+  }
+  return { icon: ClockIcon, fg: 'var(--color-ink-tertiary)', bg: 'var(--color-bone-warm)' }
+}
+
+// ---------------------------------------------------------------------------
+// Live status panel — current NYC time + density indicator
+// ---------------------------------------------------------------------------
+
+function useNYCTime() {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 30_000)
+    return () => clearInterval(id)
+  }, [])
+  return now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: 'America/New_York',
+  })
+}
+
+function LiveStatusPanel() {
+  const time = useNYCTime()
+  return (
+    <div
+      className="rounded-2xl px-4 py-3 flex items-center justify-between gap-4"
+      style={{
+        background: 'var(--color-bone-warm)',
+        border: '1px solid var(--color-border-subtle)',
+      }}
+    >
+      {/* Left: NYC + time */}
+      <div className="flex items-center gap-2.5 min-w-0">
+        <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-[var(--color-accent-emerald)]">
+          <span
+            className="absolute inline-flex w-full h-full rounded-full bg-[var(--color-accent-emerald)] opacity-60"
+            style={{ animation: 'ping 2s cubic-bezier(0,0,0.2,1) infinite' }}
+          />
+        </span>
+        <span
+          className="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-tertiary)]"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
+          NYC
+        </span>
+        <span className="text-[11px] text-[var(--color-ink-faint)]">·</span>
+        <span
+          className="text-[12px] tabular-nums text-[var(--color-ink-secondary)]"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
+          {time}
+        </span>
+      </div>
+      {/* Right: place count chip */}
+      <div className="flex items-center gap-1.5 shrink-0">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-cobalt)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="12" cy="10" r="3" />
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+        </svg>
+        <span
+          className="text-[11px] tabular-nums text-[var(--color-ink-secondary)]"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
+          14 places · 40+ attributes
+        </span>
+      </div>
+    </div>
+  )
+}
 
 // ---------------------------------------------------------------------------
 // HomeScreen
@@ -275,12 +362,21 @@ export function HomeScreen() {
           </motion.div>
         )}
 
-        {/* Recent searches */}
+        {/* Live status panel — NYC time + dataset stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+        >
+          <LiveStatusPanel />
+        </motion.div>
+
+        {/* Recent searches — intent-detected icons */}
         <motion.div
           className="space-y-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.34, ease: 'easeOut' }}
+          transition={{ duration: 0.4, delay: 0.36, ease: 'easeOut' }}
         >
           <p
             className="text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink-tertiary)] px-1"
@@ -289,17 +385,30 @@ export function HomeScreen() {
             Recent
           </p>
           <div className="flex flex-col gap-1">
-            {RECENT_SEARCHES.map((query) => (
-              <button
-                key={query}
-                onClick={() => handleSearch(query)}
-                className="group/recent min-h-[44px] flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--color-ink-secondary)] text-sm text-left hover:text-[var(--color-ink)] hover:bg-[var(--color-bone-warm)] transition-all cursor-pointer border-l-2 border-transparent hover:border-[var(--color-accent-cobalt)]"
-              >
-                <span className="text-[var(--color-ink-tertiary)]">{SearchIcon}</span>
-                <span className="flex-1">{query}</span>
-                <span className="text-[var(--color-ink-tertiary)]">{ArrowRightIcon}</span>
-              </button>
-            ))}
+            {RECENT_SEARCHES.map((query, i) => {
+              const intent = detectIntent(query)
+              return (
+                <motion.button
+                  key={query}
+                  onClick={() => handleSearch(query)}
+                  className="group/recent min-h-[44px] flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--color-ink-secondary)] text-sm text-left hover:text-[var(--color-ink)] hover:bg-[var(--color-bone-warm)] transition-all cursor-pointer border-l-2 border-transparent hover:border-[var(--color-accent-cobalt)]"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.4 + i * 0.05, ease: 'easeOut' }}
+                  whileHover={{ x: 2 }}
+                >
+                  {/* Intent icon — colored chip */}
+                  <span
+                    className="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-lg transition-transform group-hover/recent:scale-110"
+                    style={{ background: intent.bg, color: intent.fg }}
+                  >
+                    {intent.icon}
+                  </span>
+                  <span className="flex-1">{query}</span>
+                  <span className="text-[var(--color-ink-tertiary)]">{ArrowRightIcon}</span>
+                </motion.button>
+              )
+            })}
           </div>
         </motion.div>
 

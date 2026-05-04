@@ -2,6 +2,45 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Place, AttributeType } from '../data/types'
 
+// Tiny per-question icon set — pairs a glyph with each prompt
+const QUESTION_ICONS: Record<AttributeType, React.ReactNode> = {
+  outlet_usability: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M9 8V2M15 8V2" /><path d="M18 8v4a6 6 0 0 1-12 0V8z" /><path d="M12 22v-5" />
+    </svg>
+  ),
+  restroom_access: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
+    </svg>
+  ),
+  noise_level: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <path d="M15.54 8.46a5 5 0 010 7.07" />
+    </svg>
+  ),
+  laptop_tolerance: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="3" width="20" height="14" rx="2" /><path d="M2 20h20" />
+    </svg>
+  ),
+  seating_reliability: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M7 11V7a5 5 0 0110 0v4" />
+      <rect x="4" y="11" width="16" height="6" rx="2" /><path d="M6 17v4M18 17v4" />
+    </svg>
+  ),
+} as Partial<Record<AttributeType, React.ReactNode>> as Record<AttributeType, React.ReactNode>
+
+const QUESTION_COLORS: Partial<Record<AttributeType, string>> = {
+  outlet_usability: 'var(--color-accent-amber)',
+  restroom_access: 'var(--color-accent-emerald)',
+  noise_level: 'var(--color-accent-violet)',
+  laptop_tolerance: 'var(--color-accent-cobalt)',
+  seating_reliability: 'var(--color-accent-coral)',
+}
+
 interface ContributeSheetProps {
   place: Place
   isOpen: boolean
@@ -164,22 +203,40 @@ export function ContributeSheet({ place, isOpen, onClose }: ContributeSheetProps
                   </div>
 
                   <div className="space-y-2.5">
-                    {relevantQuestions.map(q => (
-                      <div key={q.type} className="flex items-center justify-between bg-[var(--color-bone-warm)] border border-[var(--color-border)] rounded-xl px-4 py-3">
-                        <span className="text-[var(--color-ink)] text-sm">{q.question}</span>
-                        <div className="flex gap-1.5">
-                          {(['yes', 'no', 'unsure'] as const).map(opt => (
-                            <button
-                              key={opt}
-                              onClick={() => handleAnswer(q.type, opt)}
-                              className={getButtonClasses(q.type, opt)}
+                    {relevantQuestions.map((q, i) => {
+                      const icon = QUESTION_ICONS[q.type]
+                      const color = QUESTION_COLORS[q.type] ?? 'var(--color-ink-tertiary)'
+                      return (
+                        <motion.div
+                          key={q.type}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: i * 0.05, ease: 'easeOut' }}
+                          className="flex items-center justify-between gap-3 bg-[var(--color-bone-warm)] border border-[var(--color-border)] rounded-xl px-4 py-3"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <span
+                              className="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-lg"
+                              style={{ background: `${color}1A`, color }}
                             >
-                              {opt === 'unsure' ? 'Not sure' : opt.charAt(0).toUpperCase() + opt.slice(1)}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+                              {icon}
+                            </span>
+                            <span className="text-[var(--color-ink)] text-sm">{q.question}</span>
+                          </div>
+                          <div className="flex gap-1.5 shrink-0">
+                            {(['yes', 'no', 'unsure'] as const).map(opt => (
+                              <button
+                                key={opt}
+                                onClick={() => handleAnswer(q.type, opt)}
+                                className={getButtonClasses(q.type, opt)}
+                              >
+                                {opt === 'unsure' ? 'Not sure' : opt.charAt(0).toUpperCase() + opt.slice(1)}
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )
+                    })}
                   </div>
 
                   <button
